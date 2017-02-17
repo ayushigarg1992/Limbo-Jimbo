@@ -52,15 +52,20 @@ public class LimboScreen extends Game{
 		// See below for what true means.
 		stage.getViewport().update(width, height, true);
 	}
-	private void draw(){
+	private void act(){
+		stage.act(Gdx.graphics.getDeltaTime());
 		for(int i=0;i<ghosts.size();i++)
 		{
+			wiz.setBounds(wiz.getX(),wiz.getY(),wiz.getWidth(),wiz.getHeight());
+			ghosts.get(i).setBounds(ghosts.get(i).getX(),ghosts.get(i).getY(),ghosts.get(i).getWidth(),ghosts.get(i).getHeight());
 			if(wiz.getBounds().overlaps(ghosts.get(i).bounds)){
-			//System.out.println("Collision Bitches");
-				ghosts.get(i).setVisible(false);
+
+				break;
+				//ghosts.get(i).setVisible(false);
 			}
+
 		}
-		stage.draw();
+		System.out.println("Collision Bitches");
 	}
 	@Override
 	public void render(){
@@ -72,18 +77,12 @@ public class LimboScreen extends Game{
 		batch.begin();
 		batch.draw(backGround,0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		batch.end();
-		stage.act(Gdx.graphics.getDeltaTime());
-		draw();
+		act();
+		stage.draw();
 
 
 	}
 
-//	@Override
-//	public void update(float delta) {
-//		if(wiz.getBounds().overlaps(ghosts.get(0).bounds)){
-//			System.out.print("Collision Bitches");
-//		}
-//	}
 	@Override
 	public void dispose(){
 		stage.dispose();

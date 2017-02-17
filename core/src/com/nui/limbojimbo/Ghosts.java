@@ -51,14 +51,17 @@ public class Ghosts extends Image{
         this.atlas = atlas;
         animation = new Animation(1/20f,atlas.getRegions());
 
-        bounds = new Rectangle(getX(),getY(),getWidth(),getHeight());
-        setBounds(getX(),getY(),getWidth(),getHeight());
+        bounds = new Rectangle(this.getX(),this.getY(),this.getWidth(),this.getHeight());
+        setBounds(this.getX(),this.getY(),this.getWidth(),this.getHeight());
         setHeight(400f);
         setWidth(500f);
         //setZIndex(zindex);
         setPosition(X,Y);
         addAction(moveToCenter());
         }
+    public void setBounds(float x,float y, float height, float width){
+        this.bounds.set(x,y,height,width);
+    }
     @Override
     public void act(float delta)
     {
