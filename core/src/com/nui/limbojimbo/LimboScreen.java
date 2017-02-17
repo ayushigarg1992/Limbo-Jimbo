@@ -52,20 +52,29 @@ public class LimboScreen extends Game{
 		// See below for what true means.
 		stage.getViewport().update(width, height, true);
 	}
+	private void draw(){
+		for(int i=0;i<ghosts.size();i++)
+		{
+			if(wiz.getBounds().overlaps(ghosts.get(i).bounds)){
+			//System.out.println("Collision Bitches");
+				ghosts.get(i).setVisible(false);
+			}
+		}
+		stage.draw();
+	}
 	@Override
 	public void render(){
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		Gdx.gl.glClearColor(1,1,1, 1);
 
-		stage.act(Gdx.graphics.getDeltaTime());
+
 
 		batch.begin();
 		batch.draw(backGround,0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		batch.end();
-		stage.draw();
-		if(wiz.getBounds().overlaps(ghosts.get(0).bounds)){
-			System.out.print("Collision Bitches");
-		}
+		stage.act(Gdx.graphics.getDeltaTime());
+		draw();
+
 
 	}
 

@@ -33,7 +33,8 @@ import javax.security.auth.login.Configuration;
 public class Ghosts extends Image{
     private Animation animation;
     private TextureAtlas atlas;
-    private float stateTime = 0;    Rectangle bounds;
+    private float stateTime = 0;
+    Rectangle bounds;
     public Rectangle getBounds(){
         return bounds;
     }
