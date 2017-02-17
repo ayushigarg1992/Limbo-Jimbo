@@ -48,6 +48,11 @@ repeat: none
   orig: 707, 527
   offset: 0, 0
   index: -1
+
+wizard4.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
 11
   rotate: false
   xy: 1, 1
@@ -56,7 +61,7 @@ repeat: none
   offset: 0, 0
   index: -1
 
-wizard4.png
+wizard5.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -68,7 +73,7 @@ repeat: none
   offset: 0, 0
   index: -1
 
-wizard5.png
+wizard6.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -80,7 +85,7 @@ repeat: none
   offset: 0, 0
   index: -1
 
-wizard6.png
+wizard7.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -92,7 +97,7 @@ repeat: none
   offset: 0, 0
   index: -1
 
-wizard7.png
+wizard8.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -104,7 +109,7 @@ repeat: none
   offset: 0, 0
   index: -1
 
-wizard8.png
+wizard9.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none

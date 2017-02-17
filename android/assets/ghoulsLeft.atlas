@@ -1,0 +1,62 @@
+
+ghoulsLeft.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+1
+  rotate: false
+  xy: 1, 1
+  size: 917, 917
+  orig: 917, 917
+  offset: 0, 0
+  index: -1
+5
+  rotate: false
+  xy: 1, 1
+  size: 917, 917
+  orig: 917, 917
+  offset: 0, 0
+  index: -1
+
+ghoulsLeft2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+2
+  rotate: false
+  xy: 1, 1
+  size: 917, 917
+  orig: 917, 917
+  offset: 0, 0
+  index: -1
+4
+  rotate: false
+  xy: 1, 1
+  size: 917, 917
+  orig: 917, 917
+  offset: 0, 0
+  index: -1
+
+ghoulsLeft3.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+3
+  rotate: false
+  xy: 1, 1
+  size: 917, 917
+  orig: 917, 917
+  offset: 0, 0
+  index: -1
+
+ghoulsLeft4.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+6
+  rotate: false
+  xy: 1, 1
+  size: 919, 915
+  orig: 919, 915
+  offset: 0, 0
+  index: -1
