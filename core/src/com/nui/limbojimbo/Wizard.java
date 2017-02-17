@@ -27,10 +27,13 @@ public class Wizard extends Image {
     private Animation animation;
     private TextureAtlas atlas;
     private float stateTime = 0;
+    private float width = 500f;
+    private float height = 400f;
+
     private Rectangle bounds;
     private Action moveToCenter(){
         MoveToAction mta = new MoveToAction();
-        mta.setPosition(900f,500f);
+        mta.setPosition(Gdx.graphics.getWidth()/2-width/2,Gdx.graphics.getHeight()/2-height/2-100f);
         mta.setDuration(0f);
         Wizard.this.addAction(mta);
         return mta;
@@ -44,7 +47,7 @@ public class Wizard extends Image {
         animation = new Animation(1/5f,atlas.getRegions());
         bounds = new Rectangle(getX(),getY(),getWidth(),getHeight());
         setBounds(getX(),getY(),getWidth(),getHeight());
-        setPosition(1200f,30f);
+        setPosition(Gdx.graphics.getWidth()/2-width/2,Gdx.graphics.getHeight()/2-height/2-100f);
         setHeight(400f);
         setWidth(500f);
         addAction(moveToCenter());

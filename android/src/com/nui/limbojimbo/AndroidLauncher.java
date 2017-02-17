@@ -13,7 +13,7 @@ public class AndroidLauncher extends AndroidApplication {
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		initialize(new LimboScreen(), config);
+		initialize(new SwiperImproved(), config);
 
 		//initialize( new GdxSplashScreenGame(), config);
 	}

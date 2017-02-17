@@ -33,13 +33,15 @@ import javax.security.auth.login.Configuration;
 public class Ghosts extends Image{
     private Animation animation;
     private TextureAtlas atlas;
+    private float width = 500f;
+    private float height = 400f;
     private float stateTime = 0;    Rectangle bounds;
     public Rectangle getBounds(){
         return bounds;
     }
     private Action moveToCenter(){
         MoveToAction mta = new MoveToAction();
-        mta.setPosition(900f,500f);
+        mta.setPosition(Gdx.graphics.getWidth()/2-width/2,Gdx.graphics.getHeight()/2-height/2-100f);
         mta.setDuration(20f);
         Ghosts.this.addAction(mta);
         return mta;
@@ -52,8 +54,8 @@ public class Ghosts extends Image{
 
         bounds = new Rectangle(getX(),getY(),getWidth(),getHeight());
         setBounds(getX(),getY(),getWidth(),getHeight());
-        setHeight(400f);
-        setWidth(500f);
+        setHeight(height);
+        setWidth(width);
         //setZIndex(zindex);
         setPosition(X,Y);
         addAction(moveToCenter());
