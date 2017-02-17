@@ -44,7 +44,7 @@ public class Wizard extends Image {
         animation = new Animation(1/5f,atlas.getRegions());
         bounds = new Rectangle(getX(),getY(),getWidth(),getHeight());
         setBounds(getX(),getY(),getWidth(),getHeight());
-        setPosition(1200f,1200f);
+        setPosition(1200f,30f);
         setHeight(400f);
         setWidth(500f);
         addAction(moveToCenter());

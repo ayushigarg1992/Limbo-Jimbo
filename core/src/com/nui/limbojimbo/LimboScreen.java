@@ -26,21 +26,21 @@ public class LimboScreen extends Game{
 	Sprite sprite ;
     private List<Ghosts> ghosts = new ArrayList<Ghosts>();
 	private Wizard wiz;
-
+	private Texture backGround;
 	@Override
 	public void create(){
 		//sprite = new Sprite(new Texture(Gdx.files.internal("wizard.png")));
+		batch = new SpriteBatch();
 		ScreenViewport viewport = new ScreenViewport();
 		stage = new Stage(viewport);
 		Gdx.input.setInputProcessor(stage);
+		 backGround = new Texture(Gdx.files.internal("libsmall.jpg"));
+
 		wiz = new Wizard(new Texture(Gdx.files.internal("wizard5.png")));
 		TextureAtlas atlasLeft =new TextureAtlas(Gdx.files.internal("ghoulsLeft.atlas"));
 		TextureAtlas atlasRight =new TextureAtlas(Gdx.files.internal("ghoulsRight.atlas"));
-		/*Animation animationLeft = new Animation(1/3f,atlasLeft.getRegions());
-		Animation animationRight = new Animation(1/3f,atlasRight.getRegions());
-		*/
-		ghosts.add(new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasLeft,-Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2));
-		ghosts.add(new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasRight,Gdx.graphics.getWidth(),Gdx.graphics.getHeight()/2));
+		ghosts.add(new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasLeft,-Gdx.graphics.getWidth()/2,0));
+		ghosts.add(new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasRight,Gdx.graphics.getWidth(),0));
 		stage.addActor(wiz);
 		stage.addActor(ghosts.get(0));
 		stage.addActor(ghosts.get(1));
@@ -56,10 +56,15 @@ public class LimboScreen extends Game{
 		Gdx.gl.glClearColor(1,1,1, 1);
 
 		stage.act(Gdx.graphics.getDeltaTime());
+
+		batch.begin();
+		batch.draw(backGround,0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		batch.end();
 		stage.draw();
 		if(wiz.getBounds().overlaps(ghosts.get(0).bounds)){
 			System.out.print("Collision Bitches");
 		}
+	
 	}
 
 //	@Override
