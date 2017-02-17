@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -27,6 +28,7 @@ public class LimboScreen extends Game{
     private List<Ghosts> ghosts = new ArrayList<Ghosts>();
 	private Wizard wiz;
 	private Texture backGround;
+
 	@Override
 	public void create(){
 		//sprite = new Sprite(new Texture(Gdx.files.internal("wizard.png")));
@@ -34,13 +36,13 @@ public class LimboScreen extends Game{
 		ScreenViewport viewport = new ScreenViewport();
 		stage = new Stage(viewport);
 		Gdx.input.setInputProcessor(stage);
-		 backGround = new Texture(Gdx.files.internal("libsmall.jpg"));
+		 backGround = new Texture(Gdx.files.internal("bwlibsmall.jpg"));
 
 		wiz = new Wizard(new Texture(Gdx.files.internal("wizard5.png")));
 		TextureAtlas atlasLeft =new TextureAtlas(Gdx.files.internal("ghoulsLeft.atlas"));
 		TextureAtlas atlasRight =new TextureAtlas(Gdx.files.internal("ghoulsRight.atlas"));
-		ghosts.add(new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasLeft,-Gdx.graphics.getWidth()/2,0));
-		ghosts.add(new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasRight,Gdx.graphics.getWidth(),0));
+		ghosts.add(new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasLeft,-Gdx.graphics.getWidth()/2+wiz.getWidth()/2,0));
+		ghosts.add(new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasRight,Gdx.graphics.getWidth()-wiz.getWidth()/2,0));
 		stage.addActor(wiz);
 		stage.addActor(ghosts.get(0));
 		stage.addActor(ghosts.get(1));
@@ -64,7 +66,7 @@ public class LimboScreen extends Game{
 		if(wiz.getBounds().overlaps(ghosts.get(0).bounds)){
 			System.out.print("Collision Bitches");
 		}
-	
+
 	}
 
 //	@Override

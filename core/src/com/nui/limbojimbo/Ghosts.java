@@ -48,7 +48,7 @@ public class Ghosts extends Image{
     public Ghosts( Texture texture,TextureAtlas atlas,float X,float Y){
         super(texture);
         this.atlas = atlas;
-        animation = new Animation(1/12f,atlas.getRegions());
+        animation = new Animation(1/20f,atlas.getRegions());
 
         bounds = new Rectangle(getX(),getY(),getWidth(),getHeight());
         setBounds(getX(),getY(),getWidth(),getHeight());
