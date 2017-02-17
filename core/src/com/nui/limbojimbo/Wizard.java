@@ -38,6 +38,9 @@ public class Wizard extends Image {
         Wizard.this.addAction(mta);
         return mta;
     }
+    public void setBounds(float x,float y, float height, float width){
+        this.bounds.set(x,y,height,width);
+    }
     public Rectangle getBounds(){
         return bounds;
     }
@@ -45,11 +48,12 @@ public class Wizard extends Image {
         super(texture);
         atlas = new TextureAtlas(Gdx.files.internal("wizard.atlas"));
         animation = new Animation(1/5f,atlas.getRegions());
-        bounds = new Rectangle(getX(),getY(),getWidth(),getHeight());
+
+        bounds = new Rectangle(this.getX(),this.getY(),this.getWidth(),this.getHeight());
         setBounds(getX(),getY(),getWidth(),getHeight());
         setPosition(Gdx.graphics.getWidth()/2-width/2,Gdx.graphics.getHeight()/2-height/2-100f);
-        setHeight(400f);
-        setWidth(500f);
+        setHeight(height);
+        setWidth(width);
         addAction(moveToCenter());
     }
     public void act(float delta)

@@ -14,7 +14,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+
+import com.badlogic.gdx.math.Rectangle;
+
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -30,14 +32,8 @@ public class LimboScreen extends Game implements ApplicationListener {
     private List<Ghosts> ghosts = new ArrayList<Ghosts>();
 	private Wizard wiz;
 	private Texture backGround;
-	OrthographicCamera cam;
 
-	SwipeHandler swipe;
 
-	Texture tex;
-	ShapeRenderer shapes;
-
-	SwipeTriStrip tris;
 	@Override
 	public void create(){
 		//sprite = new Sprite(new Texture(Gdx.files.internal("wizard.png")));
@@ -46,13 +42,13 @@ public class LimboScreen extends Game implements ApplicationListener {
 		ScreenViewport viewport = new ScreenViewport();
 		stage = new Stage(viewport);
 		Gdx.input.setInputProcessor(stage);
-		 backGround = new Texture(Gdx.files.internal("libsmall.jpg"));
+		 backGround = new Texture(Gdx.files.internal("bwlibsmall.jpg"));
 
 		wiz = new Wizard(new Texture(Gdx.files.internal("wizard5.png")));
 		TextureAtlas atlasLeft =new TextureAtlas(Gdx.files.internal("ghoulsLeft.atlas"));
 		TextureAtlas atlasRight =new TextureAtlas(Gdx.files.internal("ghoulsRight.atlas"));
-		ghosts.add(new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasLeft,-Gdx.graphics.getWidth()/2,0));
-		ghosts.add(new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasRight,Gdx.graphics.getWidth(),0));
+		ghosts.add(new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasLeft,-Gdx.graphics.getWidth()/2+wiz.getWidth()/2,0));
+		ghosts.add(new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasRight,Gdx.graphics.getWidth()-wiz.getWidth()/2,0));
 		stage.addActor(wiz);
 		stage.addActor(ghosts.get(0));
 		stage.addActor(ghosts.get(1));
@@ -66,29 +62,37 @@ public class LimboScreen extends Game implements ApplicationListener {
 		// See below for what true means.
 		stage.getViewport().update(width, height, true);
 	}
+	private void act(){
+		stage.act(Gdx.graphics.getDeltaTime());
+		for(int i=0;i<ghosts.size();i++)
+		{
+			wiz.setBounds(wiz.getX(),wiz.getY(),wiz.getWidth(),wiz.getHeight());
+			ghosts.get(i).setBounds(ghosts.get(i).getX(),ghosts.get(i).getY(),ghosts.get(i).getWidth(),ghosts.get(i).getHeight());
+			if(wiz.getBounds().overlaps(ghosts.get(i).bounds)){
+
+				break;
+				//ghosts.get(i).setVisible(false);
+			}
+
+		}
+		System.out.println("Collision Bitches");
+	}
 	@Override
 	public void render(){
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		Gdx.gl.glClearColor(1,1,1, 1);
 
-		stage.act(Gdx.graphics.getDeltaTime());
+
 
 		batch.begin();
 		batch.draw(backGround,0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		batch.end();
+		act();
 		stage.draw();
-		if(wiz.getBounds().overlaps(ghosts.get(0).bounds)){
-			System.out.print("Collision Bitches");
-		}
-	
+
+
 	}
 
-//	@Override
-//	public void update(float delta) {
-//		if(wiz.getBounds().overlaps(ghosts.get(0).bounds)){
-//			System.out.print("Collision Bitches");
-//		}
-//	}
 	@Override
 	public void dispose(){
 		stage.dispose();

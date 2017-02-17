@@ -125,6 +125,7 @@ public class SwiperImproved extends Game implements ApplicationListener {
 
         //render the triangles to the screen
         tris.draw(cam);
+        act();
         stage.draw();
 
         //uncomment to see debug lines
@@ -175,6 +176,22 @@ public class SwiperImproved extends Game implements ApplicationListener {
             shapes.line(p.x, p.y, p.x+perp.x, p.y+perp.y);
         }
         shapes.end();
+    }
+
+    private void act(){
+        stage.act(Gdx.graphics.getDeltaTime());
+        for(int i=0;i<ghosts.size();i++)
+        {
+            wiz.setBounds(wiz.getX(),wiz.getY(),wiz.getWidth(),wiz.getHeight());
+            ghosts.get(i).setBounds(ghosts.get(i).getX(),ghosts.get(i).getY(),ghosts.get(i).getWidth(),ghosts.get(i).getHeight());
+            if(wiz.getBounds().overlaps(ghosts.get(i).bounds)){
+
+                break;
+                //ghosts.get(i).setVisible(false);
+            }
+
+        }
+        System.out.println("Collision Bitches");
     }
 
     @Override
