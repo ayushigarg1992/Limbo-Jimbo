@@ -1,10 +1,12 @@
 package com.nui.limbojimbo;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -12,7 +14,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 import com.badlogic.gdx.math.Rectangle;
+
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -20,7 +24,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LimboScreen extends Game{
+public class LimboScreen extends Game implements ApplicationListener {
 	Stage stage;
 	SpriteBatch batch;
 	Texture texture;
@@ -29,9 +33,11 @@ public class LimboScreen extends Game{
 	private Wizard wiz;
 	private Texture backGround;
 
+
 	@Override
 	public void create(){
 		//sprite = new Sprite(new Texture(Gdx.files.internal("wizard.png")));
+
 		batch = new SpriteBatch();
 		ScreenViewport viewport = new ScreenViewport();
 		stage = new Stage(viewport);
@@ -47,7 +53,11 @@ public class LimboScreen extends Game{
 		stage.addActor(ghosts.get(0));
 		stage.addActor(ghosts.get(1));
 
-			}
+	}
+
+
+
+
 	public void resize (int width, int height) {
 		// See below for what true means.
 		stage.getViewport().update(width, height, true);
@@ -89,4 +99,6 @@ public class LimboScreen extends Game{
 		batch.dispose();
 		texture.dispose();
 	}
+
+
 }
