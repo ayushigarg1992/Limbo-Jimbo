@@ -33,6 +33,8 @@ public class GdxSplashScreenGame extends Game {
                         // ... carga de recursos de internacionalizacion
                         // ... otros
 
+                        GestureLibrary.getInstance().LoadLibrary();
+
                         // Se muestra el menu principal tras la SpashScreen
                         long splash_elapsed_time = System.currentTimeMillis() - splash_start_time;
                         if (splash_elapsed_time < GdxSplashScreenGame.SPLASH_MINIMUM_MILLIS) {

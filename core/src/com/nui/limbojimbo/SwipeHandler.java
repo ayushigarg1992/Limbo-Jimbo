@@ -5,11 +5,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Timer;
 import com.nui.limbojimbo.simplify.ResolverRadialChaikin;
+
+import java.util.ArrayList;
 
 public class SwipeHandler extends InputAdapter {
 	
 	private FixedList<Vector2> inputPoints;
+	private PointCloudLibrary _library;
+	ArrayList<PointCloudPoint> _curGesture =new ArrayList<PointCloudPoint>();
 	
 	/** The pointer associated with this swipe event. */
 	private int inputPointer = 0;
@@ -23,6 +28,7 @@ public class SwipeHandler extends InputAdapter {
 	private Vector2 lastPoint = new Vector2();
 	
 	private boolean isDrawing = false;
+	private  SwiperImproved obj;
 	
 	private SwipeResolver simplifier = new ResolverRadialChaikin();
 	private Array<Vector2> simplified;
@@ -30,6 +36,14 @@ public class SwipeHandler extends InputAdapter {
 	public SwipeHandler(int maxInputPoints) {
 		this.inputPoints = new FixedList<Vector2>(maxInputPoints, Vector2.class);
 		simplified = new Array<Vector2>(true, maxInputPoints, Vector2.class);
+		_library = GestureLibrary.getInstance().getLibrary();
+		resolve(); //copy initial empty list
+	}
+	public SwipeHandler(int maxInputPoints,SwiperImproved game) {
+		this.inputPoints = new FixedList<Vector2>(maxInputPoints, Vector2.class);
+		this.obj = game;
+		simplified = new Array<Vector2>(true, maxInputPoints, Vector2.class);
+		_library = GestureLibrary.getInstance().getLibrary();
 		resolve(); //copy initial empty list
 	}
 
@@ -55,14 +69,23 @@ public class SwipeHandler extends InputAdapter {
 	public void resolve() {
 		simplifier.resolve(inputPoints, simplified);
 	}
-	
+
+	public void clearCanvas() {
+		_curGesture.clear();
+		//_curGesture = new ArrayList<PointCloudPoint>();
+	}
+
+
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		if (pointer!=inputPointer)
 			return false;
+		obj.touchdown();
 		isDrawing = true;
 		
 		//clear points
 		inputPoints.clear();
+
+		clearCanvas();
 		
 		//starting point
 		lastPoint = new Vector2(screenX, Gdx.graphics.getHeight()-screenY);
@@ -71,10 +94,16 @@ public class SwipeHandler extends InputAdapter {
 		resolve();
 		return true;
 	}
+
+
 	
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		//on release, the line is simplified
+
 		resolve();
+
+		obj.recognise(_curGesture);
+		//inputPoints.clear();
 		isDrawing = false;
 		return false;
 	}
@@ -98,6 +127,9 @@ public class SwipeHandler extends InputAdapter {
 		
 		//add new point
 		inputPoints.insert(v);
+		//add gesture points
+		PointCloudPoint p = new PointCloudPoint(v.x,v.y,1);
+		_curGesture.add(p);
 		
 		lastPoint = v;
 		

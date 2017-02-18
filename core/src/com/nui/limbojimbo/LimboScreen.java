@@ -47,8 +47,8 @@ public class LimboScreen extends Game implements ApplicationListener {
 		wiz = new Wizard(new Texture(Gdx.files.internal("wizard5.png")));
 		TextureAtlas atlasLeft =new TextureAtlas(Gdx.files.internal("ghoulsLeft.atlas"));
 		TextureAtlas atlasRight =new TextureAtlas(Gdx.files.internal("ghoulsRight.atlas"));
-		ghosts.add(new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasLeft,-Gdx.graphics.getWidth()/2+wiz.getWidth()/2,0));
-		ghosts.add(new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasRight,Gdx.graphics.getWidth()-wiz.getWidth()/2,0));
+		ghosts.add(new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasLeft,-Gdx.graphics.getWidth()/2+wiz.getWidth()/2,0,"_"));
+		ghosts.add(new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasRight,Gdx.graphics.getWidth()-wiz.getWidth()/2,0,"|"));
 		stage.addActor(wiz);
 		stage.addActor(ghosts.get(0));
 		stage.addActor(ghosts.get(1));

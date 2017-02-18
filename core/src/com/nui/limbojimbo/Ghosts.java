@@ -37,6 +37,7 @@ public class Ghosts extends Image{
     private float width = 500f;
     private float height = 400f;
     private float stateTime = 0;
+    private String type;
     Rectangle bounds;
 
     public Rectangle getBounds(){
@@ -44,8 +45,8 @@ public class Ghosts extends Image{
     }
     private Action moveToCenter(){
         MoveToAction mta = new MoveToAction();
-        mta.setPosition(Gdx.graphics.getWidth()/2-width/2,Gdx.graphics.getHeight()/2-height/2-100f);
-        mta.setDuration(20f);
+        mta.setPosition(Gdx.graphics.getWidth()/2-width/2,Gdx.graphics.getHeight()/2-height/2-180f);
+        mta.setDuration(40f);
         Ghosts.this.addAction(mta);
         return mta;
     }
@@ -53,7 +54,7 @@ public class Ghosts extends Image{
     public Ghosts( Texture texture,TextureAtlas atlas,float X,float Y){
         super(texture);
         this.atlas = atlas;
-        animation = new Animation(1/20f,atlas.getRegions());
+        animation = new Animation(1/9f,atlas.getRegions());
         bounds = new Rectangle(this.getX(),this.getY(),this.getWidth(),this.getHeight());
         setBounds(this.getX(),this.getY(),this.getWidth(),this.getHeight());
         setHeight(height);
@@ -61,9 +62,26 @@ public class Ghosts extends Image{
         //setZIndex(zindex);
         setPosition(X,Y);
         addAction(moveToCenter());
+    }
+
+    public Ghosts( Texture texture,TextureAtlas atlas,float X,float Y, String type){
+        super(texture);
+        this.atlas = atlas;
+        animation = new Animation(1/9f,atlas.getRegions());
+        bounds = new Rectangle(this.getX(),this.getY(),this.getWidth(),this.getHeight());
+        setBounds(this.getX(),this.getY(),this.getWidth(),this.getHeight());
+        setHeight(height);
+        setWidth(width);
+        this.type = type;
+        //setZIndex(zindex);
+        setPosition(X,Y);
+        addAction(moveToCenter());
         }
     public void setBounds(float x,float y, float height, float width){
         this.bounds.set(x,y,height,width);
+    }
+    public String getType(){
+       return this.type;
     }
     @Override
     public void act(float delta)

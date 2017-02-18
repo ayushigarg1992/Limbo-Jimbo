@@ -10,6 +10,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 //import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -24,9 +25,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 
 public class SwiperImproved extends Game implements ApplicationListener {
 
@@ -35,26 +40,39 @@ public class SwiperImproved extends Game implements ApplicationListener {
     }*/
 
     OrthographicCamera cam;
+    private PointCloudLibrary _library;
     Stage stage;
     SpriteBatch batch;
+    int timeAux = 0;
+    private float time = 0;
+    private float spawntime = 3;
 
     SwipeHandler swipe;
+    private boolean isright = true;
     private Texture backGround;
 
     Texture tex;
     ShapeRenderer shapes;
+    private String gesture = "";
 
     SwipeTriStrip tris;
     private List<Ghosts> ghosts = new ArrayList<Ghosts>();
     private Wizard wiz;
+    TextureAtlas atlasLeft;
+    TextureAtlas atlasRight;
+    Music music;
+    Music hunt;
+    Multimap<String, Ghosts> GhostMap = ArrayListMultimap.create();
 
     @Override
     public void create() {
         //the triangle strip renderer
+       // GestureLibrary.getInstance().LoadLibrary(); //remove later
+        _library = GestureLibrary.getInstance().getLibrary();
         tris = new SwipeTriStrip();
 
         //a swipe handler with max # of input points to be kept alive
-        swipe = new SwipeHandler(20);
+        swipe = new SwipeHandler(15,this);
 
         //minimum distance between two points
         swipe.minDistance = 10;
@@ -66,6 +84,13 @@ public class SwiperImproved extends Game implements ApplicationListener {
         tex = new Texture("data/gradient.png");
         tex.setFilter(TextureFilter.Linear, TextureFilter.Linear);
         backGround = new Texture(Gdx.files.internal("libsmall.jpg"));
+        music = Gdx.audio.newMusic(Gdx.files.internal("data/bgsound.m4a"));
+        hunt = Gdx.audio.newMusic(Gdx.files.internal("data/kill.wav"));
+       // music.setVolume(3f);                 // sets the volume to half the maximum volume
+        music.setLooping(true);                // will repeat playback until music.stop() is called
+        //music.stop();                          // stops the playback
+       // music.pause();                         // pauses the playback
+        music.play();
 
 
         shapes = new ShapeRenderer();
@@ -78,10 +103,12 @@ public class SwiperImproved extends Game implements ApplicationListener {
         stage = new Stage(viewport);
 
         wiz = new Wizard(new Texture(Gdx.files.internal("wizard5.png")));
-        TextureAtlas atlasLeft =new TextureAtlas(Gdx.files.internal("ghoulsLeft.atlas"));
-        TextureAtlas atlasRight =new TextureAtlas(Gdx.files.internal("ghoulsRight.atlas"));
+        atlasLeft =new TextureAtlas(Gdx.files.internal("ghoulsLeft.atlas"));
+        atlasRight =new TextureAtlas(Gdx.files.internal("ghoulsRight.atlas"));
         ghosts.add(new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasLeft,-Gdx.graphics.getWidth()/2,0));
         ghosts.add(new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasRight,Gdx.graphics.getWidth(),0));
+        GhostMap.put("|", ghosts.get(0));
+        GhostMap.put("_", ghosts.get(1));
         stage.addActor(wiz);
         stage.addActor(ghosts.get(0));
         stage.addActor(ghosts.get(1));
@@ -90,9 +117,103 @@ public class SwiperImproved extends Game implements ApplicationListener {
         Gdx.input.setInputProcessor(swipe);
     }
 
+
+    public void SpwanEnemy(){
+
+
+        Random rn = new Random();
+        int isleft = rn.nextInt(2);
+        if (isleft ==0)
+            ghosts.add(isleft,new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasLeft,-Gdx.graphics.getWidth()/2,0));
+        else
+            ghosts.add(isleft,new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasRight,Gdx.graphics.getWidth(),0));
+        int i  = rn.nextInt(5);switch( i ){
+            case 0 :
+                GhostMap.put("_", ghosts.get(isleft));
+                break;
+            case 1 :
+                GhostMap.put("|", ghosts.get(isleft));
+                break;
+            case 2:
+                GhostMap.put("|", ghosts.get(isleft));
+                break;
+            case 3 :
+                GhostMap.put("O", ghosts.get(isleft));
+                break;
+            case 4 :
+                GhostMap.put("_", ghosts.get(isleft));
+                break;
+            default:
+                GhostMap.put("_", ghosts.get(isleft));
+
+        }
+
+        stage.addActor(ghosts.get(isleft));
+    }
+
+    public void update()
+    {
+        time += Gdx.graphics.getDeltaTime();
+        if(time > spawntime)
+        {
+           // x_pattern = MathUtils.random(Stratofall.WIDTH - (cols * balloonWidth));
+           // y_pattern = 0; //this will change depending on how many rows of the pattern contain a coin
+
+            SpwanEnemy();
+            time = 0;
+        }
+    }
+
+    public void recognise(final ArrayList<PointCloudPoint> _curGesture){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    PointCloud c = new PointCloud("input gesture", _curGesture);
+                    ArrayList<PointCloudPoint> pts = c.getPoints();
+
+                    PointCloudMatchResult r = _library.originalRecognize(c);
+                    if (r.getScore() > 0.5) {
+
+                        //System.out.println("matched"+r.getName());
+                        //obj.setgesture(r.getName());
+
+                        if (GhostMap.containsKey(r.getName())){
+                                hunt.play();
+                                Collection<Ghosts> ghostsCollection = GhostMap.get(r.getName());
+                                for(Ghosts value : ghostsCollection){
+                                    value.remove();
+                                }
+                                 GhostMap.removeAll(r.getName());
+
+
+                                //ghosts.remove(i);
+
+                               /* Ghosts G1  = new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasLeft,-Gdx.graphics.getWidth()/2,0,"|");
+                                ghosts.add(G1);
+                                stage.addActor(G1);
+                                Ghosts G2 = new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasRight,Gdx.graphics.getWidth(),0, "_");
+                                ghosts.add(G2);
+                                stage.addActor(G2);*/
+
+                        }
+                    }
+            }catch(IllegalArgumentException e){
+                    //do nothing
+            }
+
+            }
+        }).start();
+        wiz.setTouch(false);
+    }
+
     @Override
     public void resize(int width, int height) {
         //cam.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    }
+
+    public void setgesture(String s){
+        this.gesture = s;
     }
 
 
@@ -111,20 +232,24 @@ public class SwiperImproved extends Game implements ApplicationListener {
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         tex.bind();
 
+
         //the endcap scale
 //		tris.endcap = 5f;
 
+
+
         //the thickness of the line
-        tris.thickness = 20f;
+        tris.thickness = 10f;
 
         //generate the triangle strip from our path
         tris.update(swipe.path());
 
         //the vertex color for tinting, i.e. for opacity
-        tris.color = Color.BLUE;
+        tris.color = Color.GREEN;
 
         //render the triangles to the screen
         tris.draw(cam);
+        update();
         act();
         stage.draw();
 
@@ -178,6 +303,7 @@ public class SwiperImproved extends Game implements ApplicationListener {
         shapes.end();
     }
 
+
     private void act(){
         stage.act(Gdx.graphics.getDeltaTime());
         for(int i=0;i<ghosts.size();i++)
@@ -186,12 +312,16 @@ public class SwiperImproved extends Game implements ApplicationListener {
             ghosts.get(i).setBounds(ghosts.get(i).getX(),ghosts.get(i).getY(),ghosts.get(i).getWidth(),ghosts.get(i).getHeight());
             if(wiz.getBounds().overlaps(ghosts.get(i).bounds)){
 
+                System.out.println("Collision Bitches");
                 break;
                 //ghosts.get(i).setVisible(false);
             }
 
+
         }
-        System.out.println("Collision Bitches");
+
+
+        //
     }
 
     @Override
@@ -204,6 +334,10 @@ public class SwiperImproved extends Game implements ApplicationListener {
 
     }
 
+
+    public void touchdown(){
+        wiz.setTouch(true);
+    }
     @Override
     public void dispose() {
         batch.dispose();
@@ -211,6 +345,7 @@ public class SwiperImproved extends Game implements ApplicationListener {
         tex.dispose();
         stage.dispose();
         backGround.dispose();
+        music.dispose();
     }
 
 }
