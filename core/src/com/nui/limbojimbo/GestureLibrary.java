@@ -5,10 +5,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 /**
@@ -47,6 +50,7 @@ public class GestureLibrary {
 
         String filepath = "gestures/";
         FileHandle handle = Gdx.files.internal("gestures/");
+       // String locRoot = Gdx.files.getLocalStoragePath();
 
         FileHandle dirHandle;
         if (Gdx.app.getType() == Application.ApplicationType.Android) {
@@ -59,7 +63,12 @@ public class GestureLibrary {
             // yadda ...
             try {
                // FileInputStream f =  new FileInputStream(entry.file());
-                BufferedReader br = new BufferedReader(new FileReader(entry.file()));
+                String text = entry.readString();
+                InputStream is = new ByteArrayInputStream(text.getBytes());
+
+                // read it with BufferedReader
+                BufferedReader br = new BufferedReader(new InputStreamReader(is));
+               // BufferedReader br = new BufferedReader(new FileReader(entry.file()));
                 String line;
                 String name = "";
                 int stroke= 0;

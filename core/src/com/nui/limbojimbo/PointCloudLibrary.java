@@ -178,7 +178,7 @@ public class PointCloudLibrary
     if(this == demoLibrary)
     {
       _pointClouds = new ArrayList<PointCloud>();
-      populateDemoLibrary(this);
+     // populateDemoLibrary(this);
     }
     else
     {
@@ -342,7 +342,7 @@ public class PointCloudLibrary
     }
 
     demoLibrary = new PointCloudLibrary();
-    populateDemoLibrary(demoLibrary);
+   // populateDemoLibrary(demoLibrary);
     return demoLibrary;
   }
   
