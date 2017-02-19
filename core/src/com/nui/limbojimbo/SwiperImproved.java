@@ -134,33 +134,44 @@ public class SwiperImproved  implements Screen {
 
 
         Random rn = new Random();
+        int indx = 0;
         int isleft = rn.nextInt(2);
-        if (isleft ==0)
-            ghosts.add(isleft,new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasLeft,-Gdx.graphics.getWidth()/2,0));
-        else
-            ghosts.add(isleft,new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasRight,Gdx.graphics.getWidth(),0));
+
+        if (ghosts.size()> 1) {
+            indx = rn.nextInt(2);
+            if (isleft == 0)
+                ghosts.add(indx, new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")), atlasLeft, -Gdx.graphics.getWidth() / 2, 0));
+            else
+                ghosts.add(indx, new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")), atlasRight, Gdx.graphics.getWidth(), 0));
+        } else {
+            indx = ghosts.size();
+            if (indx == 0)
+                ghosts.add(indx, new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")), atlasLeft, -Gdx.graphics.getWidth() / 2, 0));
+            else
+                ghosts.add(indx, new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")), atlasRight, Gdx.graphics.getWidth(), 0));
+        }
         int i  = rn.nextInt(5);switch( i ){
             case 0 :
-                GhostMap.put("_", ghosts.get(isleft));
+                GhostMap.put("_", ghosts.get(indx));
                 break;
             case 1 :
-                GhostMap.put("|", ghosts.get(isleft));
+                GhostMap.put("|", ghosts.get(indx));
                 break;
             case 2:
-                GhostMap.put("|", ghosts.get(isleft));
+                GhostMap.put("|", ghosts.get(indx));
                 break;
             case 3 :
-                GhostMap.put("O", ghosts.get(isleft));
+                GhostMap.put("O", ghosts.get(indx));
                 break;
             case 4 :
-                GhostMap.put("_", ghosts.get(isleft));
+                GhostMap.put("_", ghosts.get(indx));
                 break;
             default:
-                GhostMap.put("_", ghosts.get(isleft));
+                GhostMap.put("_", ghosts.get(indx));
 
         }
 
-        stage.addActor(ghosts.get(isleft));
+        stage.addActor(ghosts.get(indx));
     }
 
     public void update()
