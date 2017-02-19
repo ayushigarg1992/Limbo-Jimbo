@@ -42,7 +42,7 @@ public class Wizard extends Image  {
         return mta;
     }
     public void setBounds(float x,float y, float height, float width){
-        this.bounds.set(x,y,height,width);
+        this.bounds.set(x+this.width/4,y+this.height/4,this.width/2,this.height/2);
     }
     public Rectangle getBounds(){
         return bounds;

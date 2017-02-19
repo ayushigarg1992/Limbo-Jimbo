@@ -100,7 +100,7 @@ public class SwiperImproved  implements Screen {
         music.setLooping(true);                // will repeat playback until music.stop() is called
         //music.stop();                          // stops the playback
        // music.pause();                         // pauses the playback
-        music.play();
+
 
 
         shapes = new ShapeRenderer();
@@ -318,9 +318,12 @@ public class SwiperImproved  implements Screen {
         stage.act(Gdx.graphics.getDeltaTime());
         for(int i=0;i<ghosts.size();i++)
         {
-            wiz.setBounds(wiz.getX(),wiz.getY(),wiz.getWidth(),wiz.getHeight());
+            wiz.setBounds(wiz.getX(),wiz.getY(),wiz.getWidth()-200,wiz.getHeight()-200);
             ghosts.get(i).setBounds(ghosts.get(i).getX(),ghosts.get(i).getY(),ghosts.get(i).getWidth(),ghosts.get(i).getHeight());
             if(wiz.getBounds().overlaps(ghosts.get(i).bounds)){
+                game.setScreen(new GameOverScreen(game));
+                dispose();
+                //game.
               //  game.setScreen(new startScreen(game));
                // Gdx.app.exit();
                /* endDialog = new Dialog("Game Over", skin)
@@ -339,7 +342,7 @@ public class SwiperImproved  implements Screen {
                         }, 1);
                     };
                 };*/
-                System.out.println("Collision Bitches");
+               // System.out.println("Collision Bitches");
                 break;
                 //ghosts.get(i).setVisible(false);
             }
@@ -375,6 +378,7 @@ public class SwiperImproved  implements Screen {
 
     @Override
     public void  show(){
+        music.play();
 
     }
     @Override

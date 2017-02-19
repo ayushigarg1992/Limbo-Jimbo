@@ -78,7 +78,7 @@ public class Ghosts extends Image{
         addAction(moveToCenter());
         }
     public void setBounds(float x,float y, float height, float width){
-        this.bounds.set(x,y,height,width);
+        this.bounds.set(x,y,height/2,width/2);
     }
     public String getType(){
        return this.type;
