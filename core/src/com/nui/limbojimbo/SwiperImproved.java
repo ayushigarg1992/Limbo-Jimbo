@@ -115,8 +115,8 @@ public class SwiperImproved  implements Screen {
         wiz = new Wizard(new Texture(Gdx.files.internal("wizard5.png")));
         atlasLeft =new TextureAtlas(Gdx.files.internal("ghoulsLeft.atlas"));
         atlasRight =new TextureAtlas(Gdx.files.internal("ghoulsRight.atlas"));
-        ghosts.add(new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasLeft,-Gdx.graphics.getWidth()/2,0));
-        ghosts.add(new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasRight,Gdx.graphics.getWidth(),0));
+        ghosts.add(new Ghosts(0,new Texture(Gdx.files.internal("VLine.png")),atlasLeft,-Gdx.graphics.getWidth()/2,0));
+        ghosts.add(new Ghosts(0,new Texture(Gdx.files.internal("HLine.png")),atlasRight,Gdx.graphics.getWidth(),0));
         GhostMap.put("|", ghosts.get(0));
         GhostMap.put("_", ghosts.get(1));
         stage.addActor(wiz);
@@ -127,34 +127,69 @@ public class SwiperImproved  implements Screen {
         Gdx.input.setInputProcessor(swipe);
     }
 
+    public int atlastenemy(String img){
+        Random rn = new Random();
+        int isleft = rn.nextInt(2);
+        int indx = 0;
+
+
+        if (ghosts.size()> 1) {
+            indx = rn.nextInt(2);
+            if (isleft == 0)
+                ghosts.add(indx, new Ghosts(isleft,new Texture(Gdx.files.internal(img)), atlasLeft, -Gdx.graphics.getWidth() / 2, 0));
+            else
+                ghosts.add(indx, new Ghosts(isleft,new Texture(Gdx.files.internal(img)), atlasRight, Gdx.graphics.getWidth(), 0));
+        } else {
+            indx = ghosts.size();
+            if (indx == 0)
+                ghosts.add(indx, new Ghosts(isleft,new Texture(Gdx.files.internal(img)), atlasLeft, -Gdx.graphics.getWidth() / 2, 0));
+            else
+                ghosts.add(indx, new Ghosts(isleft,new Texture(Gdx.files.internal(img)), atlasRight, Gdx.graphics.getWidth(), 0));
+            isleft= indx;
+        }
+        return isleft;
+    }
 
     public void SpwanEnemy(){
 
 
         Random rn = new Random();
-        int isleft = rn.nextInt(2);
-        if (isleft ==0)
-            ghosts.add(isleft,new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasLeft,-Gdx.graphics.getWidth()/2,0));
-        else
-            ghosts.add(isleft,new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasRight,Gdx.graphics.getWidth(),0));
+        int isleft = 0;//rn.nextInt(2);
         int i  = rn.nextInt(5);switch( i ){
             case 0 :
+                isleft = atlastenemy("HLine.png");
+                //ghosts.get(isleft).setGesture(new Texture(Gdx.files.internal("HLine.png")));
                 GhostMap.put("_", ghosts.get(isleft));
+
                 break;
             case 1 :
+                isleft = atlastenemy("VLine.png");
+                //ghosts.get(isleft).setGesture(new Texture(Gdx.files.internal("VLine.png")));
                 GhostMap.put("|", ghosts.get(isleft));
+
                 break;
             case 2:
+                isleft = atlastenemy("VLine.png");
+                //ghosts.get(isleft).setGesture(new Texture(Gdx.files.internal("VLine.png")));
                 GhostMap.put("|", ghosts.get(isleft));
+
                 break;
             case 3 :
+                isleft = atlastenemy("Circle.png");
+                //ghosts.get(isleft).setGesture(new Texture(Gdx.files.internal("Circle.png")));
                 GhostMap.put("O", ghosts.get(isleft));
-                break;
+                                break;
             case 4 :
+                isleft = atlastenemy("HLine.png");
+            // ghosts.get(isleft).setGesture(new Texture(Gdx.files.internal("HLine.png")));
                 GhostMap.put("_", ghosts.get(isleft));
+
                 break;
             default:
+                isleft = atlastenemy("HLine.png");
+                // ghosts.get(isleft).setGesture(new Texture(Gdx.files.internal("HLine.png")));
                 GhostMap.put("_", ghosts.get(isleft));
+
 
         }
 
