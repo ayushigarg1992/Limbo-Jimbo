@@ -16,7 +16,7 @@ public class GdxSplashScreenGame extends Game {
 
     @Override
     public void create () {
-        setScreen(new SplashScreen());
+        setScreen(new SplashScreen(GdxSplashScreenGame.this));
 
         final long splash_start_time = System.currentTimeMillis();
         new Thread(new Runnable() {
@@ -46,7 +46,7 @@ public class GdxSplashScreenGame extends Game {
                                         }
                                     }, (float)(GdxSplashScreenGame.SPLASH_MINIMUM_MILLIS - splash_elapsed_time) / 1000f);
                         } else {
-                            GdxSplashScreenGame.this.setScreen(new MainMenuScreen());
+                            GdxSplashScreenGame.this.setScreen(new SplashScreen((Game)GdxSplashScreenGame.this));
                         }
                     }
                 });

@@ -10,6 +10,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 //import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -23,7 +24,10 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
@@ -33,7 +37,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
-public class SwiperImproved extends Game implements ApplicationListener {
+public class SwiperImproved  implements Screen {
 
    /* public static void main(String[] args) {
         new LwjglApplication(new SwiperImproved(), "Game", 256, 256, true);
@@ -62,10 +66,15 @@ public class SwiperImproved extends Game implements ApplicationListener {
     TextureAtlas atlasRight;
     Music music;
     Music hunt;
+    Dialog  endDialog;
+
+    Skin skin;
+    private Game game;
     Multimap<String, Ghosts> GhostMap = ArrayListMultimap.create();
 
-    @Override
-    public void create() {
+  //  @Override
+    public  SwiperImproved(Game game) {
+        this.game = game;
         //the triangle strip renderer
        // GestureLibrary.getInstance().LoadLibrary(); //remove later
         _library = GestureLibrary.getInstance().getLibrary();
@@ -86,6 +95,7 @@ public class SwiperImproved extends Game implements ApplicationListener {
         backGround = new Texture(Gdx.files.internal("libsmall.jpg"));
         music = Gdx.audio.newMusic(Gdx.files.internal("data/bgsound.m4a"));
         hunt = Gdx.audio.newMusic(Gdx.files.internal("data/kill.wav"));
+        //skin = new Skin(Gdx.files.internal("uiskin.json"));
        // music.setVolume(3f);                 // sets the volume to half the maximum volume
         music.setLooping(true);                // will repeat playback until music.stop() is called
         //music.stop();                          // stops the playback
@@ -219,7 +229,7 @@ public class SwiperImproved extends Game implements ApplicationListener {
 
 
     @Override
-    public void render() {
+    public void render(float delta ) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         cam.update();
         batch.setProjectionMatrix(cam.combined);
@@ -311,7 +321,24 @@ public class SwiperImproved extends Game implements ApplicationListener {
             wiz.setBounds(wiz.getX(),wiz.getY(),wiz.getWidth(),wiz.getHeight());
             ghosts.get(i).setBounds(ghosts.get(i).getX(),ghosts.get(i).getY(),ghosts.get(i).getWidth(),ghosts.get(i).getHeight());
             if(wiz.getBounds().overlaps(ghosts.get(i).bounds)){
+              //  game.setScreen(new startScreen(game));
+               // Gdx.app.exit();
+               /* endDialog = new Dialog("Game Over", skin)
+                {
+                    protected void result(Object object)
+                    {
+                        System.out.println("Option: " + object);
+                        Timer.schedule(new Timer.Task()
+                        {
 
+                            @Override
+                            public void run()
+                            {
+                                endDialog.show(stage);
+                            }
+                        }, 1);
+                    };
+                };*/
                 System.out.println("Collision Bitches");
                 break;
                 //ghosts.get(i).setVisible(false);
@@ -337,6 +364,18 @@ public class SwiperImproved extends Game implements ApplicationListener {
 
     public void touchdown(){
         wiz.setTouch(true);
+    }
+
+
+    @Override
+    public void  hide(){
+
+    }
+
+
+    @Override
+    public void  show(){
+
     }
     @Override
     public void dispose() {
