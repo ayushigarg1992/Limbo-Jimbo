@@ -115,13 +115,15 @@ public class SwiperImproved  implements Screen {
         wiz = new Wizard(new Texture(Gdx.files.internal("wizard5.png")));
         atlasLeft =new TextureAtlas(Gdx.files.internal("ghoulsLeft.atlas"));
         atlasRight =new TextureAtlas(Gdx.files.internal("ghoulsRight.atlas"));
-        ghosts.add(new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasLeft,-Gdx.graphics.getWidth()/2,0));
-        ghosts.add(new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasRight,Gdx.graphics.getWidth(),0));
-        GhostMap.put("|", ghosts.get(0));
-        GhostMap.put("_", ghosts.get(1));
+       // ghosts.add(new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasLeft,-Gdx.graphics.getWidth()/2,0));
+       // ghosts.add(new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasRight,Gdx.graphics.getWidth(),0));
+       // GhostMap.put("|", ghosts.get(0));
+       // GhostMap.put("_", ghosts.get(1));
+        SpwanEnemy();
+        SpwanEnemy();
         stage.addActor(wiz);
-        stage.addActor(ghosts.get(0));
-        stage.addActor(ghosts.get(1));
+       // stage.addActor(ghosts.get(0));
+        //stage.addActor(ghosts.get(1));
 
         //handle swipe input
         Gdx.input.setInputProcessor(swipe);
@@ -231,6 +233,7 @@ public class SwiperImproved  implements Screen {
     @Override
     public void render(float delta ) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClearColor(1,1,1, 1);
         cam.update();
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
