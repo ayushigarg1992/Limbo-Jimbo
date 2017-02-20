@@ -49,7 +49,7 @@ public class SwiperImproved  implements Screen {
     SpriteBatch batch;
     int timeAux = 0;
     private float time = 0;
-    private float spawntime = 3;
+    private float spawntime = 6;
 
     SwipeHandler swipe;
     private boolean isright = true;
@@ -132,23 +132,23 @@ public class SwiperImproved  implements Screen {
 
     public int atlastenemy(String img){
         Random rn = new Random();
-        int isleft = rn.nextInt(2);
+        int isleft = 0;//rn.nextInt(2);
         int indx = 0;
 
 
         if (ghosts.size()> 1) {
-            indx = rn.nextInt(2);
+            isleft = rn.nextInt(2);
             if (isleft == 0)
-                ghosts.add(indx, new Ghosts(isleft,new Texture(Gdx.files.internal(img)), atlasLeft, -Gdx.graphics.getWidth() / 2, 0));
+                ghosts.add(isleft, new Ghosts(isleft,new Texture(Gdx.files.internal(img)), atlasLeft, -200, 0));
             else
-                ghosts.add(indx, new Ghosts(isleft,new Texture(Gdx.files.internal(img)), atlasRight, Gdx.graphics.getWidth(), 0));
+                ghosts.add(isleft, new Ghosts(isleft,new Texture(Gdx.files.internal(img)), atlasRight, Gdx.graphics.getWidth()+20, 0));
         } else {
-            indx = ghosts.size();
-            if (indx == 0)
-                ghosts.add(indx, new Ghosts(isleft,new Texture(Gdx.files.internal(img)), atlasLeft, -Gdx.graphics.getWidth() / 2, 0));
+            isleft = ghosts.size();
+            if (isleft == 0)
+                ghosts.add(isleft, new Ghosts(isleft,new Texture(Gdx.files.internal(img)), atlasLeft, -200, 0));
             else
-                ghosts.add(indx, new Ghosts(isleft,new Texture(Gdx.files.internal(img)), atlasRight, Gdx.graphics.getWidth(), 0));
-            isleft= indx;
+                ghosts.add(isleft, new Ghosts(isleft,new Texture(Gdx.files.internal(img)), atlasRight, Gdx.graphics.getWidth()+20, 0));
+            //isleft= indx;
         }
         return isleft;
     }
@@ -158,40 +158,49 @@ public class SwiperImproved  implements Screen {
 
         Random rn = new Random();
         int isleft = 0;//rn.nextInt(2);
-        int i  = rn.nextInt(5);switch( i ){
+        int i  = rn.nextInt(5);
+
+        switch( i ){
+
             case 0 :
                 isleft = atlastenemy("HLine.png");
                 //ghosts.get(isleft).setGesture(new Texture(Gdx.files.internal("HLine.png")));
                 GhostMap.put("_", ghosts.get(isleft));
+                System.out.println(" ghost is _ ");
 
                 break;
             case 1 :
                 isleft = atlastenemy("VLine.png");
                 //ghosts.get(isleft).setGesture(new Texture(Gdx.files.internal("VLine.png")));
                 GhostMap.put("|", ghosts.get(isleft));
+                System.out.println(" ghost is | ");
 
                 break;
             case 2:
-                isleft = atlastenemy("VLine.png");
+                isleft = atlastenemy("HLine.png");
                 //ghosts.get(isleft).setGesture(new Texture(Gdx.files.internal("VLine.png")));
-                GhostMap.put("|", ghosts.get(isleft));
+                GhostMap.put("_", ghosts.get(isleft));
+                System.out.println(" ghost is _` ");
 
                 break;
             case 3 :
                 isleft = atlastenemy("Circle.png");
                 //ghosts.get(isleft).setGesture(new Texture(Gdx.files.internal("Circle.png")));
                 GhostMap.put("O", ghosts.get(isleft));
-                                break;
+                System.out.println(" ghost is O ");
+                break;
             case 4 :
-                isleft = atlastenemy("HLine.png");
+                isleft = atlastenemy("VLine.png");
             // ghosts.get(isleft).setGesture(new Texture(Gdx.files.internal("HLine.png")));
-                GhostMap.put("_", ghosts.get(isleft));
+                GhostMap.put("|", ghosts.get(isleft));
+                System.out.println(" ghost is | ");
 
                 break;
             default:
                 isleft = atlastenemy("HLine.png");
                 // ghosts.get(isleft).setGesture(new Texture(Gdx.files.internal("HLine.png")));
                 GhostMap.put("_", ghosts.get(isleft));
+                System.out.println(" ghost is _ ");
         }
 
         stage.addActor(ghosts.get(isleft));
@@ -219,28 +228,17 @@ public class SwiperImproved  implements Screen {
                     ArrayList<PointCloudPoint> pts = c.getPoints();
 
                     PointCloudMatchResult r = _library.originalRecognize(c);
+                    System.out.println("matched "+r.getName() + " score "+r.getScore());
                     if (r.getScore() > 0.5) {
 
-                        //System.out.println("matched"+r.getName());
-                        //obj.setgesture(r.getName());
-
                         if (GhostMap.containsKey(r.getName())){
-                                hunt.play();
-                                Collection<Ghosts> ghostsCollection = GhostMap.get(r.getName());
-                                for(Ghosts value : ghostsCollection){
-                                    value.remove();
-                                }
-                                 GhostMap.removeAll(r.getName());
 
-
-                                //ghosts.remove(i);
-
-                               /* Ghosts G1  = new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasLeft,-Gdx.graphics.getWidth()/2,0,"|");
-                                ghosts.add(G1);
-                                stage.addActor(G1);
-                                Ghosts G2 = new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasRight,Gdx.graphics.getWidth(),0, "_");
-                                ghosts.add(G2);
-                                stage.addActor(G2);*/
+                            hunt.play();
+                            Collection<Ghosts> ghostsCollection = GhostMap.get(r.getName());
+                            for(Ghosts value : ghostsCollection){
+                                value.remove();
+                            }
+                            GhostMap.removeAll(r.getName());
 
                         }
                     }

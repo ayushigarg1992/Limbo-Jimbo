@@ -178,7 +178,7 @@ public class PointCloudLibrary
     if(this == demoLibrary)
     {
       _pointClouds = new ArrayList<PointCloud>();
-     // populateDemoLibrary(this);
+      populateDemoLibrary(this);
     }
     else
     {
@@ -342,7 +342,7 @@ public class PointCloudLibrary
     }
 
     demoLibrary = new PointCloudLibrary();
-   // populateDemoLibrary(demoLibrary);
+    populateDemoLibrary(demoLibrary);
     return demoLibrary;
   }
   
@@ -351,43 +351,7 @@ public class PointCloudLibrary
 
     ArrayList<PointCloudPoint> points = new ArrayList<PointCloudPoint>();
 
-    points.add(new PointCloudPoint(562.5,671.1,1));
-    points.add(new PointCloudPoint(557.1,684.8,1));
-    points.add(new PointCloudPoint( 554.4,695.2,1));
-    points.add(new PointCloudPoint( 554.4,708.1,1));
-    points.add(new PointCloudPoint( 554.4,731.9,1));
-    points.add(new PointCloudPoint( 554.4,767.9,1));
-    points.add(new PointCloudPoint(  554.48,767.9,1));
-    points.add(new PointCloudPoint( 554.4,767.9,1));
-    points.add(new PointCloudPoint(554.4642944335938,783.1931762695313,1));
-    points.add(new PointCloudPoint(554.4642944335938,792.9080200195313,1));
-    points.add(new PointCloudPoint(554.662109375,811.6114501953125,1));
-    points.add(new PointCloudPoint(556.25,836.41796875,1));
-    points.add(new PointCloudPoint(556.25,856.072265625,1));
-    points.add(new PointCloudPoint(556.25,875.676513671875,1));
-    points.add(new PointCloudPoint(556.25,894.07470703125,1));
-    points.add(new PointCloudPoint(556.25,911.6546630859375,1));
-    points.add(new PointCloudPoint(554.784912109375,922.394775390625,1));
-    points.add(new PointCloudPoint(553.0364990234375,933.5946044921875,1));
-    points.add(new PointCloudPoint(551.54443359375,955.852783203125,1));
-    points.add(new PointCloudPoint(549.2642822265625,972.658203125,1));
-    points.add(new PointCloudPoint(547.3214111328125,986.743408203125,1));
-    points.add(new PointCloudPoint(546.4285888671875,999.83837890625,1));
-    points.add(new PointCloudPoint(545.5357055664063,1012.984619140625,1));
-    points.add(new PointCloudPoint(545.5357055664063,1022.1531982421875,1));
-    points.add(new PointCloudPoint(545.3238525390625,1030.8521728515625,1));
-    points.add(new PointCloudPoint(543.75,1045.8154296875,1));
-    points.add(new PointCloudPoint(543.5817260742188,1058.5218505859375,1));
-    points.add(new PointCloudPoint(542.8571166992188,1067.7110595703125,1));
-    points.add(new PointCloudPoint(541.9642944335938,1076.329833984375,1));
-    points.add(new PointCloudPoint(541.2647094726563,1084.5860595703125,1));
-    points.add(new PointCloudPoint(540.1785888671875,1091.158447265625,1));
-    points.add(new PointCloudPoint(538.392822265625,1100.865966796875,1));
-    points.add(new PointCloudPoint(538.392822265625,1107.41455078125,1));
-    points.add(new PointCloudPoint(538.392822265625,1113.03369140625,1));
-    points.add(new PointCloudPoint(538.392822265625,1121.7130126953125,1));
-    points.add(new PointCloudPoint(537.7677001953125,1128.6002197265625,1));
-    library.addPointCloud(new PointCloud("|", points));
+
 
     points = new ArrayList<PointCloudPoint>();
    // points.add(new PointCloudPoint(177,92,1));
@@ -485,7 +449,47 @@ public class PointCloudLibrary
 
     library.addPointCloud(new PointCloud("O", points));
 
-    points = new ArrayList<PointCloudPoint>();
+   /*
+
+    points.add(new PointCloudPoint(562.5,671.1,1));
+    points.add(new PointCloudPoint(557.1,684.8,1));
+    points.add(new PointCloudPoint( 554.4,695.2,1));
+    points.add(new PointCloudPoint( 554.4,708.1,1));
+    points.add(new PointCloudPoint( 554.4,731.9,1));
+    points.add(new PointCloudPoint( 554.4,767.9,1));
+    points.add(new PointCloudPoint(  554.48,767.9,1));
+    points.add(new PointCloudPoint( 554.4,767.9,1));
+    points.add(new PointCloudPoint(554.4642944335938,783.1931762695313,1));
+    points.add(new PointCloudPoint(554.4642944335938,792.9080200195313,1));
+    points.add(new PointCloudPoint(554.662109375,811.6114501953125,1));
+    points.add(new PointCloudPoint(556.25,836.41796875,1));
+    points.add(new PointCloudPoint(556.25,856.072265625,1));
+    points.add(new PointCloudPoint(556.25,875.676513671875,1));
+    points.add(new PointCloudPoint(556.25,894.07470703125,1));
+    points.add(new PointCloudPoint(556.25,911.6546630859375,1));
+    points.add(new PointCloudPoint(554.784912109375,922.394775390625,1));
+    points.add(new PointCloudPoint(553.0364990234375,933.5946044921875,1));
+    points.add(new PointCloudPoint(551.54443359375,955.852783203125,1));
+    points.add(new PointCloudPoint(549.2642822265625,972.658203125,1));
+    points.add(new PointCloudPoint(547.3214111328125,986.743408203125,1));
+    points.add(new PointCloudPoint(546.4285888671875,999.83837890625,1));
+    points.add(new PointCloudPoint(545.5357055664063,1012.984619140625,1));
+    points.add(new PointCloudPoint(545.5357055664063,1022.1531982421875,1));
+    points.add(new PointCloudPoint(545.3238525390625,1030.8521728515625,1));
+    points.add(new PointCloudPoint(543.75,1045.8154296875,1));
+    points.add(new PointCloudPoint(543.5817260742188,1058.5218505859375,1));
+    points.add(new PointCloudPoint(542.8571166992188,1067.7110595703125,1));
+    points.add(new PointCloudPoint(541.9642944335938,1076.329833984375,1));
+    points.add(new PointCloudPoint(541.2647094726563,1084.5860595703125,1));
+    points.add(new PointCloudPoint(540.1785888671875,1091.158447265625,1));
+    points.add(new PointCloudPoint(538.392822265625,1100.865966796875,1));
+    points.add(new PointCloudPoint(538.392822265625,1107.41455078125,1));
+    points.add(new PointCloudPoint(538.392822265625,1113.03369140625,1));
+    points.add(new PointCloudPoint(538.392822265625,1121.7130126953125,1));
+    points.add(new PointCloudPoint(537.7677001953125,1128.6002197265625,1));
+    library.addPointCloud(new PointCloud("|", points));
+
+   points = new ArrayList<PointCloudPoint>();
     points.add(new PointCloudPoint(856.25,1042.2857666015625,1));
     points.add(new PointCloudPoint(844.9260864257813,1048.8709716796875,1));
     points.add(new PointCloudPoint(837.8392333984375,1050.0,1));
@@ -719,7 +723,7 @@ public class PointCloudLibrary
     points.add(new PointCloudPoint(510.58880615234375,1321.037841796875,1));
     points.add(new PointCloudPoint(506.0118408203125,1327.0858154296875,1));
     points.add(new PointCloudPoint(501.0956115722656,1335.23388671875,1));
-    library.addPointCloud(new PointCloud("N", points));
+    library.addPointCloud(new PointCloud("N", points));*/
 
 
   }
