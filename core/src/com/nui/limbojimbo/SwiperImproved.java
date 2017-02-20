@@ -20,12 +20,17 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -44,13 +49,14 @@ public class SwiperImproved  implements Screen {
     }*/
 
     OrthographicCamera cam;
+    private boolean isPause;
     private PointCloudLibrary _library;
     Stage stage;
     SpriteBatch batch;
     int timeAux = 0;
     private float time = 0;
     private float spawntime = 6;
-
+    private  ImageButton button;
     SwipeHandler swipe;
     private boolean isright = true;
     private Texture backGround;
@@ -123,19 +129,40 @@ public class SwiperImproved  implements Screen {
         SpwanEnemy();
        // SpwanEnemy();
         stage.addActor(wiz);
+        pauseToggle();
+
        // stage.addActor(ghosts.get(0));
         //stage.addActor(ghosts.get(1));
 
         //handle swipe input
         Gdx.input.setInputProcessor(swipe);
     }
+    public void pauseToggle(){
+        Texture myTexture = new Texture(Gdx.files.internal("pause_filled.png"));
+        TextureRegion myTextureRegion = new TextureRegion(myTexture);
+        TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
+         button = new ImageButton(myTexRegionDrawable); //Set the button up
+//        button.setHeight(600);
+//        button.setWidth(300);
+        button.setPosition(Gdx.graphics.getWidth()-100, Gdx.graphics.getHeight()-100);
+        stage.addActor(button);
+        button.setZIndex(2000);
+        button.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("clicked");
+                // game.setScreen(new SwiperImproved());
+                if(isPause==true) resume();
+                else
+                pause();
+                return true;
+            }
+        });
 
+    }
     public int atlastenemy(String img){
         Random rn = new Random();
         int isleft = 0;//rn.nextInt(2);
-        int indx = 0;
-
-
         if (ghosts.size()> 1) {
             isleft = rn.nextInt(2);
             if (isleft == 0)
@@ -391,12 +418,14 @@ public class SwiperImproved  implements Screen {
 
     @Override
     public void pause() {
-
+        game.pause();
+        isPause=true;
     }
 
     @Override
     public void resume() {
-
+        game.resume();
+        isPause=false;
     }
 
 

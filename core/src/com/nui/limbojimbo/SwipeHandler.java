@@ -79,9 +79,12 @@ public class SwipeHandler extends InputAdapter {
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		if (pointer!=inputPointer)
 			return false;
+
+		if(screenX==Gdx.graphics.getWidth()-80 && screenY==Gdx.graphics.getHeight()-80)
+			obj.pause();
 		obj.touchdown();
 		isDrawing = true;
-		
+
 		//clear points
 		inputPoints.clear();
 
