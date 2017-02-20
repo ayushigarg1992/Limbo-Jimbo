@@ -52,6 +52,7 @@ public class startScreen implements Screen {
 //        button.setHeight(600);
 //        button.setWidth(300);
         button.setPosition(Gdx.graphics.getWidth()/2-button.getWidth()/2, Gdx.graphics.getHeight()/4-button.getHeight()/4);
+
         background = new Texture(Gdx.files.internal("Start.jpg"));
         click = Gdx.audio.newMusic(Gdx.files.internal("data/kill.wav"));
         stage = new Stage(new ScreenViewport()); //Set up a stage for the ui
