@@ -1,36 +1,22 @@
 package com.nui.limbojimbo;
-import com.badlogic.gdx.ApplicationAdapter;
+
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Scaling;
-
-import javax.security.auth.login.Configuration;
 
 /**
- * Created by ayushi on 2/15/2017.
+ * Created by Utsa on 3/23/2017.
  */
 
-public class Ghosts extends Image{
+public class GhostsDemo extends Image{
     private int direction;
     private Animation animation;
     private TextureAtlas atlas;
@@ -49,11 +35,11 @@ public class Ghosts extends Image{
         MoveToAction mta = new MoveToAction();
         mta.setPosition(Gdx.graphics.getWidth()/2-width/2,Gdx.graphics.getHeight()/2-height/2-180f);
         mta.setDuration(40f);
-        Ghosts.this.addAction(mta);
+        com.nui.limbojimbo.GhostsDemo.this.addAction(mta);
         return mta;
     }
 
-    public Ghosts( int direction,Texture texture,TextureAtlas atlas,float X,float Y){
+    public GhostsDemo( int direction,Texture texture,TextureAtlas atlas,float X,float Y){
         super(texture);
         this.direction = direction;
         gestureImage = texture;
@@ -69,10 +55,10 @@ public class Ghosts extends Image{
         addAction(moveToCenter());
     }
 
-    public Ghosts( int direction, Texture texture,TextureAtlas atlas,float X,float Y, String type){
-      super(texture);
+    public GhostsDemo( int direction, Texture texture,TextureAtlas atlas,float X,float Y, String type){
+        super(texture);
         this.direction = direction;
-       gestureImage = texture;
+        gestureImage = texture;
         this.atlas = atlas;
         animation = new Animation(1/9f,atlas.getRegions());
         bounds = new Rectangle(this.getX(),this.getY(),this.getWidth(),this.getHeight());
@@ -83,7 +69,7 @@ public class Ghosts extends Image{
         //setZIndex(zindex);
         setPosition(X,Y);
         addAction(moveToCenter());
-        }
+    }
 
 
 
@@ -100,7 +86,7 @@ public class Ghosts extends Image{
 //
 //    }
     public String getType(){
-       return this.type;
+        return this.type;
     }
     @Override
     public void act(float delta)
@@ -109,8 +95,8 @@ public class Ghosts extends Image{
 
 
         batch.begin();
-       // batch.draw();
-        batch.draw(gestureImage,getGestureCoords(direction)[0],getGestureCoords(direction)[1],80,80); //changed
+        // batch.draw();
+       // batch.draw(gestureImage,getGestureCoords(direction)[0],getGestureCoords(direction)[1],80,80); //changed
         batch.end();
         TextureRegion region = (TextureRegion)animation.getKeyFrame(stateTime+=delta, true);
         ((TextureRegionDrawable)getDrawable()).setRegion(region);
@@ -131,9 +117,8 @@ public class Ghosts extends Image{
             arr[1] = getY()+this.getBounds().getHeight()*(6f/4f);
 
         }
-    return arr;
+        return arr;
     }
-
 
 
 }

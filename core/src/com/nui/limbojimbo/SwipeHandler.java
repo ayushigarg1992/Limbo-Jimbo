@@ -29,6 +29,7 @@ public class SwipeHandler extends InputAdapter {
 	
 	private boolean isDrawing = false;
 	private  SwiperImproved obj;
+
 	
 	private SwipeResolver simplifier = new ResolverRadialChaikin();
 	private Array<Vector2> simplified;
@@ -46,6 +47,8 @@ public class SwipeHandler extends InputAdapter {
 		_library = GestureLibrary.getInstance().getLibrary();
 		resolve(); //copy initial empty list
 	}
+
+
 
 	/**
 	 * Returns the fixed list of input points (not simplified).

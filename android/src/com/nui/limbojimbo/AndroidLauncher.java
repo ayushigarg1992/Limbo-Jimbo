@@ -44,6 +44,7 @@ public class AndroidLauncher extends AndroidApplication {
 		permissions.add(WRITE_EXTERNAL_STORAGE);
 		resultCode = WRITE_EXTERNAL_RESULT;
 
+
 		//filter out the permissions we have already accepted
 		permissionsToRequest = findUnAskedPermissions(permissions);
 		//get the permissions we have asked for before but are not granted..
