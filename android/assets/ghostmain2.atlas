@@ -1,0 +1,175 @@
+
+ghostmain2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+main10
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+ghostmain22.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+main11
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+main14
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+ghostmain23.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+main12
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+ghostmain24.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+main13
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+ghostmain25.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+main15
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+ghostmain26.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+main16
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+ghostmain27.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+main2
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+ghostmain28.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+main3
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+ghostmain29.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+main4
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+ghostmain210.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+main5
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+ghostmain211.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+main6
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+ghostmain212.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+main7
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+ghostmain213.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+main8
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+ghostmain214.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+main9
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1

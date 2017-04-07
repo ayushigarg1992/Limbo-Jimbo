@@ -71,7 +71,10 @@ public class SwipeHandler extends InputAdapter {
 	}
 
 	public void clearCanvas() {
-		_curGesture.clear();
+		if(!isDrawing && _curGesture.size()>0) {
+			_curGesture.clear();
+			inputPoints.clear();
+		}
 		//_curGesture = new ArrayList<PointCloudPoint>();
 	}
 
@@ -80,15 +83,16 @@ public class SwipeHandler extends InputAdapter {
 		if (pointer!=inputPointer)
 			return false;
 
-		if(screenX==Gdx.graphics.getWidth()-80 && screenY==Gdx.graphics.getHeight()-80)
-			obj.pause();
+		//if(screenX==Gdx.graphics.getWidth()-80 && screenY==Gdx.graphics.getHeight()-80)
+			//obj.pause();
 		obj.touchdown();
+		clearCanvas();
 		isDrawing = true;
 
 		//clear points
-		inputPoints.clear();
 
-		clearCanvas();
+
+
 		
 		//starting point
 		lastPoint = new Vector2(screenX, Gdx.graphics.getHeight()-screenY);

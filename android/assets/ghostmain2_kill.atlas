@@ -1,0 +1,72 @@
+
+ghostmain2_kill.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghostmain2_kill1
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+ghostmain2_kill2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghostmain2_kill2
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+ghostmain2_kill3.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghostmain2_kill3
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+ghostmain2_kill4.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghostmain2_kill4
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+ghostmain2_kill5.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghostmain2_kill5
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+ghostmain2_kill6.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghostmain2_kill6
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
