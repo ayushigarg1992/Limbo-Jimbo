@@ -74,6 +74,7 @@ public class SwiperImproved  implements Screen {
     private List<TextureAtlas> rightghosts = new ArrayList<TextureAtlas>();
     private List<TextureAtlas> leftghostskill = new ArrayList<TextureAtlas>();
     private List<TextureAtlas> rightghostskill = new ArrayList<TextureAtlas>();
+    private List<Texture> gestureText =  new ArrayList<Texture>();
     TextureAtlas atlasRight;
     Music music;
     Music hunt;
@@ -133,7 +134,7 @@ public class SwiperImproved  implements Screen {
             GhostMap.put("_", ghosts.get(0));
             stage.addActor(ghosts.get(0));
         }
-        wiz = new Wizard(new Texture(Gdx.files.internal("witch-Recovered1.png")));
+        wiz = new Wizard(new Texture(Gdx.files.internal("witch.png")));
         stage.addActor(wiz);
         pauseToggle();
 
@@ -150,6 +151,16 @@ public class SwiperImproved  implements Screen {
            // @Override
             //public void run() {
         //        try {
+
+        {
+                    gestureText.add(new Texture(Gdx.files.internal("alpha.png")));
+                    gestureText.add(new Texture(Gdx.files.internal("ss.png")));
+                    gestureText.add(new Texture(Gdx.files.internal("HLine.png")));
+                    gestureText.add(new Texture(Gdx.files.internal("Circle.png")));
+                    gestureText.add(new Texture(Gdx.files.internal("VLine.png")));
+
+        }
+
 
                     atlasLeft =new TextureAtlas(Gdx.files.internal("ghost1_left.atlas"));
                     leftghosts.add(atlasLeft);
@@ -208,7 +219,8 @@ public class SwiperImproved  implements Screen {
         });
 
     }
-    public int atlastenemy(String img,float speed){
+    public int atlastenemy(int idx,float speed){
+        idx = idx % gestureText.size();
         Random rn = new Random();
         int pos = rn.nextInt(500);
         int isleft = 0;//rn.nextInt(2);
@@ -216,17 +228,17 @@ public class SwiperImproved  implements Screen {
         if (ghosts.size()> 1) {
             isleft = rn.nextInt(2);
             if (isleft == 0) {
-                ghosts.add(isleft, new Ghosts(isleft, new Texture(Gdx.files.internal(img)), leftghosts.get(i),leftghostskill.get(i), -200, pos, speed));
+                ghosts.add(isleft, new Ghosts(isleft,gestureText.get(idx), leftghosts.get(i),leftghostskill.get(i), -200, pos, speed));
 
             } else {
-                ghosts.add(isleft, new Ghosts(isleft, new Texture(Gdx.files.internal(img)), rightghosts.get(i),rightghostskill.get(i), Gdx.graphics.getWidth() + 20, pos, speed));
+                ghosts.add(isleft, new Ghosts(isleft, gestureText.get(idx), rightghosts.get(i),rightghostskill.get(i), Gdx.graphics.getWidth() + 20, pos, speed));
             }
         } else {
             isleft = ghosts.size();
             if (isleft == 0)
-                ghosts.add(isleft, new Ghosts(isleft,new Texture(Gdx.files.internal(img)), leftghosts.get(i),leftghostskill.get(i), -200, pos,speed));
+                ghosts.add(isleft, new Ghosts(isleft,gestureText.get(idx), leftghosts.get(i),leftghostskill.get(i), -200, pos,speed));
             else
-                ghosts.add(isleft, new Ghosts(isleft,new Texture(Gdx.files.internal(img)), rightghosts.get(i),rightghostskill.get(i), Gdx.graphics.getWidth()+20, pos,speed));
+                ghosts.add(isleft, new Ghosts(isleft,gestureText.get(idx), rightghosts.get(i),rightghostskill.get(i), Gdx.graphics.getWidth()+20, pos,speed));
             //isleft= indx;
         }
         return isleft;
@@ -237,53 +249,46 @@ public class SwiperImproved  implements Screen {
 
         Random rn = new Random();
         int isleft = 0;//rn.nextInt(2);
-        int i  = rn.nextInt(6);
+        int i  = rn.nextInt(5);
 
         switch( i ){
 
             case 0 :
-                isleft = atlastenemy("alpha.png",speed);
+                isleft = atlastenemy(i,speed);
                 //ghosts.get(isleft).setGesture(new Texture(Gdx.files.internal("HLine.png")));
                 GhostMap.put("a", ghosts.get(isleft));
                 System.out.println(" ghost is a ");
 
                 break;
             case 1 :
-                isleft = atlastenemy("ss.png",speed);
+                isleft = atlastenemy(i,speed);
                 //ghosts.get(isleft).setGesture(new Texture(Gdx.files.internal("VLine.png")));
                 GhostMap.put("/", ghosts.get(isleft));
                 System.out.println(" ghost is / ");
 
                 break;
             case 2:
-                isleft = atlastenemy("HLine.png",speed);
+                isleft = atlastenemy(i,speed);
                 //ghosts.get(isleft).setGesture(new Texture(Gdx.files.internal("VLine.png")));
                 GhostMap.put("_", ghosts.get(isleft));
                 System.out.println(" ghost is _ ");
 
                 break;
             case 3 :
-                isleft = atlastenemy("Circle.png",speed);
+                isleft = atlastenemy(i,speed);
                 //ghosts.get(isleft).setGesture(new Texture(Gdx.files.internal("Circle.png")));
                 GhostMap.put("O", ghosts.get(isleft));
                 System.out.println(" ghost is O ");
                 break;
             case 4 :
-                isleft = atlastenemy("VLine.png",speed);
+                isleft = atlastenemy(i,speed);
             // ghosts.get(isleft).setGesture(new Texture(Gdx.files.internal("HLine.png")));
                 GhostMap.put("|", ghosts.get(isleft));
                 System.out.println(" ghost is | ");
 
                 break;
-            case 5 :
-                isleft = atlastenemy("alpha.png",speed);
-                // ghosts.get(isleft).setGesture(new Texture(Gdx.files.internal("HLine.png")));
-                GhostMap.put("a", ghosts.get(isleft));
-                System.out.println(" ghost is a ");
-
-                break;
             default:
-                isleft = atlastenemy("HLine.png",speed);
+                isleft = atlastenemy(2,speed);
                 // ghosts.get(isleft).setGesture(new Texture(Gdx.files.internal("HLine.png")));
                 GhostMap.put("_", ghosts.get(isleft));
                 System.out.println(" ghost is _ ");
@@ -508,14 +513,14 @@ public class SwiperImproved  implements Screen {
 
     @Override
     public void pause() {
-        game.pause();
-        isPause=true;
+       // game.pause();
+       // isPause=true;
     }
 
     @Override
     public void resume() {
-        game.resume();
-        isPause=false;
+       // game.resume();
+        //isPause=false;
     }
 
 
@@ -537,6 +542,25 @@ public class SwiperImproved  implements Screen {
     }
     @Override
     public void dispose() {
+       for (Texture t :  gestureText){
+           t.dispose();
+       }
+        for (TextureAtlas t :  leftghosts){
+            t.dispose();
+        }
+        for (TextureAtlas t :  leftghostskill){
+            t.dispose();
+        }
+        for (TextureAtlas t :  rightghosts){
+            t.dispose();
+        }
+        for (TextureAtlas t :  rightghostskill){
+            t.dispose();
+        }
+        atlasLeft.dispose();
+        atlasRight.dispose();
+        wiz.remove();
+
         batch.dispose();
         shapes.dispose();
         tex.dispose();
