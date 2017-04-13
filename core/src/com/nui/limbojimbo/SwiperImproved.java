@@ -57,10 +57,12 @@ public class SwiperImproved  implements Screen {
     private float curenttime = 0 ;
     private float time = 0;
     private float spawntime = 6;
+    private float mainghostspawntime=60;
     private  ImageButton button;
     SwipeHandler swipe;
     private boolean isright = true;
     private Texture backGround;
+    private int DELAY = 1500;
 
     Texture tex;
     ShapeRenderer shapes;
@@ -68,6 +70,7 @@ public class SwiperImproved  implements Screen {
 
     SwipeTriStrip tris;
     private List<Ghosts> ghosts = new ArrayList<Ghosts>();
+    private Ghosts mainGhost;
     private Wizard wiz;
     TextureAtlas atlasLeft;
     private List<TextureAtlas> leftghosts = new ArrayList<TextureAtlas>();
@@ -78,6 +81,7 @@ public class SwiperImproved  implements Screen {
     Music music;
     Music hunt;
     Dialog  endDialog;
+
 
     Skin skin;
     private Game game;
@@ -140,6 +144,8 @@ public class SwiperImproved  implements Screen {
         rightghostskill.add( new TextureAtlas(Gdx.files.internal("ghost2_kill.atlas")));
         rightghostskill.add( new TextureAtlas(Gdx.files.internal("ghost3_kill.atlas")));
 
+
+
        // ghosts.add(new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasLeft,-Gdx.graphics.getWidth()/2,0));
        // ghosts.add(new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasRight,Gdx.graphics.getWidth(),0));
        // GhostMap.put("|", ghosts.get(0));
@@ -176,6 +182,13 @@ public class SwiperImproved  implements Screen {
                 return true;
             }
         });
+
+   /*     new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                computersTurn();
+            }
+        }, DELAY);*/
 
     }
     public int atlastenemy(String img,float speed){
@@ -261,11 +274,25 @@ public class SwiperImproved  implements Screen {
 
         stage.addActor(ghosts.get(isleft));
     }
+    public void SpwanMainEnemy(float speed){
+        atlastmainenemy("HLine",speed);
+        stage.addActor(mainGhost);
+    }
+    public void atlastmainenemy(String img,float speed){
+        int isleft=1;
+        mainGhost=new Ghosts(isleft, new Texture(Gdx.files.internal(img)),  new TextureAtlas(Gdx.files.internal("mainghost1.atlas")), new TextureAtlas(Gdx.files.internal("mainghost1_kill.atlas")), Gdx.graphics.getWidth() + 20, Gdx.graphics.getHeight()/2, speed);
+    }
+
 
     public void update()
     {
         curenttime +=Gdx.graphics.getDeltaTime();
         time += Gdx.graphics.getDeltaTime();
+
+        if(curenttime>mainghostspawntime)
+        {
+            SpwanMainEnemy(60f);
+        }
         if(time > spawntime)
         {
            // x_pattern = MathUtils.random(Stratofall.WIDTH - (cols * balloonWidth));
@@ -283,7 +310,10 @@ public class SwiperImproved  implements Screen {
                 SpwanEnemy(speed);
                 System.out.println(" curenttime is <60 "+curenttime);
             } else {
-                speed = 20f;
+                speed=80f;
+                spawntime= Integer.MAX_VALUE;
+
+              speed = 20f;
                 spawntime = 3;
                 SpwanEnemy(speed);
                 SpwanEnemy(speed);
