@@ -27,7 +27,7 @@ public class SwipeHandler extends InputAdapter {
 	
 	private Vector2 lastPoint = new Vector2();
 	
-	private boolean isDrawing = false;
+	 boolean isDrawing = false;
 	private  SwiperImproved obj;
 	
 	private SwipeResolver simplifier = new ResolverRadialChaikin();

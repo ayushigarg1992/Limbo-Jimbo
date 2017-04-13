@@ -90,6 +90,27 @@ public class Ghosts extends Image{
         addAction(moveToCenter());
     }
 
+
+    public Ghosts(Texture texture,TextureAtlas atlas,TextureAtlas killatlas,float X,float Y, float speed , boolean isdemo){
+        super(texture);
+        this.direction = direction;
+        gestureImage = texture;
+        this.atlas = atlas;
+        this.killatlas = killatlas;
+        this.speed = speed;
+        animation = new Animation(1/9f,atlas.getRegions());
+        bounds = new Rectangle(this.getX(),this.getY(),this.getWidth(),this.getHeight());
+        setBounds(this.getX(),this.getY(),this.getWidth(),this.getHeight());
+        setHeight(height);
+        setWidth(width);
+        batch = new SpriteBatch();
+        //setZIndex(zindex);
+        setPosition(X,Y);
+      //  addAction(moveToCenter());
+        if (isdemo ==false)
+            addAction(moveToCenter());
+    }
+
     public Ghosts( int direction, Texture texture,TextureAtlas atlas,float X,float Y, String type){
         super(texture);
         this.direction = direction;
