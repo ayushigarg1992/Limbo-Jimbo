@@ -57,7 +57,7 @@ public class SwiperImproved  implements Screen {
     private float curenttime = 0 ;
     private float time = 0;
     private float spawntime = 6;
-    private float mainghostspawntime=60;
+    private float mainghostspawntime=20;
     private  ImageButton button;
     SwipeHandler swipe;
     private boolean isright = true;
@@ -70,7 +70,7 @@ public class SwiperImproved  implements Screen {
 
     SwipeTriStrip tris;
     private List<Ghosts> ghosts = new ArrayList<Ghosts>();
-    private Ghosts mainGhost;
+    private MainGhosts mainGhost;
     private Wizard wiz;
     TextureAtlas atlasLeft;
     private List<TextureAtlas> leftghosts = new ArrayList<TextureAtlas>();
@@ -80,6 +80,8 @@ public class SwiperImproved  implements Screen {
     TextureAtlas atlasRight;
     Music music;
     Music hunt;
+    boolean isinit = false;
+    private boolean isdemo = true;
     Dialog  endDialog;
 
 
@@ -92,7 +94,7 @@ public class SwiperImproved  implements Screen {
         this.game = game;
         //the triangle strip renderer
        // GestureLibrary.getInstance().LoadLibrary(); //remove later
-        _library = GestureLibrary.getInstance().getLibrary();
+
         tris = new SwipeTriStrip();
 
         //a swipe handler with max # of input points to be kept alive
@@ -100,6 +102,7 @@ public class SwiperImproved  implements Screen {
 
         //minimum distance between two points
         swipe.minDistance = 10;
+        tris.thickness = 10f;
 
         //minimum distance between first and second point
         swipe.initialDistance = 10;
@@ -108,8 +111,9 @@ public class SwiperImproved  implements Screen {
         tex = new Texture("data/gradient.png");
         tex.setFilter(TextureFilter.Linear, TextureFilter.Linear);
         backGround = new Texture(Gdx.files.internal("bg1.jpg"));
+
         music = Gdx.audio.newMusic(Gdx.files.internal("data/bgsound.m4a"));
-        hunt = Gdx.audio.newMusic(Gdx.files.internal("data/kill.wav"));
+
         //skin = new Skin(Gdx.files.internal("uiskin.json"));
        // music.setVolume(3f);                 // sets the volume to half the maximum volume
         music.setLooping(true);                // will repeat playback until music.stop() is called
@@ -127,31 +131,15 @@ public class SwiperImproved  implements Screen {
         ScreenViewport viewport = new ScreenViewport();
         stage = new Stage(viewport);
 
-        wiz = new Wizard(new Texture(Gdx.files.internal("witch-Recovered1.png")));
-        atlasLeft =new TextureAtlas(Gdx.files.internal("ghost1_left.atlas"));
-        leftghosts.add(atlasLeft);
-        leftghosts.add( new TextureAtlas(Gdx.files.internal("ghost2.atlas")));
-        leftghosts.add( new TextureAtlas(Gdx.files.internal("ghost3.atlas")));
+        createactor();
+        if (isdemo){
+          //  ghosts.add(0, new Ghosts(0, new Texture(Gdx.files.internal("HLine.png")), leftghosts.get(0),leftghostskill.get(0), -200, 400, 60f));
+            ghosts.add(0,new Ghosts( new Texture(Gdx.files.internal("HLine.png")), rightghosts.get(0),rightghostskill.get(0),Gdx.graphics.getWidth()/2 +100,400, 60f , true));
+            GhostMap.put("_", ghosts.get(0));
+            stage.addActor(ghosts.get(0));
+        }
+        wiz = new Wizard(new Texture(Gdx.files.internal("witch.png")));
 
-        leftghostskill.add( new TextureAtlas(Gdx.files.internal("ghostLeftKill.atlas")));
-        leftghostskill.add( new TextureAtlas(Gdx.files.internal("ghost2_kill.atlas")));
-        leftghostskill.add( new TextureAtlas(Gdx.files.internal("ghost3_kill.atlas")));
-        atlasRight =new TextureAtlas(Gdx.files.internal("ghost1_right.atlas"));
-        rightghosts.add(atlasRight);
-        rightghosts.add( new TextureAtlas(Gdx.files.internal("ghost2.atlas")));
-        rightghosts.add( new TextureAtlas(Gdx.files.internal("ghost3.atlas")));
-        rightghostskill.add( new TextureAtlas(Gdx.files.internal("ghost_rightkill1.atlas")));
-        rightghostskill.add( new TextureAtlas(Gdx.files.internal("ghost2_kill.atlas")));
-        rightghostskill.add( new TextureAtlas(Gdx.files.internal("ghost3_kill.atlas")));
-
-
-
-       // ghosts.add(new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasLeft,-Gdx.graphics.getWidth()/2,0));
-       // ghosts.add(new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasRight,Gdx.graphics.getWidth(),0));
-       // GhostMap.put("|", ghosts.get(0));
-       // GhostMap.put("_", ghosts.get(1));
-        //SpwanEnemy(speed);
-       // SpwanEnemy();
         stage.addActor(wiz);
         pauseToggle();
 
@@ -161,6 +149,48 @@ public class SwiperImproved  implements Screen {
         //handle swipe input
         Gdx.input.setInputProcessor(swipe);
     }
+
+
+    public void createactor(){
+       // new Thread(new Runnable() {
+           // @Override
+            //public void run() {
+        //        try {
+
+                    atlasLeft =new TextureAtlas(Gdx.files.internal("ghost1_left.atlas"));
+                    leftghosts.add(atlasLeft);
+                    leftghosts.add( new TextureAtlas(Gdx.files.internal("ghost2.atlas")));
+                    leftghosts.add( new TextureAtlas(Gdx.files.internal("ghost3.atlas")));
+
+                    leftghostskill.add( new TextureAtlas(Gdx.files.internal("ghostLeftKill.atlas")));
+                    leftghostskill.add( new TextureAtlas(Gdx.files.internal("ghost2_kill.atlas")));
+                    leftghostskill.add( new TextureAtlas(Gdx.files.internal("ghost3_kill.atlas")));
+                    atlasRight =new TextureAtlas(Gdx.files.internal("ghost1_right.atlas"));
+                    rightghosts.add(atlasRight);
+                    rightghosts.add( new TextureAtlas(Gdx.files.internal("ghost2.atlas")));
+                    rightghosts.add( new TextureAtlas(Gdx.files.internal("ghost3.atlas")));
+                    rightghostskill.add( new TextureAtlas(Gdx.files.internal("ghost_rightkill1.atlas")));
+                    rightghostskill.add( new TextureAtlas(Gdx.files.internal("ghost2_kill.atlas")));
+                    rightghostskill.add( new TextureAtlas(Gdx.files.internal("ghost3_kill.atlas")));
+                    _library = GestureLibrary.getInstance().getLibrary();
+                    hunt = Gdx.audio.newMusic(Gdx.files.internal("data/kill.wav"));
+                    isinit = true;
+
+
+
+            //    }catch(IllegalArgumentException e){
+                    //do nothing
+           //     }
+
+      //      }
+       // }).start();
+        //wiz.setTouch(false);
+    }
+
+
+
+
+
     public void pauseToggle(){
         Texture myTexture = new Texture(Gdx.files.internal("pause_filled.png"));
         TextureRegion myTextureRegion = new TextureRegion(myTexture);
@@ -242,7 +272,7 @@ public class SwiperImproved  implements Screen {
                 isleft = atlastenemy("HLine.png",speed);
                 //ghosts.get(isleft).setGesture(new Texture(Gdx.files.internal("VLine.png")));
                 GhostMap.put("_", ghosts.get(isleft));
-                System.out.println(" ghost is _` ");
+                System.out.println(" ghost is _ ");
 
                 break;
             case 3 :
@@ -275,12 +305,12 @@ public class SwiperImproved  implements Screen {
         stage.addActor(ghosts.get(isleft));
     }
     public void SpwanMainEnemy(float speed){
-        atlastmainenemy("HLine",speed);
+        atlastmainenemy("HLine.png",speed);
         stage.addActor(mainGhost);
     }
     public void atlastmainenemy(String img,float speed){
         int isleft=1;
-        mainGhost=new Ghosts(isleft, new Texture(Gdx.files.internal(img)),  new TextureAtlas(Gdx.files.internal("mainghost1.atlas")), new TextureAtlas(Gdx.files.internal("mainghost1_kill.atlas")), Gdx.graphics.getWidth() + 20, Gdx.graphics.getHeight()/2, speed);
+        mainGhost=new MainGhosts(isleft, new Texture(Gdx.files.internal(img)),  new TextureAtlas(Gdx.files.internal("mainghost1.atlas")), new TextureAtlas(Gdx.files.internal("mainghost1_kill.atlas")), Gdx.graphics.getWidth() + 20, Gdx.graphics.getHeight()/2, speed);
     }
 
 
@@ -292,6 +322,8 @@ public class SwiperImproved  implements Screen {
         if(curenttime>mainghostspawntime)
         {
             SpwanMainEnemy(60f);
+            mainghostspawntime=Integer.MAX_VALUE;
+
         }
         if(time > spawntime)
         {
@@ -346,6 +378,10 @@ public class SwiperImproved  implements Screen {
                             GhostMap.removeAll(r.getName());
 
                         }
+
+                        if (isdemo){
+                            isdemo = false;
+                        }
                     }
             }catch(IllegalArgumentException e){
                     //do nothing
@@ -390,17 +426,22 @@ public class SwiperImproved  implements Screen {
 
 
         //the thickness of the line
-        tris.thickness = 10f;
+
 
         //generate the triangle strip from our path
-        tris.update(swipe.path());
+        if (swipe.isDrawing) {
+            tris.update(swipe.path());
 
-        //the vertex color for tinting, i.e. for opacity
-        tris.color = Color.GREEN;
+            //the vertex color for tinting, i.e. for opacity
+            tris.color = Color.GREEN;
 
-        //render the triangles to the screen
-        tris.draw(cam);
-        update();
+            //render the triangles to the screen
+            tris.draw(cam);
+        }
+
+
+        if(!isdemo)
+            update();
         act();
         stage.draw();
 

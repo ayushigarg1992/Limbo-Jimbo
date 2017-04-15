@@ -5,15 +5,17 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer20;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 
-public class SwipeTriStrip {
+public class SwipeTriStrip extends Image {
 
 	Array<Vector2> texcoord = new Array<Vector2>();
 	Array<Vector2> tristrip = new Array<Vector2>();
 	int batchSize;
 	Vector2 perp = new Vector2();
-	public float thickness = 30f;
+	public float thickness = 10f;
 	public float endcap = 8.5f;
 	public Color color = new Color(Color.WHITE);
 	ImmediateModeRenderer20 gl20;
@@ -38,6 +40,8 @@ public class SwipeTriStrip {
 			gl20.texCoord(tc.x, 0f);
 			gl20.vertex(point.x, point.y, 0f);
 		}
+		/*this.addAction( Actions.sequence( Actions.fadeOut( 0.0001f ), Actions.fadeIn( 5f ),
+				Actions.run(onSplashFinishedRunnable) ) );*/
 		gl20.end();
 	}
 	
@@ -106,5 +110,15 @@ public class SwipeTriStrip {
 		batchSize = generate(input, 1);
 		int b = generate(input, -1);
 	}
+
+
+	Runnable onSplashFinishedRunnable = new Runnable() {
+
+		@Override
+		public void run() {
+			tristrip.clear();
+			texcoord.clear();
+		}
+	};
 	
 }
