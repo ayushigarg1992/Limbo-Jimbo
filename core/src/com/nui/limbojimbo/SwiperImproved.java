@@ -61,7 +61,7 @@ public class SwiperImproved  implements Screen {
     SwipeHandler swipe;
     private boolean isright = true;
     private Texture backGround;
-
+    private int gestureSize;
     Texture tex;
     ShapeRenderer shapes;
     private String gesture = "";
@@ -126,11 +126,13 @@ public class SwiperImproved  implements Screen {
 
         ScreenViewport viewport = new ScreenViewport();
         stage = new Stage(viewport);
-
-        createactor();
+       createactor();
+        //Ghosts g = new Ghosts(1, gestures, leftghosts.get(0), -200, 400, 60f);
         if (isdemo){
-          //  ghosts.add(0, new Ghosts(0, new Texture(Gdx.files.internal("HLine.png")), leftghosts.get(0),leftghostskill.get(0), -200, 400, 60f));
+
+            ghosts.add(0, new Ghosts(0, new Texture(Gdx.files.internal("HLine.png")), leftghosts.get(0),leftghostskill.get(0), -200, 400, 60f));
             ghosts.add(0,new Ghosts( new Texture(Gdx.files.internal("HLine.png")), rightghosts.get(0),rightghostskill.get(0),Gdx.graphics.getWidth()/2 +100,400, 60f , true));
+            //ghosts.add(0,g);
             GhostMap.put("_", ghosts.get(0));
             stage.addActor(ghosts.get(0));
         }
@@ -225,10 +227,15 @@ public class SwiperImproved  implements Screen {
         int pos = rn.nextInt(500);
         int isleft = 0;//rn.nextInt(2);
         int i = rn.nextInt(3);
+
         if (ghosts.size()> 1) {
             isleft = rn.nextInt(2);
             if (isleft == 0) {
-                ghosts.add(isleft, new Ghosts(isleft,gestureText.get(idx), leftghosts.get(i),leftghostskill.get(i), -200, pos, speed));
+                List<Texture> list = new ArrayList<Texture>();
+                list.add(gestureText.get(0));
+                list.add(gestureText.get(1));
+                ghosts.add(isleft, new Ghosts(isleft,list, leftghosts.get(i),leftghostskill.get(i), -200, pos, speed));
+                //ghosts.add(isleft, new Ghosts(isleft,list, leftghosts.get(i),leftghostskill.get(i), -200, pos, speed));
 
             } else {
                 ghosts.add(isleft, new Ghosts(isleft, gestureText.get(idx), rightghosts.get(i),rightghostskill.get(i), Gdx.graphics.getWidth() + 20, pos, speed));
@@ -250,46 +257,39 @@ public class SwiperImproved  implements Screen {
         Random rn = new Random();
         int isleft = 0;//rn.nextInt(2);
         int i  = rn.nextInt(5);
+        int size = rn.nextInt(5);
+        int x=0;
+        List<Texture> gestures = new ArrayList<Texture>();
 
-        switch( i ){
+            switch( i ){
 
             case 0 :
                 isleft = atlastenemy(i,speed);
-                //ghosts.get(isleft).setGesture(new Texture(Gdx.files.internal("HLine.png")));
                 GhostMap.put("a", ghosts.get(isleft));
                 System.out.println(" ghost is a ");
-
                 break;
             case 1 :
                 isleft = atlastenemy(i,speed);
-                //ghosts.get(isleft).setGesture(new Texture(Gdx.files.internal("VLine.png")));
                 GhostMap.put("/", ghosts.get(isleft));
                 System.out.println(" ghost is / ");
-
                 break;
             case 2:
                 isleft = atlastenemy(i,speed);
-                //ghosts.get(isleft).setGesture(new Texture(Gdx.files.internal("VLine.png")));
                 GhostMap.put("_", ghosts.get(isleft));
                 System.out.println(" ghost is _ ");
-
                 break;
             case 3 :
                 isleft = atlastenemy(i,speed);
-                //ghosts.get(isleft).setGesture(new Texture(Gdx.files.internal("Circle.png")));
                 GhostMap.put("O", ghosts.get(isleft));
                 System.out.println(" ghost is O ");
                 break;
             case 4 :
                 isleft = atlastenemy(i,speed);
-            // ghosts.get(isleft).setGesture(new Texture(Gdx.files.internal("HLine.png")));
                 GhostMap.put("|", ghosts.get(isleft));
                 System.out.println(" ghost is | ");
-
                 break;
             default:
                 isleft = atlastenemy(2,speed);
-                // ghosts.get(isleft).setGesture(new Texture(Gdx.files.internal("HLine.png")));
                 GhostMap.put("_", ghosts.get(isleft));
                 System.out.println(" ghost is _ ");
         }
