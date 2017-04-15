@@ -11,6 +11,10 @@ public class GestureTexture {
     Texture text;
     String s;
 
+    public GestureTexture(Texture t, String s){
+        text = t;
+        this.s =s;
+    }
     public void setText(Texture t){
         this.text = t;
 
