@@ -43,10 +43,11 @@ public class Ghosts extends Image{
     private float stateTime = 0;
     private boolean isdead = false;
     private String type;
-    private List<Texture> gestureSet;
+    public List<GestureTexture> gestureSet;
     private float speed = 40f;
     SpriteBatch batch;
     Rectangle bounds;
+    String gest;
     private MoveToAction mta;
 
     public Rectangle getBounds(){
@@ -65,6 +66,7 @@ public class Ghosts extends Image{
         this.direction = direction;
         gestureImage = texture;
         this.atlas = atlas;
+        this.gest=null;
         animation = new Animation(1/9f,atlas.getRegions());
         bounds = new Rectangle(this.getX(),this.getY(),this.getWidth(),this.getHeight());
         setBounds(this.getX(),this.getY(),this.getWidth(),this.getHeight());
@@ -129,9 +131,9 @@ public class Ghosts extends Image{
     }
 
     public Ghosts( int direction, Texture texture,TextureAtlas atlas,float X,float Y, String type){
-        super(texture);
+      super(texture);
         this.direction = direction;
-        gestureImage = texture;
+       gestureImage = texture;
         this.atlas = atlas;
         animation = new Animation(1/9f,atlas.getRegions());
         bounds = new Rectangle(this.getX(),this.getY(),this.getWidth(),this.getHeight());
@@ -142,7 +144,8 @@ public class Ghosts extends Image{
         //setZIndex(zindex);
         setPosition(X,Y);
         addAction(moveToCenter());
-    }
+        }
+
 
     public Ghosts( int direction,Texture texture,TextureAtlas atlas,TextureAtlas killatlas,float X,float Y, float speed){
         super(texture);
@@ -161,8 +164,8 @@ public class Ghosts extends Image{
         setPosition(X,Y);
         addAction(moveToCenter());
     }
-    public Ghosts( int direction,List<Texture> texture,TextureAtlas atlas,TextureAtlas killatlas,float X,float Y, float speed){
-        super(texture.get(0));
+    public Ghosts( int direction,List<GestureTexture> texture,TextureAtlas atlas,TextureAtlas killatlas,float X,float Y, float speed){
+        super(texture.get(0).getText());
         this.direction = direction;
         gestureSet = texture;
         this.atlas = atlas;
@@ -204,6 +207,8 @@ public class Ghosts extends Image{
         setWidth(width);
     }
 
+
+
     public void setUndead(){
         this.isdead = false;
     }
@@ -212,10 +217,17 @@ public class Ghosts extends Image{
     public String getType(){
         return this.type;
     }
+    public String getGest(){
+        return this.gest;
+    }
+
+    public void setGest(String s){
+        this.gest=s;
+    }
+
     @Override
     public void act(float delta)
     {
-        //Texture texture = gestureImage;
         if (isdead && animation.isAnimationFinished(stateTime)){
             remove();
 
@@ -230,9 +242,9 @@ public class Ghosts extends Image{
             if(gestureSet!=null && !gestureSet.isEmpty()) {
                 int tp =30;
 
-                for (Texture t : gestureSet)
+                for (GestureTexture t : gestureSet)
                 {
-                    batch.draw(t, getGestureCoords(direction)[0]+tp, getGestureCoords(direction)[1]+tp, 80, 80);
+                    batch.draw(t.getText(), getGestureCoords(direction)[0]+tp, getGestureCoords(direction)[1]+tp, 80, 80);
                     tp+=30;
                 }
             }
@@ -245,6 +257,9 @@ public class Ghosts extends Image{
 
 
         super.act(delta);
+    }
+    private void removeGesture(int idx){
+        gestureSet.remove(idx);
     }
     private void updateBounds() {
         setBounds(getX(), getY(), getWidth(), getHeight());

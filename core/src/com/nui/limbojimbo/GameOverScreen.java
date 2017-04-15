@@ -34,10 +34,15 @@ public class GameOverScreen implements Screen {
     private Viewport viewport;
     private SpriteBatch batch;
     private Stage stage;
+    private Stage stage1;
     private Texture myTexture;
+    private Texture myTexture1;
     private TextureRegion myTextureRegion;
+    private TextureRegion myTextureRegion1;
     private TextureRegionDrawable myTexRegionDrawable;
+    private TextureRegionDrawable myTexRegionDrawable1;
     private ImageButton button;
+    private ImageButton button1;
     private ImageButton gameover;
     private Texture background;
     private SpriteBatch spriteB;
@@ -65,15 +70,25 @@ public class GameOverScreen implements Screen {
         myTextureRegion = new TextureRegion(myTexture);
         myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
         button = new ImageButton(myTexRegionDrawable); //Set the button up
-//        button.setHeight(600);
-//        button.setWidth(300);
+
+        myTexture1 = new Texture(Gdx.files.internal("playDemo.png"));
+        myTextureRegion1 = new TextureRegion(myTexture1);
+        myTexRegionDrawable1 = new TextureRegionDrawable(myTextureRegion1);
+        button1 = new ImageButton(myTexRegionDrawable1); //Set the button up
+
+
         button.setPosition(Gdx.graphics.getWidth()/2-button.getWidth()/2, Gdx.graphics.getHeight()/4-button.getHeight()/4);
-        background = new Texture(Gdx.files.internal("gameover.jpg"));
+        button1.setPosition(Gdx.graphics.getWidth()/2-button1.getWidth()/2, Gdx.graphics.getHeight()/8-button1.getHeight()/8);
+
+        background = new Texture(Gdx.files.internal("nextLevel.jpg"));
         click = Gdx.audio.newMusic(Gdx.files.internal("data/kill.wav"));
         stage = new Stage(new ScreenViewport()); //Set up a stage for the ui
+        stage1 = new Stage(new ScreenViewport());
         stage.addActor(button); //Add the button to the stage to perform rendering and take input.
         //stage.addActor(gameover);
+        stage1.addActor(button1);
         Gdx.input.setInputProcessor(stage); //Start taking input from the ui
+        Gdx.input.setInputProcessor(stage1);
         button.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -84,12 +99,22 @@ public class GameOverScreen implements Screen {
             }
         });
 
+        button1.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                //System.out.println("clicked");
+                // game.setScreen(new SwiperImproved());
+                demoscreen();
+                return true;
+            }
+        });
+
     }
 
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 0);
+        Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         batch.draw(background,0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
@@ -99,12 +124,19 @@ public class GameOverScreen implements Screen {
         batch.end();
         stage.act(delta);
         stage.draw();
+        stage1.act(delta);
+        stage1.draw();
     }
 
 
     public void  nextscreen(){
         click.play();
         game.setScreen(new SwiperImproved(game));
+    }
+
+    public void  demoscreen(){
+        click.play();
+        game.setScreen(new SwiperImprovedDemo(game));
     }
 
 
