@@ -5,7 +5,8 @@ package com.nui.limbojimbo;
  */
 
 
-
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -41,7 +42,9 @@ import com.google.common.collect.Multimap;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Random;
 
 import static com.badlogic.gdx.Gdx.graphics;
@@ -65,7 +68,7 @@ public class SwiperImproved  implements Screen {
     SwipeHandler swipe;
     private boolean isright = true;
     private Texture backGround;
-
+    private final Lock _mutex = new ReentrantLock(true);
     Texture tex;
     ShapeRenderer shapes;
     private String gesture = "";
@@ -86,6 +89,7 @@ public class SwiperImproved  implements Screen {
     private boolean isdemo = true;
     Dialog  endDialog;
     BitmapFont font;
+    BitmapFont font1;
     Skin skin;
     private Game game;
     Multimap<String, Ghosts> GhostMap = ArrayListMultimap.create();
@@ -96,6 +100,11 @@ public class SwiperImproved  implements Screen {
     private TextureRegion myTextureRegion3;
     private TextureRegionDrawable myTexRegionDrawable3;
     private ImageButton button2;
+    private Texture myTexture4;
+    private TextureRegion myTextureRegion4;
+    private TextureRegionDrawable myTexRegionDrawable4;
+    private ImageButton button4;
+    private Stage stage4;
     private ImageButton button3;
     private InputMultiplexer multiplexer;
     private Stage stage2;
@@ -104,6 +113,7 @@ public class SwiperImproved  implements Screen {
     private int score;
     String s;
     String l;
+    private Queue<Ghosts> GhostsQ = new LinkedList<Ghosts>();
   //  @Override
     public  SwiperImproved(Game game) {
         this.game = game;
@@ -121,7 +131,7 @@ public class SwiperImproved  implements Screen {
 
         //minimum distance between two points
         swipe.minDistance = 10;
-        tris.thickness = 10f;
+        tris.thickness = 20f;
 
         //minimum distance between first and second point
         swipe.initialDistance = 10;
@@ -167,7 +177,7 @@ public class SwiperImproved  implements Screen {
         myTexture3 = new Texture(Gdx.files.internal("play_filled.png"));
         myTextureRegion3 = new TextureRegion(myTexture3);
         myTexRegionDrawable3 = new TextureRegionDrawable(myTextureRegion3);
-        button2 = new ImageButton(myTexRegionDrawable2,myTexRegionDrawable3); //Set the button up
+        button2 = new ImageButton(myTexRegionDrawable2,myTexRegionDrawable2,myTexRegionDrawable3); //Set the button up
         stage2=new Stage(new ScreenViewport());
 //        button3=new ImageButton(myTexRegionDrawable3);
 //        stage3=new Stage(new ScreenViewport());
@@ -183,6 +193,7 @@ public class SwiperImproved  implements Screen {
         Gdx.input.setInputProcessor(stage2);
         createactor();
         if (isdemo){
+            font1=new BitmapFont();
             //  ghosts.add(0, new Ghosts(0, new Texture(Gdx.files.internal("HLine.png")), leftghosts.get(0),leftghostskill.get(0), -200, 400, 60f));
             ghosts.add(0,new Ghosts( new Texture(Gdx.files.internal("HLine.png")), rightghosts.get(0),rightghostskill.get(0),Gdx.graphics.getWidth()/2 +100,400, 60f , true));
             GhostMap.put("_", ghosts.get(0));
@@ -193,16 +204,25 @@ public class SwiperImproved  implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if(!isPause) {
+                    button2.setChecked(true);
                     Gdx.app.getApplicationListener().pause();}
                 else{
+                    button2.setChecked(false);
                     Gdx.app.getApplicationListener().resume();
                 }
 
             }
         });
+
+        myTexture4 = new Texture(Gdx.files.internal("arrow.png"));
+        myTextureRegion4 = new TextureRegion(myTexture4);
+        myTexRegionDrawable4 = new TextureRegionDrawable(myTextureRegion4);
+        button4 = new ImageButton(myTexRegionDrawable4);
        // stage.addActor(ghosts.get(0));
         //stage.addActor(ghosts.get(1));
-
+        button4.setPosition(button4.getWidth()+600,button4.getHeight()+500);
+        stage4 = new Stage(new ScreenViewport());
+        stage4.addActor(button4);
         //handle swipe input
         Gdx.input.setInputProcessor(swipe);
     }
@@ -253,38 +273,6 @@ public class SwiperImproved  implements Screen {
        // }).start();
         //wiz.setTouch(false);
     }
-
-
-
-
-
-    public void pauseToggle(){
-        Texture myTexture = new Texture(Gdx.files.internal("pause_filled.png"));
-        TextureRegion myTextureRegion = new TextureRegion(myTexture);
-        TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
-         button = new ImageButton(myTexRegionDrawable); //Set the button up
-//        button.setHeight(600);
-//        button.setWidth(300);
-        button.setPosition(Gdx.graphics.getWidth()-100, Gdx.graphics.getHeight()-100);
-        stage.addActor(button);
-        button.setZIndex(2000);
-        button.addListener(new InputListener(){
-            @Override
-          public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                pause();
-            return true;
-        }
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                resume();
-
-            }
-
-        });
-
-        //handle swipe input
-        Gdx.input.setInputProcessor(swipe);
-    }
-
 
     public int atlastenemy(int idx,float speed){
         idx = idx % gestureText.size();
@@ -418,11 +406,12 @@ public class SwiperImproved  implements Screen {
 
                             hunt.play();
                             Collection<Ghosts> ghostsCollection = GhostMap.get(r.getName());
+                            int size=ghostsCollection.size();
                             for(Ghosts value : ghostsCollection){
                                 value.setDead();
                             }
                             GhostMap.removeAll(r.getName());
-                            score=score+10;
+                            score=score+(10*size);
                             s=String.valueOf(score);
                         }
 
@@ -459,11 +448,19 @@ public class SwiperImproved  implements Screen {
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
         batch.draw(backGround,0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        font.setColor(Color.GREEN);
+        //batch.draw(button2);
+        font.setColor(Color.YELLOW);
         font.getData().setScale(6);
-        font.draw(batch,s,0,1350);
+        font.draw(batch,"Score: "+ s,0,1350);
+        if(isdemo){
+            font.setColor(Color.YELLOW);
+            font.getData().setScale(9);
+            font.draw(batch,"Draw the symbol to kill the ghost",300,1200);
+        }
         batch.end();
-
+        if(isdemo){
+            stage4.draw();
+        }
         if(!isPause) {
             music.play();
             stage.act(Gdx.graphics.getDeltaTime());
@@ -488,6 +485,9 @@ public class SwiperImproved  implements Screen {
             if (!isdemo)
                 update();
             act();
+
+        }else{
+            music.pause();
         }
         stage.draw();
         stage2.draw();
@@ -543,26 +543,24 @@ public class SwiperImproved  implements Screen {
     }
 
 
-    private void act(){
+    private void act() {
         stage.act(Gdx.graphics.getDeltaTime());
-        if(ghosts.size()<=0) {return;}
-        //int i=0;
-        for(int i=0;i<ghosts.size();i++)
+        if (GhostMap.size() <= 0) {
+            return;
+        }
 
-        {
-            Ghosts ghoul = ghosts.get(i);
+        for(Ghosts gh: GhostMap.values()) {
             wiz.setBounds(wiz.getX(), wiz.getY(), wiz.getWidth() - 200, wiz.getHeight() - 200);
-            ghoul.setBounds(ghoul.getX(), ghoul.getY(), ghoul.getWidth(), ghoul.getHeight());
-            if (wiz.getBounds().overlaps(ghoul.bounds)) {
+            gh.setBounds(gh.getX(), gh.getY(), gh.getWidth(), gh.getHeight());
+            if (wiz.getBounds().overlaps(gh.bounds)) {
                 if (lifeline > 1) {
-                    String g = ghoul.getGest();
-                    ghoul.remove();
-                    GhostMap.remove(g, ghoul);
+                    _mutex.lock();
+                    String g = gh.getGest();
+                    gh.remove();
+                    GhostMap.remove(g, gh);
                     lifeline = lifeline - 1;
                     l = String.valueOf(lifeline);
-
-                    // System.out.println("The gesture is "+ g);
-                    //Ghosts ghoul = ghosts.get(i);
+                    _mutex.unlock();
 
                 } else if (lifeline == 1) {
                     game.setScreen(new GameOverScreen(game));
@@ -571,10 +569,11 @@ public class SwiperImproved  implements Screen {
                 }
 
             }
-            //ghosts.get(i).setVisible(false);
         }
+        //ghosts.get(i).setVisible(false);
 
-        }
+    }
+
 
 
         //
@@ -624,6 +623,10 @@ public class SwiperImproved  implements Screen {
         for (TextureAtlas t :  rightghostskill){
             t.dispose();
         }
+        myTexture3.dispose();
+        myTexture4.dispose();
+        stage3.dispose();
+        stage4.dispose();
         atlasLeft.dispose();
         atlasRight.dispose();
         wiz.remove();
