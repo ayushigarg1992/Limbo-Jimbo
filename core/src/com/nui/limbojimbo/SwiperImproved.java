@@ -219,6 +219,8 @@ public class SwiperImproved  implements Screen {
         });
 
     }
+
+
     public int atlastenemy(int idx,float speed){
         idx = idx % gestureText.size();
         Random rn = new Random();
@@ -479,6 +481,7 @@ public class SwiperImproved  implements Screen {
             ghosts.get(i).setBounds(ghosts.get(i).getX(),ghosts.get(i).getY(),ghosts.get(i).getWidth(),ghosts.get(i).getHeight());
             if(wiz.getBounds().overlaps(ghosts.get(i).bounds)){
                 game.setScreen(new GameOverScreen(game));
+               // ghosts.get(i).remove();
                 dispose();
                 //game.
               //  game.setScreen(new startScreen(game));
