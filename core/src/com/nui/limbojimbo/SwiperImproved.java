@@ -193,6 +193,7 @@ public class SwiperImproved  implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if(!isPause) {
+
                     Gdx.app.getApplicationListener().pause();}
                 else{
                     Gdx.app.getApplicationListener().resume();
@@ -488,6 +489,8 @@ public class SwiperImproved  implements Screen {
             if (!isdemo)
                 update();
             act();
+        } else {
+            music.pause();
         }
         stage.draw();
         stage2.draw();
@@ -550,21 +553,27 @@ public class SwiperImproved  implements Screen {
         for(int i=0;i<ghosts.size();i++)
 
         {
-            Ghosts ghoul = ghosts.get(i);
-            wiz.setBounds(wiz.getX(), wiz.getY(), wiz.getWidth() - 200, wiz.getHeight() - 200);
-            ghoul.setBounds(ghoul.getX(), ghoul.getY(), ghoul.getWidth(), ghoul.getHeight());
-            if (wiz.getBounds().overlaps(ghoul.bounds)) {
+            //Ghosts ghoul = ghosts.get(i);
+            wiz.setBounds(wiz.getX(),wiz.getY(),wiz.getWidth()-200,wiz.getHeight()-200);
+            ghosts.get(i).setBounds(ghosts.get(i).getX(),ghosts.get(i).getY(),ghosts.get(i).getWidth(),ghosts.get(i).getHeight());
+            if(wiz.getBounds().overlaps(ghosts.get(i).bounds)){
+                String g = ghosts.get(i).getGest();
+                System.out.println("lifeline =  "+lifeline+ "g="+g );
                 if (lifeline > 1) {
-                    String g = ghoul.getGest();
-                    ghoul.remove();
-                    GhostMap.remove(g, ghoul);
+
+
+                    ghosts.get(i).remove();
+                    GhostMap.remove(g, ghosts.get(i));
                     lifeline = lifeline - 1;
                     l = String.valueOf(lifeline);
 
                     // System.out.println("The gesture is "+ g);
                     //Ghosts ghoul = ghosts.get(i);
 
-                } else if (lifeline == 1) {
+                }
+
+                else if (lifeline == 1) {
+                   // lifeline = 3;
                     game.setScreen(new GameOverScreen(game));
                     dispose();
                     // break;
@@ -629,7 +638,7 @@ public class SwiperImproved  implements Screen {
         wiz.remove();
 
 //        batch.dispose();
-        shapes.dispose();
+//        shapes.dispose();
         tex.dispose();
         stage.dispose();
         backGround.dispose();
