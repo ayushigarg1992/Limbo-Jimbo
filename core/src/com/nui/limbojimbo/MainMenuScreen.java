@@ -19,7 +19,6 @@ public class MainMenuScreen implements Screen {
         batch = new SpriteBatch();
         ttrSplash = new Texture("main_menu_bg.png");
     }
-
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 0, 0, 1);

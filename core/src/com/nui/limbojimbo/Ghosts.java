@@ -41,6 +41,7 @@ public class Ghosts extends Image{
     private String type;
     SpriteBatch batch;
     Rectangle bounds;
+    String gest;
 
     public Rectangle getBounds(){
         return bounds;
@@ -58,6 +59,7 @@ public class Ghosts extends Image{
         this.direction = direction;
         gestureImage = texture;
         this.atlas = atlas;
+        this.gest=null;
         animation = new Animation(1/9f,atlas.getRegions());
         bounds = new Rectangle(this.getX(),this.getY(),this.getWidth(),this.getHeight());
         setBounds(this.getX(),this.getY(),this.getWidth(),this.getHeight());
@@ -102,6 +104,14 @@ public class Ghosts extends Image{
     public String getType(){
        return this.type;
     }
+    public String getGest(){
+        return this.gest;
+    }
+
+    public void setGest(String s){
+        this.gest=s;
+    }
+
     @Override
     public void act(float delta)
     {
