@@ -1,0 +1,132 @@
+
+ghost_rightkill1.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghost1_righttkill1
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+
+ghost_rightkill12.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghost1_righttkill10
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+
+ghost_rightkill13.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghost1_righttkill11
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+
+ghost_rightkill14.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghost1_righttkill2
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+
+ghost_rightkill15.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghost1_righttkill3
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+
+ghost_rightkill16.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghost1_righttkill4
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+
+ghost_rightkill17.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghost1_righttkill5
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+
+ghost_rightkill18.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghost1_righttkill6
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+
+ghost_rightkill19.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghost1_righttkill7
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+
+ghost_rightkill110.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghost1_righttkill8
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+
+ghost_rightkill111.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghost1_righttkill9
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1

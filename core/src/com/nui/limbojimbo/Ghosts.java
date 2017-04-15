@@ -34,22 +34,26 @@ public class Ghosts extends Image{
     private int direction;
     private Animation animation;
     private TextureAtlas atlas;
+    private TextureAtlas killatlas;
     private Texture gestureImage;
     private float width = 500f;
     private float height = 400f;
     private float stateTime = 0;
+    private boolean isdead = false;
     private String type;
+    private float speed = 40f;
     SpriteBatch batch;
     Rectangle bounds;
     String gest;
+    private MoveToAction mta;
 
     public Rectangle getBounds(){
         return bounds;
     }
     private Action moveToCenter(){
-        MoveToAction mta = new MoveToAction();
-        mta.setPosition(Gdx.graphics.getWidth()/2-width/2,Gdx.graphics.getHeight()/2-height/2-180f);
-        mta.setDuration(40f);
+        mta = new MoveToAction();
+        mta.setPosition(Gdx.graphics.getWidth()/2-width/2,40);
+        mta.setDuration(speed);
         Ghosts.this.addAction(mta);
         return mta;
     }
@@ -71,6 +75,44 @@ public class Ghosts extends Image{
         addAction(moveToCenter());
     }
 
+    public Ghosts( int direction,Texture texture,TextureAtlas atlas,float X,float Y, float speed){
+        super(texture);
+        this.direction = direction;
+        gestureImage = texture;
+        this.atlas = atlas;
+        this.speed = speed;
+        animation = new Animation(1/9f,atlas.getRegions());
+        bounds = new Rectangle(this.getX(),this.getY(),this.getWidth(),this.getHeight());
+        setBounds(this.getX(),this.getY(),this.getWidth(),this.getHeight());
+        setHeight(height);
+        setWidth(width);
+        batch = new SpriteBatch();
+        //setZIndex(zindex);
+        setPosition(X,Y);
+        addAction(moveToCenter());
+    }
+
+
+    public Ghosts(Texture texture,TextureAtlas atlas,TextureAtlas killatlas,float X,float Y, float speed , boolean isdemo){
+        super(texture);
+        this.direction = direction;
+        gestureImage = texture;
+        this.atlas = atlas;
+        this.killatlas = killatlas;
+        this.speed = speed;
+        animation = new Animation(1/9f,atlas.getRegions());
+        bounds = new Rectangle(this.getX(),this.getY(),this.getWidth(),this.getHeight());
+        setBounds(this.getX(),this.getY(),this.getWidth(),this.getHeight());
+        setHeight(height);
+        setWidth(width);
+        batch = new SpriteBatch();
+        //setZIndex(zindex);
+        setPosition(X,Y);
+      //  addAction(moveToCenter());
+        if (isdemo ==false)
+            addAction(moveToCenter());
+    }
+
     public Ghosts( int direction, Texture texture,TextureAtlas atlas,float X,float Y, String type){
       super(texture);
         this.direction = direction;
@@ -88,10 +130,30 @@ public class Ghosts extends Image{
         }
 
 
-
+    public Ghosts( int direction,Texture texture,TextureAtlas atlas,TextureAtlas killatlas,float X,float Y, float speed){
+        super(texture);
+        this.direction = direction;
+        gestureImage = texture;
+        this.atlas = atlas;
+        this.killatlas = killatlas;
+        this.speed = speed;
+        animation = new Animation(1/9f,atlas.getRegions());
+        bounds = new Rectangle(this.getX(),this.getY(),this.getWidth(),this.getHeight());
+        setBounds(this.getX(),this.getY(),this.getWidth(),this.getHeight());
+        setHeight(height);
+        setWidth(width);
+        batch = new SpriteBatch();
+        //setZIndex(zindex);
+        setPosition(X,Y);
+        addAction(moveToCenter());
+    }
 
     public void setBounds(float x,float y, float height, float width){
         this.bounds.set(x,y,height/2,width/2);
+    }
+
+    public void setKillatlas(TextureAtlas atlas){
+        this.killatlas = atlas;
     }
     // changed
 //    public void setGesture(Texture t){
@@ -101,8 +163,26 @@ public class Ghosts extends Image{
 //
 //
 //    }
+
+    public void setDead(){
+        this.isdead = true;
+        animation = new Animation(1/4f,killatlas.getRegions());
+        bounds = new Rectangle(this.getX(),this.getY(),this.getWidth(),this.getHeight());
+        setBounds(this.getX(),this.getY(),this.getWidth(),this.getHeight());
+        stateTime = 0;
+        setHeight(height);
+        setWidth(width);
+    }
+
+
+
+    public void setUndead(){
+        this.isdead = false;
+    }
+
+
     public String getType(){
-       return this.type;
+        return this.type;
     }
     public String getGest(){
         return this.gest;
@@ -115,15 +195,22 @@ public class Ghosts extends Image{
     @Override
     public void act(float delta)
     {
-        //Texture texture = gestureImage;
+        if (isdead && animation.isAnimationFinished(stateTime)){
+            remove();
 
+        } else if (isdead){
+            this.removeAction(mta);
+            TextureRegion region = (TextureRegion)animation.getKeyFrame(stateTime+=delta, false);
+            ((TextureRegionDrawable)getDrawable()).setRegion(region);
+        } else {
+            batch.begin();
+            // batch.draw();
+            batch.draw(gestureImage,getGestureCoords(direction)[0],getGestureCoords(direction)[1],80,80); //changed
+            batch.end();
+            TextureRegion region = (TextureRegion)animation.getKeyFrame(stateTime+=delta, true);
+            ((TextureRegionDrawable)getDrawable()).setRegion(region);
+        }
 
-        batch.begin();
-       // batch.draw();
-        batch.draw(gestureImage,getGestureCoords(direction)[0],getGestureCoords(direction)[1],80,80); //changed
-        batch.end();
-        TextureRegion region = (TextureRegion)animation.getKeyFrame(stateTime+=delta, true);
-        ((TextureRegionDrawable)getDrawable()).setRegion(region);
 
         super.act(delta);
     }
@@ -141,9 +228,9 @@ public class Ghosts extends Image{
             arr[1] = getY()+this.getBounds().getHeight()*(6f/4f);
 
         }
-    return arr;
+        return arr;
     }
 
-
+//jkjfknnhdkfjjhhgfk ;
 
 }

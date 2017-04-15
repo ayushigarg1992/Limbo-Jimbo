@@ -1,0 +1,144 @@
+
+witch.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+witch-Recovered1
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+witch2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+witch-Recovered10
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+witch3.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+witch-Recovered11
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+witch4.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+witch-Recovered12
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+witch5.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+witch-Recovered2
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+witch6.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+witch-Recovered3
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+witch7.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+witch-Recovered4
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+witch8.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+witch-Recovered5
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+witch9.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+witch-Recovered6
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+witch10.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+witch-Recovered7
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+witch11.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+witch-Recovered8
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+witch12.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+witch-Recovered9
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1

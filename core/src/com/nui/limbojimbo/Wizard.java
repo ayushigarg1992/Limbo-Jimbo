@@ -36,20 +36,20 @@ public class Wizard extends Image  {
     private Rectangle bounds;
     private Action moveToCenter(){
         MoveToAction mta = new MoveToAction();
-        mta.setPosition(Gdx.graphics.getWidth()/2-width/2,Gdx.graphics.getHeight()/2-height/2-100f);
+        mta.setPosition(Gdx.graphics.getWidth()/2-width/2,60);
         mta.setDuration(0f);
         Wizard.this.addAction(mta);
         return mta;
     }
     public void setBounds(float x,float y, float height, float width){
-        this.bounds.set(x+this.width/4,y+this.height/4,this.width/2,this.height/2);
+        this.bounds.set(x+30,y-30,height-30,width-30);
     }
     public Rectangle getBounds(){
         return bounds;
     }
     public Wizard(Texture texture){
         super(texture);
-        atlas = new TextureAtlas(Gdx.files.internal("wizard.atlas"));
+        atlas = new TextureAtlas(Gdx.files.internal("witch.atlas"));
         animation = new Animation(1/5f,atlas.getRegions());
 
         animation.setPlayMode(Animation.PlayMode.NORMAL);
@@ -57,7 +57,7 @@ public class Wizard extends Image  {
 
         bounds = new Rectangle(this.getX(),this.getY(),this.getWidth(),this.getHeight());
         setBounds(getX(),getY(),getWidth(),getHeight());
-        setPosition(Gdx.graphics.getWidth()/2-width/2,Gdx.graphics.getHeight()/2-height/2-180f);
+        setPosition(Gdx.graphics.getWidth()/2-width/2,60);
         setHeight(height);
         setWidth(width);
         addAction(moveToCenter());

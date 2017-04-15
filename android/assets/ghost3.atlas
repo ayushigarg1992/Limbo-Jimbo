@@ -1,0 +1,170 @@
+
+ghost3.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghost10
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+
+ghost32.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghost11
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+
+ghost33.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghost12
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+
+ghost34.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghost13
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+
+ghost35.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghost14
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+ghost16
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+
+ghost36.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghost15
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+
+ghost37.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghost17
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+
+ghost38.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghost3
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+
+ghost39.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghost4
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+ghost5
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+
+ghost310.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghost6
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+
+ghost311.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghost7
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+
+ghost312.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghost8
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+
+ghost313.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghost9
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1

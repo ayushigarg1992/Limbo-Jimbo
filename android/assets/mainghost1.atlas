@@ -1,0 +1,146 @@
+
+mainghost1.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+mainghost1
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+mainghost12.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+mainghost10
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+mainghost13.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+mainghost11
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+mainghost14.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+mainghost12
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+mainghost13
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+mainghost7
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+mainghost15.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+mainghost2
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+mainghost16.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+mainghost3
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+mainghost17.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+mainghost4
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+mainghost18.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+mainghost5
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+mainghost19.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+mainghost6
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+mainghost110.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+mainghost8
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+mainghost111.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+mainghost9
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1

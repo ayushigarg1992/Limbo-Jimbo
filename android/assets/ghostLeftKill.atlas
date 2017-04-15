@@ -1,0 +1,132 @@
+
+ghostLeftKill.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghost1_lefttkill1
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+
+ghostLeftKill2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghost1_lefttkill10
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+
+ghostLeftKill3.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghost1_lefttkill11
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+
+ghostLeftKill4.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghost1_lefttkill2
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+
+ghostLeftKill5.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghost1_lefttkill3
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+
+ghostLeftKill6.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghost1_lefttkill4
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+
+ghostLeftKill7.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghost1_lefttkill5
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+
+ghostLeftKill8.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghost1_lefttkill6
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+
+ghostLeftKill9.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghost1_lefttkill7
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+
+ghostLeftKill10.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghost1_lefttkill8
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+
+ghostLeftKill11.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ghost1_lefttkill9
+  rotate: false
+  xy: 1, 1
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
