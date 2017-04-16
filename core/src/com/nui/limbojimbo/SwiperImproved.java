@@ -72,12 +72,15 @@ public class SwiperImproved implements Screen {
     private float curenttime = 0 ;
     private float time = 0;
     private float spawntime = 6;
+    private float mainghostspawntime=3;
     private  ImageButton button;
     SwipeHandler swipe;
     private boolean isright = true;
     private Texture backGround;
+
     private final Lock _mutex = new ReentrantLock(true);
     private int gestureSize;
+
     Texture tex;
     int [] position;
     ShapeRenderer shapes;
@@ -85,6 +88,7 @@ public class SwiperImproved implements Screen {
 
     SwipeTriStrip tris;
     private List<Ghosts> ghosts = new ArrayList<Ghosts>();
+    private MainGhosts mainGhost;
     private Wizard wiz;
     TextureAtlas atlasLeft;
     private List<TextureAtlas> leftghosts = new ArrayList<TextureAtlas>();
@@ -148,6 +152,7 @@ public class SwiperImproved implements Screen {
     private Ghosts lastremoved  = null ;
     static int lifeline=3;
     private int score;
+    private int level=1;
     String s;
     String l;
     int posidx = 0 ;
@@ -181,6 +186,7 @@ public class SwiperImproved implements Screen {
         tex = new Texture("data/gradient.png");
         tex.setFilter(TextureFilter.Linear, TextureFilter.Linear);
         backGround = new Texture(Gdx.files.internal("bg1.jpg"));
+
         music = Gdx.audio.newMusic(Gdx.files.internal("data/bgsound.m4a"));
 
         //skin = new Skin(Gdx.files.internal("uiskin.json"));
@@ -200,16 +206,11 @@ public class SwiperImproved implements Screen {
         ScreenViewport viewport = new ScreenViewport();
         stage = new Stage(viewport);
 
-        wiz = new Wizard(new Texture(Gdx.files.internal("wizard5.png")));
+      //  wiz = new Wizard(new Texture(Gdx.files.internal("wizard5.png")));
         atlasLeft =new TextureAtlas(Gdx.files.internal("ghoulsLeft.atlas"));
         atlasRight =new TextureAtlas(Gdx.files.internal("ghoulsRight.atlas"));
         isPause=false;
-        // ghosts.add(new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasLeft,-Gdx.graphics.getWidth()/2,0));
-        // ghosts.add(new Ghosts(new Texture(Gdx.files.internal("ghoulsRight.png")),atlasRight,Gdx.graphics.getWidth(),0));
-        // GhostMap.put("|", ghosts.get(0));
-        // GhostMap.put("_", ghosts.get(1));
-        // SpwanEnemy();
-        stage.addActor(wiz);
+
         myTexture2 = new Texture(Gdx.files.internal("pause_filled.png"));
         myTextureRegion2 = new TextureRegion(myTexture2);
         myTexRegionDrawable2 = new TextureRegionDrawable(myTextureRegion2);
@@ -241,7 +242,12 @@ public class SwiperImproved implements Screen {
             GhostMap.put("_", ghosts.get(0));
             stage.addActor(ghosts.get(0));
         }
-        // Gdx.input.setInputProcessor(stage3);
+
+        wiz = new Wizard(new Texture(Gdx.files.internal("witch.png")));
+
+        stage.addActor(wiz);
+      //  pauseToggle();
+       // Gdx.input.setInputProcessor(stage3);
         button2.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -418,7 +424,7 @@ public class SwiperImproved implements Screen {
 
         });
 
-        //handle swipe input
+
         Gdx.input.setInputProcessor(swipe);
     }
 
@@ -539,6 +545,21 @@ public class SwiperImproved implements Screen {
 
         stage.addActor(ghosts.get(isleft));
     }
+    public void SpwanMainEnemy(float speed){
+        Random rn = new Random();
+        int size = 5;
+        List<GestureTexture> gestures = getGestureTextures(rn, size);
+        atlastmainenemy(gestures,speed);
+        GhostMap.put(gestures.get(0).getString(), mainGhost);
+        stage.addActor(mainGhost);
+    }
+    public void atlastmainenemy(List<GestureTexture> gestureList,float speed){
+        int isleft=1;
+        mainGhost=new MainGhosts(isleft, gestureList,  new TextureAtlas(Gdx.files.internal("mainghost1.atlas")), new TextureAtlas(Gdx.files.internal("mainghost1_kill.atlas")), Gdx.graphics.getWidth() + 20, Gdx.graphics.getHeight()/2, speed);
+    }
+
+
+
 
     private List<GestureTexture> getGestureTextures(Random rn, int size) {
         List<GestureTexture> gestures = new ArrayList<GestureTexture>();
@@ -557,6 +578,14 @@ public class SwiperImproved implements Screen {
     {
         curenttime +=Gdx.graphics.getDeltaTime();
         time += Gdx.graphics.getDeltaTime();
+
+        if(curenttime>mainghostspawntime)
+        {
+            //SpwanMainEnemy(60f);
+
+           // mainghostspawntime=Integer.MAX_VALUE;
+
+        }
         if(time > spawntime)
         {
             // x_pattern = MathUtils.random(Stratofall.WIDTH - (cols * balloonWidth));
@@ -575,6 +604,7 @@ public class SwiperImproved implements Screen {
                 System.out.println(" curenttime is <60 "+curenttime);
             } else {
                 speed = 40f;
+
                 spawntime = 3;
                 SpwanEnemy(speed);
                 SpwanEnemy(speed);
@@ -597,6 +627,40 @@ public class SwiperImproved implements Screen {
                     System.out.println("matched "+r.getName() + " score "+r.getScore());
                     if (r.getScore() > 0.1) {
 
+                    /*    if(mainGhost!=null)
+                        {
+                            hunt.play();
+                            if (mainGhost.gestureSet != null && mainGhost.gestureSet.size() > 1)
+                            {
+                                mainGhost.gestureSet.remove(0);
+                                if(mainGhost.gestureSet.size()==1)
+                                {
+                                    occ--;
+                                }
+
+                            }
+                            else
+                            {
+                                if (occ == 0)
+                                {
+                                    mainGhost.setDead();
+                                }
+                                else
+                                {
+                                   mainGhost.sequence.
+                                    Random rn = new Random();
+                                    int size = 5;
+                                    List<GestureTexture> gestures = getGestureTextures(rn, size);
+                                    mainGhost.setGestureSet(gestures);
+
+                                }
+
+
+                            }
+
+
+                        }*/
+
                         if (GhostMap.containsKey(r.getName())){
 
                             hunt.play();
@@ -609,14 +673,38 @@ public class SwiperImproved implements Screen {
                                 while (ghostsCollection.hasNext()) {
                                     Ghosts value = ghostsCollection.next();
                                     if (multgesture) {
-                                        if (value.gestureSet != null && value.gestureSet.size() > 1) {
-                                            value.gestureSet.remove(0);
-                                            enhancedList.add(value);
-                                            ghostsCollection.remove();
+                                        if(value instanceof MainGhosts)
+                                        {
+                                            if (value.gestureSet != null && value.gestureSet.size() > 1) {
+                                                value.gestureSet.remove(0);
+                                                enhancedList.add(value);
+                                                ghostsCollection.remove();
+                                            } else {
 
-                                        } else {
-                                            value.setDead();
-                                            ghostsCollection.remove();
+                                                    Random rn = new Random();
+                                                    int size = 5;
+                                                    List<GestureTexture> gestures = getGestureTextures(rn, size);
+                                                    value.setGestureSet(gestures);
+                                                if(((MainGhosts) value).getOcc()>0) {
+                                                    ((MainGhosts) value).setSequence();
+                                                }
+
+
+                                            }
+
+
+                                        }
+                                        else {
+
+                                            if (value.gestureSet != null && value.gestureSet.size() > 1) {
+                                                value.gestureSet.remove(0);
+                                                enhancedList.add(value);
+                                                ghostsCollection.remove();
+
+                                            } else {
+                                                value.setDead();
+                                                ghostsCollection.remove();
+                                            }
                                         }
                                     } else
                                         value.setDead();
