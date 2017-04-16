@@ -43,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import static com.badlogic.gdx.Gdx.graphics;
 
@@ -380,48 +381,14 @@ public class SwiperImproved  implements Screen {
         int i  = rn.nextInt(5);
         int size = 3;//set this later by level
         int x=0;
-
         List<GestureTexture> gestures = getGestureTextures(rn, size);
         isleft = atlastenemy(gestures,speed);
         GhostMap.put(gestures.get(0).getString(), ghosts.get(isleft));
-            /*switch( i ){
-
-            case 0 :
-                isleft = atlastenemy(i,speed);
-                GhostMap.put("a", ghosts.get(isleft));
-                System.out.println(" ghost is a ");
-                break;
-            case 1 :
-                isleft = atlastenemy(i,speed);
-                GhostMap.put("/", ghosts.get(isleft));
-                System.out.println(" ghost is / ");
-                break;
-            case 2:
-                isleft = atlastenemy(i,speed);
-                GhostMap.put("_", ghosts.get(isleft));
-                System.out.println(" ghost is _ ");
-                break;
-            case 3 :
-                isleft = atlastenemy(i,speed);
-                GhostMap.put("O", ghosts.get(isleft));
-                System.out.println(" ghost is O ");
-                break;
-            case 4 :
-                isleft = atlastenemy(i,speed);
-                GhostMap.put("|", ghosts.get(isleft));
-                System.out.println(" ghost is | ");
-                break;
-            default:
-                isleft = atlastenemy(2,speed);
-                GhostMap.put("_", ghosts.get(isleft));
-                System.out.println(" ghost is _ ");
-        }
-*/
         stage.addActor(ghosts.get(isleft));
     }
 
     private List<GestureTexture> getGestureTextures(Random rn, int size) {
-        List<GestureTexture> gestures = new ArrayList<GestureTexture>();
+        List<GestureTexture> gestures = new CopyOnWriteArrayList<GestureTexture>();
         int x=0;
         while(x<=size){
             int m = rn.nextInt(5);
@@ -481,7 +448,7 @@ public class SwiperImproved  implements Screen {
 
                             hunt.play();
                             Collection<Ghosts> ghostsCollection = GhostMap.get(r.getName());
-                            List<Ghosts> enhancedList = new ArrayList<Ghosts>();
+                            List<Ghosts> enhancedList = new CopyOnWriteArrayList<Ghosts>();
                             for(Ghosts value : ghostsCollection){
                                 if(value.gestureSet!=null && value.gestureSet.size()>1)
                                 {
@@ -701,6 +668,7 @@ public class SwiperImproved  implements Screen {
 
 //        batch.dispose();
         shapes.dispose();
+        //gestureText.dispose();
         tex.dispose();
         stage.dispose();
         backGround.dispose();

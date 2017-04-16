@@ -240,12 +240,20 @@ public class Ghosts extends Image{
             // batch.draw();
 
             if(gestureSet!=null && !gestureSet.isEmpty()) {
-                int tp =30;
-
-                for (GestureTexture t : gestureSet)
+                int tp =65;
+                if(direction==1){
+                for (int i=0;i<gestureSet.size();i++)
                 {
-                    batch.draw(t.getText(), getGestureCoords(direction)[0]+tp, getGestureCoords(direction)[1]+tp, 80, 80);
-                    tp+=30;
+                    batch.draw(gestureSet.get(i).getText(), getGestureCoords(direction)[0]+tp, getGestureCoords(direction)[1], 80, 80);
+                    tp+=65;
+                }
+                }
+                else if(direction==0){
+                    for (int i=gestureSet.size()-1;i>=0;i--)
+                    {
+                        batch.draw(gestureSet.get(i).getText(), getGestureCoords(direction)[0]+tp, getGestureCoords(direction)[1], 80, 80);
+                        tp+=65;
+                    }
                 }
             }
            if(gestureImage!=null)
