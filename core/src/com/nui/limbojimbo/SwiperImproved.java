@@ -98,8 +98,10 @@ public class SwiperImproved  implements Screen {
     private ImageButton button2;
     private ImageButton button3;
     private InputMultiplexer multiplexer;
+    private boolean multgesture = false;
     private Stage stage2;
     private Stage stage3;
+    private Ghosts lastremoved  = null ;
     static int lifeline=3;
     private int score;
     String s;
@@ -346,7 +348,7 @@ public class SwiperImproved  implements Screen {
     public int atlastenemy(List<GestureTexture> gestureList,float speed){
 
         Random rn = new Random();
-        int pos = rn.nextInt(500);
+        int pos =   (100*rn.nextInt(10) % Gdx.graphics.getWidth()) - 50*rn.nextInt(1)  ;
         int isleft = 0;//rn.nextInt(2);
         int i = rn.nextInt(3);
 
@@ -381,43 +383,51 @@ public class SwiperImproved  implements Screen {
         int i  = rn.nextInt(5);
         int size = 3;//set this later by level
         int x=0;
+        if (multgesture) {
+            List<GestureTexture> gestures = getGestureTextures(rn, size);
+            isleft = atlastenemy(gestures, speed);
+            GhostMap.put(gestures.get(0).getString(), ghosts.get(isleft));
+        } else {
+            switch (i) {
 
-        List<GestureTexture> gestures = getGestureTextures(rn, size);
-        isleft = atlastenemy(gestures,speed);
-        GhostMap.put(gestures.get(0).getString(), ghosts.get(isleft));
-            /*switch( i ){
-
-            case 0 :
-                isleft = atlastenemy(i,speed);
-                GhostMap.put("a", ghosts.get(isleft));
-                System.out.println(" ghost is a ");
-                break;
-            case 1 :
-                isleft = atlastenemy(i,speed);
-                GhostMap.put("/", ghosts.get(isleft));
-                System.out.println(" ghost is / ");
-                break;
-            case 2:
-                isleft = atlastenemy(i,speed);
-                GhostMap.put("_", ghosts.get(isleft));
-                System.out.println(" ghost is _ ");
-                break;
-            case 3 :
-                isleft = atlastenemy(i,speed);
-                GhostMap.put("O", ghosts.get(isleft));
-                System.out.println(" ghost is O ");
-                break;
-            case 4 :
-                isleft = atlastenemy(i,speed);
-                GhostMap.put("|", ghosts.get(isleft));
-                System.out.println(" ghost is | ");
-                break;
-            default:
-                isleft = atlastenemy(2,speed);
-                GhostMap.put("_", ghosts.get(isleft));
-                System.out.println(" ghost is _ ");
+                case 0:
+                    isleft = atlastenemy(i, speed);
+                    ghosts.get(isleft).setGest("a");
+                    GhostMap.put("a", ghosts.get(isleft));
+                    System.out.println(" ghost is a ");
+                    break;
+                case 1:
+                    isleft = atlastenemy(i, speed);
+                    ghosts.get(isleft).setGest("/");
+                    GhostMap.put("/", ghosts.get(isleft));
+                    System.out.println(" ghost is / ");
+                    break;
+                case 2:
+                    isleft = atlastenemy(i, speed);
+                    ghosts.get(isleft).setGest("_");
+                    GhostMap.put("_", ghosts.get(isleft));
+                    System.out.println(" ghost is _ ");
+                    break;
+                case 3:
+                    isleft = atlastenemy(i, speed);
+                    ghosts.get(isleft).setGest("O");
+                    GhostMap.put("O", ghosts.get(isleft));
+                    System.out.println(" ghost is O ");
+                    break;
+                case 4:
+                    isleft = atlastenemy(i, speed);
+                    ghosts.get(isleft).setGest("|");
+                    GhostMap.put("|", ghosts.get(isleft));
+                    System.out.println(" ghost is | ");
+                    break;
+                default:
+                    isleft = atlastenemy(2, speed);
+                    ghosts.get(isleft).setGest("_");
+                    GhostMap.put("_", ghosts.get(isleft));
+                    System.out.println(" ghost is _ ");
+            }
         }
-*/
+
         stage.addActor(ghosts.get(isleft));
     }
 
@@ -484,16 +494,23 @@ public class SwiperImproved  implements Screen {
                             Collection<Ghosts> ghostsCollection = GhostMap.get(r.getName());
                             List<Ghosts> enhancedList = new ArrayList<Ghosts>();
                             for(Ghosts value : ghostsCollection){
-                                if(value.gestureSet!=null && value.gestureSet.size()>1)
-                                {
-                                    value.gestureSet.remove(0);
-                                    enhancedList.add(value);
-                                    GhostMap.put(value.gestureSet.get(0).getString(),value);
+                                if (multgesture) {
+                                    if (value.gestureSet != null && value.gestureSet.size() > 1) {
+                                        value.gestureSet.remove(0);
+                                        enhancedList.add(value);
+                                        GhostMap.put(value.gestureSet.get(0).getString(), value);
+                                    }
+                                    else
+                                        value.setDead();
                                 }
                                 else
-                                value.setDead();
+                                    value.setDead();
+
                             }
-                            GhostMap.removeAll(enhancedList);
+                            if (multgesture) {
+                                GhostMap.removeAll(enhancedList);
+                            } else
+                                GhostMap.removeAll(r.getName());
                             score=score+10;
                             s=String.valueOf(score);
                         }
@@ -624,17 +641,20 @@ public class SwiperImproved  implements Screen {
         for(int i=0;i<ghosts.size();i++)
 
         {
+            if (lastremoved != null && ghosts.get(i)==lastremoved)
+                continue;
             //Ghosts ghoul = ghosts.get(i);
             wiz.setBounds(wiz.getX(),wiz.getY(),wiz.getWidth()-200,wiz.getHeight()-200);
             ghosts.get(i).setBounds(ghosts.get(i).getX(),ghosts.get(i).getY(),ghosts.get(i).getWidth(),ghosts.get(i).getHeight());
             if(wiz.getBounds().overlaps(ghosts.get(i).bounds)){
+                lastremoved = ghosts.get(i);
                 String g = ghosts.get(i).getGest();
                 System.out.println("lifeline =  "+lifeline+ "g="+g );
                 if (lifeline > 1) {
 
 
                     ghosts.get(i).remove();
-                    GhostMap.remove(g, ghosts.get(i));
+                    GhostMap.remove(g, lastremoved);
                     lifeline = lifeline - 1;
                     l = String.valueOf(lifeline);
 
@@ -646,7 +666,7 @@ public class SwiperImproved  implements Screen {
                 else if (lifeline == 1) {
                    // lifeline = 3;
                     game.setScreen(new GameOverScreen(game));
-                    dispose();
+
                     // break;
                 }
 
@@ -678,7 +698,7 @@ public class SwiperImproved  implements Screen {
 
     @Override
     public void  hide(){
-
+        dispose();
     }
 
 
@@ -708,13 +728,14 @@ public class SwiperImproved  implements Screen {
         atlasRight.dispose();
         wiz.remove();
 
-//        batch.dispose();
-//        shapes.dispose();
+        batch.dispose();
+        shapes.dispose();
         tex.dispose();
-        stage.dispose();
-        backGround.dispose();
+
         music.dispose();
         myTexture2.dispose();
+        stage.dispose();
+        backGround.dispose();
         stage2.dispose();
 
     }
