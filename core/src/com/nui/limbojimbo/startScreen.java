@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -17,10 +18,14 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class startScreen implements Screen {
     private SpriteBatch batch;
@@ -35,6 +40,10 @@ public class startScreen implements Screen {
     private Animation animation;
     private float timePassed=0;
     private Game game;
+    int x = 0;
+    boolean ispressed = false;
+    SwiperImproved main;
+    int y = 80;
     Music click;
 
 
@@ -42,13 +51,15 @@ public class startScreen implements Screen {
     public  startScreen(final Game game) {
         batch = new SpriteBatch();
         this.game = game;
-        wizardatlas = new TextureAtlas(Gdx.files.internal("wizard.atlas"));
+        wizardatlas = new TextureAtlas(Gdx.files.internal("broom.pack"));
 
         animation =new Animation(1/3f, wizardatlas.getRegions());
+
         myTexture = new Texture(Gdx.files.internal("button.png"));
+
         myTextureRegion = new TextureRegion(myTexture);
         myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
-        button = new ImageButton(myTexRegionDrawable); //Set the button up
+        button = new ImageButton(myTexRegionDrawable,null,null); //Set the button up
 //        button.setHeight(600);
 //        button.setWidth(300);
         button.setPosition(Gdx.graphics.getWidth()/2-button.getWidth()/2, Gdx.graphics.getHeight()/4-button.getHeight()/4);
@@ -58,15 +69,17 @@ public class startScreen implements Screen {
         stage = new Stage(new ScreenViewport()); //Set up a stage for the ui
         stage.addActor(button); //Add the button to the stage to perform rendering and take input.
         Gdx.input.setInputProcessor(stage); //Start taking input from the ui
-        button.addListener(new InputListener(){
+        button.addListener(new ClickListener(){
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                //System.out.println("clicked");
-               // game.setScreen(new SwiperImproved());
+            public void clicked(InputEvent event, float x, float y) {
+                ispressed = true;
+                button.setChecked(true);
+                button.remove();
                 nextscreen();
-                return true;
+
             }
         });
+
 
     }
 
@@ -79,7 +92,13 @@ public class startScreen implements Screen {
         batch.draw(background,0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 
         //timePassed += Gdx.graphics.getDeltaTime();
-       // batch.draw((TextureRegion) animation.getKeyFrame(timePassed, true), 300, 500);
+        if (ispressed) {
+            batch.draw((TextureRegion) animation.getKeyFrame(timePassed+=delta, true), x, y, 300, 500);
+            x += 5;
+            if (x == Gdx.graphics.getWidth()-30){
+                game.setScreen(main);
+            }
+        }
         batch.end();
         stage.act(delta);
         stage.draw();
@@ -88,7 +107,16 @@ public class startScreen implements Screen {
 
     public void  nextscreen(){
         click.play();
-        game.setScreen(new SwiperImproved(game));
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                // Do something on the main thread
+                main = new SwiperImproved(game);
+
+            }
+        });
+
+
     }
 
 
