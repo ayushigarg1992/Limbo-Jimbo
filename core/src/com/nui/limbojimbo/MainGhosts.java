@@ -38,6 +38,7 @@ public class MainGhosts extends Ghosts{
     private TextureAtlas atlas;
     private TextureAtlas killatlas;
     private float speed = 40f;
+    private float rightspeed =5f;
     //SpriteBatch batch;
    // Rectangle bounds;
     float w = 600f;
@@ -59,10 +60,11 @@ public class MainGhosts extends Ghosts{
         return mta;
     }
 
-    private Action moveToRight(){
+    private Action moveToRight(float x, float y){
         mtr = new MoveToAction();
-        mtr.setPosition(Gdx.graphics.getWidth()-20, Gdx.graphics.getHeight()/2);
-        mtr.setDuration(speed);
+        mtr.setPosition(x,y);
+        mtr.setPosition(Gdx.graphics.getWidth()-40, Gdx.graphics.getHeight()/2);
+        mtr.setDuration(rightspeed);
         // MainGhosts.this.addAction(mtr);
         return mtr;
     }
@@ -71,9 +73,10 @@ public class MainGhosts extends Ghosts{
     public void setSequence( )
     {
         if(occ>0) {
+            this.sequence.reset();
+            this.sequence.addAction(moveToRight(this.getX(),this.getY()));
+           this.sequence.addAction(moveToCenter());
 
-            this.sequence.addAction(moveToCenter());
-            this.sequence.addAction(moveToRight());
             this.addAction(sequence);
             occ--;
         }
@@ -106,7 +109,7 @@ public class MainGhosts extends Ghosts{
         //setHeight(height);
       //  setWidth(width);
         sequence.addAction(moveToCenter());
-        sequence.addAction(moveToRight());
+       // sequence.addAction(moveToRight());
 
 
         this.addAction(sequence);

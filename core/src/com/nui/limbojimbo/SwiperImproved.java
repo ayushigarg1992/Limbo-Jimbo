@@ -77,6 +77,10 @@ public class SwiperImproved implements Screen {
     SwipeHandler swipe;
     private boolean isright = true;
     private Texture backGround;
+   // private List<Texture> backgroundList=new ArrayList<Texture>();
+    private List<TextureAtlas> mainghostAtlasList=new ArrayList<TextureAtlas>();
+    private List<TextureAtlas> mainghostAtlasListKill=new ArrayList<TextureAtlas>( );
+    private int levelNum=1;
 
     private final Lock _mutex = new ReentrantLock(true);
     private int gestureSize;
@@ -154,8 +158,8 @@ public class SwiperImproved implements Screen {
     static int lifeline=3;
     private int score;
     private int level=1;
-    private TextureAtlas mainGhostAtlas;
-    private TextureAtlas mainGhostAtlasKill;
+    private TextureAtlas mainGhostAtlas=new TextureAtlas(Gdx.files.internal("mainghost1.atlas"));
+    private TextureAtlas mainGhostAtlasKill=new TextureAtlas(Gdx.files.internal("mainghost1_kill.atlas"));
     String s;
     String l;
     int getsize = 1;
@@ -190,9 +194,21 @@ public class SwiperImproved implements Screen {
         //we will use a texture for the smooth edge, and also for stroke effects
         tex = new Texture("data/gradient.png");
         tex.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-        backGround = new Texture(Gdx.files.internal("bg1.jpg"));
+
+        /*backgroundList.add(new Texture(Gdx.files.internal("bg2.jpg")));
+        backgroundList.add(new Texture(Gdx.files.internal("bg3.jpg")));
+        backgroundList.add(new Texture(Gdx.files.internal("bg4.jpg")));*/
+        backGround=new Texture(Gdx.files.internal("bg1.jpg"));
+       /* mainghostAtlasList.add(mainGhostAtlas);
+        mainghostAtlasList.add(new TextureAtlas(Gdx.files.internal("ghostmain2.atlas")));
+        mainghostAtlasList.add(new TextureAtlas(Gdx.files.internal("ghostMain.atlas")));
+        mainghostAtlasList.add(new TextureAtlas(Gdx.files.internal("ghostmain2.atlas")));
+        mainghostAtlasListKill.add(mainGhostAtlasKill);
+        mainghostAtlasListKill.add(new TextureAtlas(Gdx.files.internal("ghostmain2_kill.atlas")));
+        mainghostAtlasListKill.add(new TextureAtlas(Gdx.files.internal("ghostKilledMain.atlas")));
+        mainghostAtlasListKill.add(new TextureAtlas(Gdx.files.internal("ghostmain2_kill.atlas")));
         mainGhostAtlas=new TextureAtlas(Gdx.files.internal("mainghost1.atlas"));
-        mainGhostAtlasKill=new TextureAtlas(Gdx.files.internal("mainghost1_kill.atlas"));
+        mainGhostAtlasKill=new TextureAtlas(Gdx.files.internal("mainghost1_kill.atlas"));*/
 
         music = Gdx.audio.newMusic(Gdx.files.internal("data/bgsound.m4a"));
 
@@ -562,7 +578,7 @@ public class SwiperImproved implements Screen {
     }
     public void atlastmainenemy(List<GestureTexture> gestureList,float speed){
         int isleft=1;
-        mainGhost=new MainGhosts(isleft, gestureList, mainGhostAtlas ,mainGhostAtlasKill , Gdx.graphics.getWidth() + 20, Gdx.graphics.getHeight()/2, speed);
+        mainGhost=new MainGhosts(isleft, gestureList, mainGhostAtlas , mainGhostAtlasKill , Gdx.graphics.getWidth() - 100, Gdx.graphics.getHeight()/3, speed);
     }
 
 
@@ -655,14 +671,20 @@ public class SwiperImproved implements Screen {
                                                 enhancedList.add(value);
                                                 ghostsCollection.remove();
                                             } else {
-
+                                                if(((MainGhosts) value).getOcc()>0) {
+                                                    ((MainGhosts) value).setSequence();
                                                     Random rn = new Random();
                                                     int size = 5;
                                                     List<GestureTexture> gestures = getGestureTextures(rn, size);
                                                     value.setGestureSet(gestures);
                                                     enhancedList.add(value);
-                                                if(((MainGhosts) value).getOcc()>0) {
-                                                    ((MainGhosts) value).setSequence();
+
+
+                                                }
+                                                else
+                                                {
+                                                    value.setDead();
+                                                    //levelChange(++levelNum);
                                                 }
 
 
@@ -684,6 +706,7 @@ public class SwiperImproved implements Screen {
                                         }
                                     } else
                                         value.setDead();
+
                                 }
 
                             for (Ghosts value : enhancedList)
@@ -869,24 +892,36 @@ public class SwiperImproved implements Screen {
         //ghosts.get(i).setVisible(false);
 
     }*/
-public void levelChange(int levelnum)
+/*public void levelChange(int levelnum)
 {
-    if(levelnum<=3) {
+    if(levelnum<=4) {
         switch (levelnum) {
             case 2:
-                backGround = new Texture(Gdx.files.internal("bg2.jpg"));
-                mainGhostAtlas=new TextureAtlas(Gdx.files.internal("ghostmain2.atlas"));
-                mainGhostAtlasKill=new TextureAtlas(Gdx.files.internal("ghostmain2_kill.atlas"));
+                backGround = backgroundList.get(levelnum-1);
+                mainGhostAtlas=mainghostAtlasList.get(levelnum-1);
+                mainGhostAtlasKill=mainghostAtlasListKill.get(levelnum-1);
+                curenttime=0;
+                spawntime=6;
+                mainghostspawntime=30;
+                getsize=levelnum;
                 break;
             case 3:
-                backGround = new Texture(Gdx.files.internal("bg3.jpg"));
-                mainGhostAtlas=new TextureAtlas(Gdx.files.internal("ghostMain.atlas"));
-                mainGhostAtlasKill=new TextureAtlas(Gdx.files.internal("ghostKilledMain.atlas"));
+                backGround = backgroundList.get(levelnum-1);
+                mainGhostAtlas=mainghostAtlasList.get(levelnum-1);
+                mainGhostAtlasKill=mainghostAtlasListKill.get(levelnum-1);
+                curenttime=0;
+                spawntime=6;
+                mainghostspawntime=30;
+                getsize=levelnum;
                 break;
             case 4:
-                backGround = new Texture(Gdx.files.internal("bg4.jpg"));
-                mainGhostAtlas=new TextureAtlas(Gdx.files.internal("ghostmain2.atlas"));
-                mainGhostAtlasKill=new TextureAtlas(Gdx.files.internal("ghostmain2_kill.atlas"));
+                backGround = backgroundList.get(levelnum-1);
+                mainGhostAtlas=mainghostAtlasList.get(levelnum-1);
+                mainGhostAtlasKill=mainghostAtlasListKill.get(levelnum-1);
+                curenttime=0;
+                spawntime=6;
+                mainghostspawntime=30;
+                getsize=levelnum;
                 break;
 
 
@@ -896,7 +931,7 @@ public void levelChange(int levelnum)
     {
 
     }
-}
+}*/
     private void act(){
         stage.act(Gdx.graphics.getDeltaTime());
         if(ghosts.size()<=0) {return;}
