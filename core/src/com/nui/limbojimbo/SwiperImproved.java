@@ -280,7 +280,7 @@ public class SwiperImproved implements Screen {
         myTextureRegion9 = new TextureRegion(myTexture9);
         myTexRegionDrawable9 = new TextureRegionDrawable(myTextureRegion9);
         button9 = new ImageButton(myTexRegionDrawable9); //Set the button up
-        button9.setPosition(0,1350);
+        button9.setPosition(0,graphics.getHeight()-100);
         stage9=new Stage(new ScreenViewport());
         stage9.addActor(button9);
 
@@ -290,7 +290,7 @@ public class SwiperImproved implements Screen {
         myTextureRegion4 = new TextureRegion(myTexture4);
         myTexRegionDrawable4 = new TextureRegionDrawable(myTextureRegion4);
         button4 = new ImageButton(myTexRegionDrawable4); //Set the button up
-        button4.setPosition(button4.getWidth()+2,1350);
+        button4.setPosition(button4.getWidth()+2,graphics.getHeight()-100);
         stage4=new Stage(new ScreenViewport());
         stage4.addActor(button4);
 
@@ -298,7 +298,7 @@ public class SwiperImproved implements Screen {
         myTextureRegion7 = new TextureRegion(myTexture7);
         myTexRegionDrawable7 = new TextureRegionDrawable(myTextureRegion7);
         button7 = new ImageButton(myTexRegionDrawable7); //Set the button up
-        button7.setPosition(button7.getWidth()+button4.getWidth()+4,1350);
+        button7.setPosition(button7.getWidth()+button4.getWidth()+4,graphics.getHeight()-100);
         stage7=new Stage(new ScreenViewport());
         stage7.addActor(button7);
 
@@ -306,7 +306,7 @@ public class SwiperImproved implements Screen {
         myTextureRegion5 = new TextureRegion(myTexture5);
         myTexRegionDrawable5 = new TextureRegionDrawable(myTextureRegion5);
         button5 = new ImageButton(myTexRegionDrawable5); //Set the button up
-        button5.setPosition(button5.getWidth()+button4.getWidth()+4,1350);
+        button5.setPosition(button5.getWidth()+button4.getWidth()+4,graphics.getHeight()-100);
         stage5=new Stage(new ScreenViewport());
         stage5.addActor(button5);
 
@@ -314,7 +314,7 @@ public class SwiperImproved implements Screen {
         myTextureRegion6 = new TextureRegion(myTexture6);
         myTexRegionDrawable6 = new TextureRegionDrawable(myTextureRegion6);
         button6 = new ImageButton(myTexRegionDrawable6);
-        button6.setPosition(button6.getWidth()+2,1350);
+        button6.setPosition(button6.getWidth()+2,graphics.getHeight()-100);
         stage6=new Stage(new ScreenViewport());
         stage6.addActor(button6);
     }
