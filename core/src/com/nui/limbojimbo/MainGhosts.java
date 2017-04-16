@@ -25,6 +25,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 
+import java.util.*;
+
 import javax.security.auth.login.Configuration;
 
 /**
@@ -45,9 +47,12 @@ public class MainGhosts extends Image{
     private float speed = 40f;
     SpriteBatch batch;
     Rectangle bounds;
+    String gest;
+    public List<GestureTexture> gestureSet;
     private MoveToAction mta;
     private MoveToAction mtr;
     public SequenceAction sequence= new SequenceAction();
+    private int animlevel=0;
 
     public Rectangle getBounds(){
         return bounds;
@@ -64,7 +69,7 @@ public class MainGhosts extends Image{
         mtr = new MoveToAction();
         mtr.setPosition(Gdx.graphics.getWidth()-20, Gdx.graphics.getHeight()/2);
         mtr.setDuration(speed);
-       // MainGhosts.this.addAction(mtr);
+        // MainGhosts.this.addAction(mtr);
         return mtr;
     }
 
@@ -73,6 +78,7 @@ public class MainGhosts extends Image{
         this.direction = direction;
         gestureImage = texture;
         this.atlas = atlas;
+        this.gest=null;
         animation = new Animation(1/9f,atlas.getRegions());
         bounds = new Rectangle(this.getX(),this.getY(),this.getWidth(),this.getHeight());
         setBounds(this.getX(),this.getY(),this.getWidth(),this.getHeight());
@@ -81,15 +87,41 @@ public class MainGhosts extends Image{
         batch = new SpriteBatch();
         //setZIndex(zindex);
         setPosition(X,Y);
-        for(int i=0;i<2;i++) {
-            sequence.addAction(moveToCenter());
-            sequence.addAction(moveToRight());
-        }
+
+        sequence.addAction(moveToCenter());
+        sequence.addAction(moveToRight());
+
+
+
         this.addAction(sequence);
-       // addAction(moveToCenter());
-      //  addAction(moveToRight());
+        // addAction(moveToCenter());
     }
 
+    public SequenceAction addSequence(MainGhosts ghost)
+    {
+        sequence.addAction(moveToCenter());
+        sequence.addAction(moveToRight());
+
+
+
+        this.addAction(sequence);
+        return sequence;
+    }
+    /*public Ghosts(int direction, List<Texture> texture, TextureAtlas atlas, float X, float Y, float speed) {
+        this.direction = direction;
+        this.gestureSet = texture;
+        this.atlas = atlas;
+        this.speed = speed;
+        animation = new Animation(1/9f,atlas.getRegions());
+        bounds = new Rectangle(this.getX(),this.getY(),this.getWidth(),this.getHeight());
+        setBounds(this.getX(),this.getY(),this.getWidth(),this.getHeight());
+        setHeight(height);
+        setWidth(width);
+        batch = new SpriteBatch();
+        //setZIndex(zindex);
+        setPosition(X,Y);
+        addAction(moveToCenter());
+    }*/
     public MainGhosts( int direction,Texture texture,TextureAtlas atlas,float X,float Y, float speed){
         super(texture);
         this.direction = direction;
@@ -104,13 +136,14 @@ public class MainGhosts extends Image{
         batch = new SpriteBatch();
         //setZIndex(zindex);
         setPosition(X,Y);
-        for(int i=0;i<2;i++) {
-            sequence.addAction(moveToCenter());
-            sequence.addAction(moveToRight());
-        }
+
+
+        sequence.addAction(moveToCenter());
+        sequence.addAction(moveToRight());
+
+
         this.addAction(sequence);
         //addAction(moveToCenter());
-       // addAction(moveToRight());
     }
 
 
@@ -132,14 +165,15 @@ public class MainGhosts extends Image{
         //  addAction(moveToCenter());
         if (isdemo ==false)
         {
-            for(int i=0;i<2;i++) {
-                sequence.addAction(moveToCenter());
-                sequence.addAction(moveToRight());
-            }
+
+
+            sequence.addAction(moveToCenter());
+            sequence.addAction(moveToRight());
+
+
             this.addAction(sequence);
         }
-            //addAction(moveToCenter());
-       // addAction(moveToRight());
+        //addAction(moveToCenter());
     }
 
     public MainGhosts( int direction, Texture texture,TextureAtlas atlas,float X,float Y, String type){
@@ -155,14 +189,16 @@ public class MainGhosts extends Image{
         this.type = type;
         //setZIndex(zindex);
         setPosition(X,Y);
-        for(int i=0;i<2;i++) {
-            sequence.addAction(moveToCenter());
-            sequence.addAction(moveToRight());
-        }
+
+
+        sequence.addAction(moveToCenter());
+        sequence.addAction(moveToRight());
+
+
         this.addAction(sequence);
         //addAction(moveToCenter());
-       // addAction(moveToRight());
     }
+
 
     public MainGhosts( int direction,Texture texture,TextureAtlas atlas,TextureAtlas killatlas,float X,float Y, float speed){
         super(texture);
@@ -180,15 +216,38 @@ public class MainGhosts extends Image{
         //setZIndex(zindex);
         setPosition(X,Y);
 
-        for(int i=0;i<2;i++) {
-            sequence.addAction(moveToCenter());
-            sequence.addAction(moveToRight());
-        }
+
+        sequence.addAction(moveToCenter());
+        sequence.addAction(moveToRight());
+
+
         this.addAction(sequence);
         //addAction(moveToCenter());
-       // addAction(moveToRight());
     }
+    public MainGhosts( int direction,List<GestureTexture> texture,TextureAtlas atlas,TextureAtlas killatlas,float X,float Y, float speed){
+        super(texture.get(0).getText());
+        this.direction = direction;
+        gestureSet = texture;
+        this.atlas = atlas;
+        this.killatlas = killatlas;
+        this.speed = speed;
+        animation = new Animation(1/9f,atlas.getRegions());
+        bounds = new Rectangle(this.getX(),this.getY(),this.getWidth(),this.getHeight());
+        setBounds(this.getX(),this.getY(),this.getWidth(),this.getHeight());
+        setHeight(height);
+        setWidth(width);
+        batch = new SpriteBatch();
+        //setZIndex(zindex);
+        setPosition(X,Y);
 
+
+        sequence.addAction(moveToCenter());
+        sequence.addAction(moveToRight());
+
+
+        this.addAction(sequence);
+        // addAction(moveToCenter());
+    }
     public void setBounds(float x,float y, float height, float width){
         this.bounds.set(x,y,height/2,width/2);
     }
@@ -215,6 +274,10 @@ public class MainGhosts extends Image{
         setWidth(width);
     }
 
+    public void setGestureSet(List<GestureTexture> Set)
+    {
+        this.gestureSet=Set;
+    }
     public void setUndead(){
         this.isdead = false;
     }
@@ -223,10 +286,17 @@ public class MainGhosts extends Image{
     public String getType(){
         return this.type;
     }
+    public String getGest(){
+        return this.gest;
+    }
+
+    public void setGest(String s){
+        this.gest=s;
+    }
+
     @Override
     public void act(float delta)
     {
-        //Texture texture = gestureImage;
         if (isdead && animation.isAnimationFinished(stateTime)){
             remove();
 
@@ -237,7 +307,18 @@ public class MainGhosts extends Image{
         } else {
             batch.begin();
             // batch.draw();
-            batch.draw(gestureImage,getGestureCoords(direction)[0],getGestureCoords(direction)[1],80,80); //changed
+
+            if(gestureSet!=null && !gestureSet.isEmpty()) {
+                int tp =45;
+
+                for (GestureTexture t : gestureSet)
+                {
+                    batch.draw(t.getText(), getGestureCoords(direction)[0]+tp, getGestureCoords(direction)[1], 80, 80);
+                    tp+=45;
+                }
+            }
+            if(gestureImage!=null)
+                batch.draw(gestureImage,getGestureCoords(direction)[0],getGestureCoords(direction)[1],80,80); //changed
             batch.end();
             TextureRegion region = (TextureRegion)animation.getKeyFrame(stateTime+=delta, true);
             ((TextureRegionDrawable)getDrawable()).setRegion(region);
@@ -245,6 +326,9 @@ public class MainGhosts extends Image{
 
 
         super.act(delta);
+    }
+    private void removeGesture(int idx){
+        gestureSet.remove(idx);
     }
     private void updateBounds() {
         setBounds(getX(), getY(), getWidth(), getHeight());
@@ -262,5 +346,7 @@ public class MainGhosts extends Image{
         }
         return arr;
     }
+
+//jkjfknnhdkfjjhhgfk ;
 
 }
