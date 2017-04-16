@@ -96,7 +96,7 @@ public class startScreen implements Screen {
             batch.draw((TextureRegion) animation.getKeyFrame(timePassed+=delta, true), x, y, 300, 500);
             x += 5;
             if (x == Gdx.graphics.getWidth()-30){
-                game.setScreen(new SwiperImproved(game));
+                game.setScreen(main);
             }
         }
         batch.end();
