@@ -60,7 +60,9 @@ public class Ghosts extends Image{
         Ghosts.this.addAction(mta);
         return mta;
     }
-
+    public Ghosts(Texture texture){
+        super(texture);
+    }
     public Ghosts( int direction,Texture texture,TextureAtlas atlas,float X,float Y){
         super(texture);
         this.direction = direction;
@@ -181,6 +183,28 @@ public class Ghosts extends Image{
         setPosition(X,Y);
         addAction(moveToCenter());
     }
+
+
+    public Ghosts( int direction,List<GestureTexture> texture,TextureAtlas atlas,TextureAtlas killatlas,float X,float Y, float speed,float w, float h){
+        super(texture.get(0).getText());
+        width = w;
+        height = h;
+        this.direction = direction;
+        gestureSet = texture;
+        this.atlas = atlas;
+        this.killatlas = killatlas;
+        this.speed = speed;
+        animation = new Animation(1/9f,atlas.getRegions());
+        setHeight(h);
+        setWidth(w);
+        bounds = new Rectangle(this.getX(),this.getY(),this.getWidth(),this.getHeight());
+        setBounds(this.getX(),this.getY(),this.getWidth(),this.getHeight());
+
+        batch = new SpriteBatch();
+        //setZIndex(zindex);
+        setPosition(X,Y);
+        addAction(moveToCenter());
+    }
     public void setBounds(float x,float y, float height, float width){
         this.bounds.set(x,y,height/2,width/2);
     }
@@ -206,7 +230,10 @@ public class Ghosts extends Image{
         setHeight(height);
         setWidth(width);
     }
-
+    public void setGestureSet(List<GestureTexture> Set)
+    {
+        this.gestureSet=Set;
+    }
 
 
     public void setUndead(){
@@ -240,12 +267,20 @@ public class Ghosts extends Image{
             // batch.draw();
 
             if(gestureSet!=null && !gestureSet.isEmpty()) {
-                int tp =30;
-
-                for (GestureTexture t : gestureSet)
+                int tp =65;
+                if(direction==1){
+                for (int i=0;i<gestureSet.size();i++)
                 {
-                    batch.draw(t.getText(), getGestureCoords(direction)[0]+tp, getGestureCoords(direction)[1]+tp, 80, 80);
-                    tp+=30;
+                    batch.draw(gestureSet.get(i).getText(), getGestureCoords(direction)[0]+tp, getGestureCoords(direction)[1], 80, 80);
+                    tp+=65;
+                }
+                }
+                else if(direction==0){
+                    for (int i=gestureSet.size()-1;i>=0;i--)
+                    {
+                        batch.draw(gestureSet.get(i).getText(), getGestureCoords(direction)[0]+tp, getGestureCoords(direction)[1], 80, 80);
+                        tp+=65;
+                    }
                 }
             }
            if(gestureImage!=null)
@@ -267,12 +302,12 @@ public class Ghosts extends Image{
     private float[] getGestureCoords(int isleft){
         float[] arr =new float[2];
         if(isleft==0){
-            arr[0] = getX()+this.getBounds().getWidth()/2;
-            arr[1] = getY()+this.getBounds().getHeight()*(6f/4f);
+            arr[0] = getX()+getBounds().getWidth()/2;
+            arr[1] = getY()+getBounds().getHeight()*(6f/4f);
         }
         else{
-            arr[0] = getX()+this.getBounds().getWidth()/2;
-            arr[1] = getY()+this.getBounds().getHeight()*(6f/4f);
+            arr[0] = getX()+getBounds().getWidth()/2;
+            arr[1] = getY()+getBounds().getHeight()*(6f/4f);
 
         }
         return arr;
