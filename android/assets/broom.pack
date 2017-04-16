@@ -1,0 +1,60 @@
+
+broom.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+broom/broom1
+  rotate: false
+  xy: 1, 1
+  size: 894, 894
+  orig: 894, 894
+  offset: 0, 0
+  index: -1
+
+broom2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+broom/broom2
+  rotate: false
+  xy: 1, 1
+  size: 894, 894
+  orig: 894, 894
+  offset: 0, 0
+  index: -1
+
+broom3.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+broom/broom3
+  rotate: false
+  xy: 1, 1
+  size: 894, 894
+  orig: 894, 894
+  offset: 0, 0
+  index: -1
+
+broom4.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+broom/broom4
+  rotate: false
+  xy: 1, 1
+  size: 894, 894
+  orig: 894, 894
+  offset: 0, 0
+  index: -1
+
+broom5.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+broom/broom5
+  rotate: false
+  xy: 1, 1
+  size: 894, 894
+  orig: 894, 894
+  offset: 0, 0
+  index: -1

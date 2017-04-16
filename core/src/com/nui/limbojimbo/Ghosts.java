@@ -24,6 +24,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 
+import java.util.List;
+
 import javax.security.auth.login.Configuration;
 
 /**
@@ -41,6 +43,7 @@ public class Ghosts extends Image{
     private float stateTime = 0;
     private boolean isdead = false;
     private String type;
+    public List<GestureTexture> gestureSet;
     private float speed = 40f;
     SpriteBatch batch;
     Rectangle bounds;
@@ -74,7 +77,21 @@ public class Ghosts extends Image{
         setPosition(X,Y);
         addAction(moveToCenter());
     }
-
+    /*public Ghosts(int direction, List<Texture> texture, TextureAtlas atlas, float X, float Y, float speed) {
+        this.direction = direction;
+        this.gestureSet = texture;
+        this.atlas = atlas;
+        this.speed = speed;
+        animation = new Animation(1/9f,atlas.getRegions());
+        bounds = new Rectangle(this.getX(),this.getY(),this.getWidth(),this.getHeight());
+        setBounds(this.getX(),this.getY(),this.getWidth(),this.getHeight());
+        setHeight(height);
+        setWidth(width);
+        batch = new SpriteBatch();
+        //setZIndex(zindex);
+        setPosition(X,Y);
+        addAction(moveToCenter());
+    }*/
     public Ghosts( int direction,Texture texture,TextureAtlas atlas,float X,float Y, float speed){
         super(texture);
         this.direction = direction;
@@ -147,7 +164,23 @@ public class Ghosts extends Image{
         setPosition(X,Y);
         addAction(moveToCenter());
     }
-
+    public Ghosts( int direction,List<GestureTexture> texture,TextureAtlas atlas,TextureAtlas killatlas,float X,float Y, float speed){
+        super(texture.get(0).getText());
+        this.direction = direction;
+        gestureSet = texture;
+        this.atlas = atlas;
+        this.killatlas = killatlas;
+        this.speed = speed;
+        animation = new Animation(1/9f,atlas.getRegions());
+        bounds = new Rectangle(this.getX(),this.getY(),this.getWidth(),this.getHeight());
+        setBounds(this.getX(),this.getY(),this.getWidth(),this.getHeight());
+        setHeight(height);
+        setWidth(width);
+        batch = new SpriteBatch();
+        //setZIndex(zindex);
+        setPosition(X,Y);
+        addAction(moveToCenter());
+    }
     public void setBounds(float x,float y, float height, float width){
         this.bounds.set(x,y,height/2,width/2);
     }
@@ -205,7 +238,18 @@ public class Ghosts extends Image{
         } else {
             batch.begin();
             // batch.draw();
-            batch.draw(gestureImage,getGestureCoords(direction)[0],getGestureCoords(direction)[1],80,80); //changed
+
+            if(gestureSet!=null && !gestureSet.isEmpty()) {
+                int tp =30;
+
+                for (GestureTexture t : gestureSet)
+                {
+                    batch.draw(t.getText(), getGestureCoords(direction)[0]+tp, getGestureCoords(direction)[1]+tp, 80, 80);
+                    tp+=30;
+                }
+            }
+           if(gestureImage!=null)
+              batch.draw(gestureImage,getGestureCoords(direction)[0],getGestureCoords(direction)[1],80,80); //changed
             batch.end();
             TextureRegion region = (TextureRegion)animation.getKeyFrame(stateTime+=delta, true);
             ((TextureRegionDrawable)getDrawable()).setRegion(region);
@@ -213,6 +257,9 @@ public class Ghosts extends Image{
 
 
         super.act(delta);
+    }
+    private void removeGesture(int idx){
+        gestureSet.remove(idx);
     }
     private void updateBounds() {
         setBounds(getX(), getY(), getWidth(), getHeight());
