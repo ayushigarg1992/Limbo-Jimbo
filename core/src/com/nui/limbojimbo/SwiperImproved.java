@@ -5,7 +5,11 @@ package com.nui.limbojimbo;
  */
 
 
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantLock;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
@@ -38,7 +42,9 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Multimaps;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -47,6 +53,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import static com.badlogic.gdx.Gdx.graphics;
 
@@ -94,7 +101,7 @@ public class SwiperImproved implements Screen {
     BitmapFont font1;
     Skin skin;
     private Game game;
-    Multimap<String, Ghosts> GhostMap = ArrayListMultimap.create();
+    Multimap<String, Ghosts> GhostMap = Multimaps.synchronizedMultimap(HashMultimap.<String, Ghosts> create());
     private Texture myTexture2;
     private TextureRegion myTextureRegion2;
     private TextureRegionDrawable myTexRegionDrawable2;
@@ -117,6 +124,8 @@ public class SwiperImproved implements Screen {
     private int score;
     String s;
     String l;
+    ReadWriteLock lock = new ReentrantReadWriteLock();
+    Lock writeLock = lock.writeLock();
 
     private Queue<Ghosts> GhostsQ = new LinkedList<Ghosts>();
 
@@ -200,7 +209,7 @@ public class SwiperImproved implements Screen {
         if (isdemo){
             font1=new BitmapFont();
             //  ghosts.add(0, new Ghosts(0, new Texture(Gdx.files.internal("HLine.png")), leftghosts.get(0),leftghostskill.get(0), -200, 400, 60f));
-            ghosts.add(0,new Ghosts( new Texture(Gdx.files.internal("HLine.png")), rightghosts.get(0),rightghostskill.get(0),Gdx.graphics.getWidth()/2 +100,400, 60f , true));
+            ghosts.add(0,new Ghosts( new Texture(Gdx.files.internal("HLine.png")), rightghosts.get(0),rightghostskill.get(0),Gdx.graphics.getWidth()/2 +100,Gdx.graphics.getHeight()/4, 60f , true));
             //ghosts.add(0,g);
             GhostMap.put("_", ghosts.get(0));
             stage.addActor(ghosts.get(0));
@@ -225,7 +234,8 @@ public class SwiperImproved implements Screen {
         myTexRegionDrawable4 = new TextureRegionDrawable(myTextureRegion4);
         button4 = new ImageButton(myTexRegionDrawable4);
         //stage.addActor(ghosts.get(1));
-        button4.setPosition(button4.getWidth()+600,button4.getHeight()+500);
+        button4.setPosition(Gdx.graphics.getWidth()/2-100,Gdx.graphics.getHeight()/2+60);
+        button4.setWidth(300);
         stage4 = new Stage(new ScreenViewport());
         stage4.addActor(button4);
         //handle swipe input
@@ -452,14 +462,14 @@ public class SwiperImproved implements Screen {
     }
 
     private List<GestureTexture> getGestureTextures(Random rn, int size) {
-        List<GestureTexture> gestures = new CopyOnWriteArrayList<GestureTexture>();
+        List<GestureTexture> gestures = new ArrayList<GestureTexture>();
         int x=0;
-        while(x<=size){
+        while(size> 0){
             int m = rn.nextInt(5);
             Texture tx = gestureText.get(m);
             String s = getGestureString(m);
             gestures.add(new GestureTexture(tx,s));
-            x++;
+            size--;
         }
         return gestures;
     }
@@ -479,13 +489,13 @@ public class SwiperImproved implements Screen {
                 SpwanEnemy(speed);
                 SpwanEnemy(speed);
             } else if (curenttime > 30 && curenttime < 60 ){
-                speed = 40f;
+                speed = 50f;
                 spawntime = 6;
                 SpwanEnemy(speed);
                 SpwanEnemy(speed);
                 System.out.println(" curenttime is <60 "+curenttime);
             } else {
-                speed = 20f;
+                speed = 40f;
                 spawntime = 3;
                 SpwanEnemy(speed);
                 SpwanEnemy(speed);
@@ -511,28 +521,57 @@ public class SwiperImproved implements Screen {
                         if (GhostMap.containsKey(r.getName())){
 
                             hunt.play();
-                            Collection<Ghosts> ghostsCollection = GhostMap.get(r.getName());
+
+
+                            List<Ghosts> enhancedList = new ArrayList<Ghosts>();
+                            Iterator<Ghosts> ghostsCollection = GhostMap.get(r.getName()).iterator();
+                           /* try {
+                                writeLock.lock();*/
+                                while (ghostsCollection.hasNext()) {
+                                    Ghosts value = ghostsCollection.next();
+                                    if (multgesture) {
+                                        if (value.gestureSet != null && value.gestureSet.size() > 1) {
+                                            value.gestureSet.remove(0);
+                                            enhancedList.add(value);
+                                            ghostsCollection.remove();
+
+                                        } else {
+                                            value.setDead();
+                                            ghostsCollection.remove();
+                                        }
+                                    } else
+                                        value.setDead();
+                                }
+                            /*} finally {
+                                writeLock.unlock();
+                            }*/
+                           /* Collection<Ghosts> ghostsCollection = Collections.synchronizedCollection(GhostMap.get(r.getName()));
                             int size=ghostsCollection.size();
                           //  List<Ghosts> enhancedList = new ArrayList<Ghosts>();
                             List<Ghosts> enhancedList = new CopyOnWriteArrayList<Ghosts>();
-                            for(Ghosts value : ghostsCollection){
-                                if (multgesture) {
-                                    if (value.gestureSet != null && value.gestureSet.size() > 1) {
-                                        value.gestureSet.remove(0);
-                                        enhancedList.add(value);
-                                        GhostMap.put(value.gestureSet.get(0).getString(), value);
-                                    }
-                                    else
+                            synchronized (ghostsCollection) {
+                                for (Ghosts value : ghostsCollection) {
+                                    if (multgesture) {
+                                        if (value.gestureSet != null && value.gestureSet.size() > 1) {
+                                            value.gestureSet.remove(0);
+                                            enhancedList.add(value);
+                                            GhostMap.put(value.gestureSet.get(0).getString(), value);
+                                        } else {
+                                            value.setDead();
+                                        }
+                                    } else
                                         value.setDead();
-                                }
-                                else
-                                    value.setDead();
 
+                                }
                             }
 
                             if (multgesture) {
                                 GhostMap.removeAll(enhancedList);
                             } else
+                                GhostMap.removeAll(r.getName());*/
+                            for (Ghosts value : enhancedList)
+                                GhostMap.put(value.gestureSet.get(0).getString(), value);
+                            if (!multgesture)
                                 GhostMap.removeAll(r.getName());
                             score=score+10;
                             s=String.valueOf(score);
@@ -572,13 +611,13 @@ public class SwiperImproved implements Screen {
         batch.begin();
         batch.draw(backGround,0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         //batch.draw(button2);
-        font.setColor(Color.YELLOW);
-        font.getData().setScale(6);
-        font.draw(batch,"Score: "+ s,0,1350);
+        font.setColor(Color.RED);
+        font.getData().setScale(5);
+        font.draw(batch,"Score: "+ s,Gdx.graphics.getWidth()/2,graphics.getHeight()-10);
         if(isdemo){
             font.setColor(Color.YELLOW);
-            font.getData().setScale(9);
-            font.draw(batch,"Draw the symbol to kill the ghost",300,1200);
+            font.getData().setScale(8);
+            font.draw(batch,"Draw the symbol to kill the ghost",30,Gdx.graphics.getHeight()-150);
         }
         batch.end();
         if(isdemo){
@@ -666,7 +705,7 @@ public class SwiperImproved implements Screen {
     }
 
 
-    private void act() {
+   /* private void act() {
         stage.act(Gdx.graphics.getDeltaTime());
         if (GhostMap.size() <= 0) {
             return;
@@ -681,22 +720,7 @@ public class SwiperImproved implements Screen {
                     String g = gh.getGest();
                     gh.remove();
                     GhostMap.remove(g, gh);
-       /* {
-        {
-            if (lastremoved != null && ghosts.get(i)==lastremoved)
-                continue;
-            //Ghosts ghoul = ghosts.get(i);
-            wiz.setBounds(wiz.getX(),wiz.getY(),wiz.getWidth()-200,wiz.getHeight()-200);
-            ghosts.get(i).setBounds(ghosts.get(i).getX(),ghosts.get(i).getY(),ghosts.get(i).getWidth(),ghosts.get(i).getHeight());
-            if(wiz.getBounds().overlaps(ghosts.get(i).bounds)){
-                lastremoved = ghosts.get(i);
-                String g = ghosts.get(i).getGest();
-                System.out.println("lifeline =  "+lifeline+ "g="+g );
-                if (lifeline > 1) {
 
-
-                    ghosts.get(i).remove();
-                    GhostMap.remove(g, ghosts.get(i));*/
                     GhostMap.remove(g, lastremoved);
                     lifeline = lifeline - 1;
                     l = String.valueOf(lifeline);
@@ -715,9 +739,49 @@ public class SwiperImproved implements Screen {
         }
         //ghosts.get(i).setVisible(false);
 
+    }*/
+
+    private void act(){
+        stage.act(Gdx.graphics.getDeltaTime());
+        if(ghosts.size()<=0) {return;}
+        //int i=0;
+        for(int i=0;i<ghosts.size();i++)
+
+        {
+            if (lastremoved != null && ghosts.get(i)==lastremoved)
+                continue;
+            //Ghosts ghoul = ghosts.get(i);
+            wiz.setBounds(wiz.getX(),wiz.getY(),wiz.getWidth()-200,wiz.getHeight()-200);
+            ghosts.get(i).setBounds(ghosts.get(i).getX(),ghosts.get(i).getY(),ghosts.get(i).getWidth(),ghosts.get(i).getHeight());
+            if(wiz.getBounds().overlaps(ghosts.get(i).bounds)){
+                lastremoved = ghosts.get(i);
+                String g = ghosts.get(i).getGest();
+                System.out.println("lifeline =  "+lifeline+ "g="+g );
+                if (lifeline > 1) {
+
+
+                    ghosts.get(i).remove();
+                    GhostMap.remove(g, lastremoved);
+                    lifeline = lifeline - 1;
+                    l = String.valueOf(lifeline);
+
+                    // System.out.println("The gesture is "+ g);
+                    //Ghosts ghoul = ghosts.get(i);
+
+                }
+
+                else if (lifeline == 1) {
+                    // lifeline = 3;
+                    game.setScreen(new GameOverScreen(game));
+
+                    // break;
+                }
+
+            }
+            //ghosts.get(i).setVisible(false);
+        }
+
     }
-
-
 
 
 
@@ -770,7 +834,7 @@ public class SwiperImproved implements Screen {
         }
         myTexture3.dispose();
         myTexture4.dispose();
-        stage3.dispose();
+       // stage3.dispose();
         stage4.dispose();
         atlasLeft.dispose();
         atlasRight.dispose();
