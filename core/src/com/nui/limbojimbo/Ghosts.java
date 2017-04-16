@@ -255,43 +255,43 @@ public class Ghosts extends Image{
     @Override
     public void act(float delta)
     {
-        if (isdead && animation.isAnimationFinished(stateTime)){
-            remove();
 
-        } else if (isdead){
-            this.removeAction(mta);
-            TextureRegion region = (TextureRegion)animation.getKeyFrame(stateTime+=delta, false);
-            ((TextureRegionDrawable)getDrawable()).setRegion(region);
-        } else {
-            batch.begin();
-            // batch.draw();
+            if (isdead && animation.isAnimationFinished(stateTime)) {
+                remove();
 
-            if(gestureSet!=null && !gestureSet.isEmpty()) {
-                int tp =65;
-                if(direction==1){
-                for (int i=0;i<gestureSet.size();i++)
-                {
-                    batch.draw(gestureSet.get(i).getText(), getGestureCoords(direction)[0]+tp, getGestureCoords(direction)[1], 80, 80);
-                    tp+=65;
-                }
-                }
-                else if(direction==0){
-                    for (int i=gestureSet.size()-1;i>=0;i--)
-                    {
-                        batch.draw(gestureSet.get(i).getText(), getGestureCoords(direction)[0]+tp, getGestureCoords(direction)[1], 80, 80);
-                        tp+=65;
+            } else if (isdead) {
+                this.removeAction(mta);
+                TextureRegion region = (TextureRegion) animation.getKeyFrame(stateTime += delta, false);
+                ((TextureRegionDrawable) getDrawable()).setRegion(region);
+            } else {
+                batch.begin();
+                // batch.draw();
+
+                if (gestureSet != null && !gestureSet.isEmpty()) {
+
+                    int tp = 65;
+                    if (direction == 1) {
+                      //  System.out.println("gestureset = "+gestureSet.size());
+                        for (int i = 0; i < gestureSet.size(); i++) {
+                            batch.draw(gestureSet.get(i).getText(), getGestureCoords(direction)[0] + tp, getGestureCoords(direction)[1], 80, 80);
+                            tp += 65;
+                        }
+                    } else if (direction == 0) {
+                        for (int i = gestureSet.size() - 1; i >= 0; i--) {
+                            batch.draw(gestureSet.get(i).getText(), getGestureCoords(direction)[0] + tp, getGestureCoords(direction)[1], 80, 80);
+                            tp += 65;
+                        }
                     }
                 }
+                if (gestureImage != null)
+                    batch.draw(gestureImage, getGestureCoords(direction)[0], getGestureCoords(direction)[1], 80, 80); //changed
+                batch.end();
+                TextureRegion region = (TextureRegion) animation.getKeyFrame(stateTime += delta, true);
+                ((TextureRegionDrawable) getDrawable()).setRegion(region);
             }
-           if(gestureImage!=null)
-              batch.draw(gestureImage,getGestureCoords(direction)[0],getGestureCoords(direction)[1],80,80); //changed
-            batch.end();
-            TextureRegion region = (TextureRegion)animation.getKeyFrame(stateTime+=delta, true);
-            ((TextureRegionDrawable)getDrawable()).setRegion(region);
-        }
 
 
-        super.act(delta);
+            super.act(delta);
     }
     private void removeGesture(int idx){
         gestureSet.remove(idx);
