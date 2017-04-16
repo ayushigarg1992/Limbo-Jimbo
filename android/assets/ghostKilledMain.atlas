@@ -1,0 +1,108 @@
+
+ghostKilledMain.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+mainghost3_kill1
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+ghostKilledMain2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+mainghost3_kill2
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+ghostKilledMain3.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+mainghost3_kill3
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+ghostKilledMain4.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+mainghost3_kill4
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+ghostKilledMain5.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+mainghost3_kill5
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+ghostKilledMain6.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+mainghost3_kill6
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+ghostKilledMain7.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+mainghost3_kill7
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+ghostKilledMain8.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+mainghost3_kill8
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+
+ghostKilledMain9.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+mainghost3_kill9
+  rotate: false
+  xy: 1, 1
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1

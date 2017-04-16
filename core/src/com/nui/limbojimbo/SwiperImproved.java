@@ -105,6 +105,7 @@ public class SwiperImproved implements Screen {
     BitmapFont font;
     BitmapFont font1;
     Skin skin;
+
     private Game game;
     Multimap<String, Ghosts> GhostMap = Multimaps.synchronizedMultimap(HashMultimap.<String, Ghosts> create());
     private Texture myTexture2;
@@ -128,6 +129,8 @@ public class SwiperImproved implements Screen {
     static int lifeline=3;
     private int score;
     private int level=1;
+    private TextureAtlas mainGhostAtlas;
+    private TextureAtlas mainGhostAtlasKill;
     String s;
     String l;
     int posidx = 0 ;
@@ -161,6 +164,8 @@ public class SwiperImproved implements Screen {
         tex = new Texture("data/gradient.png");
         tex.setFilter(TextureFilter.Linear, TextureFilter.Linear);
         backGround = new Texture(Gdx.files.internal("bg1.jpg"));
+        mainGhostAtlas=new TextureAtlas(Gdx.files.internal("mainghost1.atlas"));
+        mainGhostAtlasKill=new TextureAtlas(Gdx.files.internal("mainghost1_kill.atlas"));
 
         music = Gdx.audio.newMusic(Gdx.files.internal("data/bgsound.m4a"));
 
@@ -488,7 +493,7 @@ public class SwiperImproved implements Screen {
     }
     public void atlastmainenemy(List<GestureTexture> gestureList,float speed){
         int isleft=1;
-        mainGhost=new MainGhosts(isleft, gestureList,  new TextureAtlas(Gdx.files.internal("mainghost1.atlas")), new TextureAtlas(Gdx.files.internal("mainghost1_kill.atlas")), Gdx.graphics.getWidth() + 20, Gdx.graphics.getHeight()/2, speed);
+        mainGhost=new MainGhosts(isleft, gestureList, mainGhostAtlas ,mainGhostAtlasKill , Gdx.graphics.getWidth() + 20, Gdx.graphics.getHeight()/2, speed);
     }
 
 
@@ -840,7 +845,34 @@ public class SwiperImproved implements Screen {
         //ghosts.get(i).setVisible(false);
 
     }*/
+public void levelChange(int levelnum)
+{
+    if(levelnum<=3) {
+        switch (levelnum) {
+            case 2:
+                backGround = new Texture(Gdx.files.internal("bg2.jpg"));
+                mainGhostAtlas=new TextureAtlas(Gdx.files.internal("ghostmain2.atlas"));
+                mainGhostAtlasKill=new TextureAtlas(Gdx.files.internal("ghostmain2_kill.atlas"));
+                break;
+            case 3:
+                backGround = new Texture(Gdx.files.internal("bg3.jpg"));
+                mainGhostAtlas=new TextureAtlas(Gdx.files.internal("ghostMain.atlas"));
+                mainGhostAtlasKill=new TextureAtlas(Gdx.files.internal("ghostKilledMain.atlas"));
+                break;
+            case 4:
+                backGround = new Texture(Gdx.files.internal("bg4.jpg"));
+                mainGhostAtlas=new TextureAtlas(Gdx.files.internal("ghostmain2.atlas"));
+                mainGhostAtlasKill=new TextureAtlas(Gdx.files.internal("ghostmain2_kill.atlas"));
+                break;
 
+
+        }
+    }
+    else
+    {
+
+    }
+}
     private void act(){
         stage.act(Gdx.graphics.getDeltaTime());
         if(ghosts.size()<=0) {return;}
