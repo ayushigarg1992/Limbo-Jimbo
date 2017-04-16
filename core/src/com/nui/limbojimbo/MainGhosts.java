@@ -35,22 +35,13 @@ import javax.security.auth.login.Configuration;
 
 public class MainGhosts extends Ghosts{
     private int direction;
-    private Animation animation;
     private TextureAtlas atlas;
     private TextureAtlas killatlas;
-    private Texture gestureImage;
-    //private float width = 950f;
-   // private float height = 800f;
-    private float stateTime = 0;
-    private boolean isdead = false;
-    private String type;
     private float speed = 40f;
-    SpriteBatch batch;
-    Rectangle bounds;
-    float w = 800;
-    float h = 950;
-    String gest;
-    public List<GestureTexture> gestureSet;
+    //SpriteBatch batch;
+   // Rectangle bounds;
+    float w = 600f;
+    float h = 750f;
     private MoveToAction mta;
     private MoveToAction mtr;
     public SequenceAction sequence= new SequenceAction();
@@ -97,20 +88,20 @@ public class MainGhosts extends Ghosts{
 
 
     public MainGhosts( int direction,List<GestureTexture> texture,TextureAtlas atlas,TextureAtlas killatlas,float X,float Y, float speed){
-        super( direction,texture,atlas,killatlas,X, Y,  speed,800,950);
-      /*  this.direction = direction;
-        gestureSet = texture;
+        super( direction,texture,atlas,killatlas,X, Y, speed,600f,750f);
+        this.direction = direction;
+       // gestureSet = texture;
         this.atlas = atlas;
         this.killatlas = killatlas;
         this.speed = speed;
-        animation = new Animation(1/9f,atlas.getRegions());
-        bounds = new Rectangle(this.getX(),this.getY(),this.getWidth(),this.getHeight());
-        setBounds(this.getX(),this.getY(),this.getWidth(),this.getHeight());
-        setHeight(height);
-        setWidth(width);
-        batch = new SpriteBatch();
+       // animation = new Animation(1/9f,atlas.getRegions());
+      //  bounds = new Rectangle(this.getX(),this.getY(),this.getWidth(),this.getHeight());
+       // setBounds(this.getX(),this.getY(),this.getWidth(),this.getHeight());
+       // setHeight(h);
+       // setWidth(w);
+        //batch = new SpriteBatch();
         //setZIndex(zindex);
-        setPosition(X,Y);*/
+        setPosition(X,Y);
 
         //setHeight(height);
       //  setWidth(width);
@@ -123,29 +114,11 @@ public class MainGhosts extends Ghosts{
     }
 
 
-    public void setKillatlas(TextureAtlas atlas){
-        this.killatlas = atlas;
-    }
-    // changed
-//    public void setGesture(Texture t){
-//
-//        //gestureImage =t;
-//        gestureImage.load(t.getTextureData());
-//
-//
-//    }
-
-
-
-    public void setGestureSet(List<GestureTexture> Set)
-    {
-        this.gestureSet=Set;
+    @Override
+    public void setBounds(float x,float y, float height, float width){
+        super.setBounds( x, y,  height,  width);
+       // bounds.set(x,y,h/2,w/2);
     }
 
-
-
-
-
-//jkjfknnhdkfjjhhgfk ;
 
 }

@@ -72,7 +72,7 @@ public class SwiperImproved implements Screen {
     private float curenttime = 0 ;
     private float time = 0;
     private float spawntime = 6;
-    private float mainghostspawntime=3;
+    private float mainghostspawntime=30;
     private  ImageButton button;
     SwipeHandler swipe;
     private boolean isright = true;
@@ -130,6 +130,7 @@ public class SwiperImproved implements Screen {
     private int level=1;
     String s;
     String l;
+    int getsize = 1;
     int posidx = 0 ;
     ReadWriteLock lock = new ReentrantReadWriteLock();
     Lock writeLock = lock.writeLock();
@@ -139,6 +140,7 @@ public class SwiperImproved implements Screen {
     public  SwiperImproved(Game game) {
         this.game = game;
         this.lifeline=3;
+
         this.score=0;
         this.s=String.valueOf(score);
         this.l=String.valueOf(lifeline);
@@ -429,7 +431,7 @@ public class SwiperImproved implements Screen {
         Random rn = new Random();
         int isleft = 0;//rn.nextInt(2);
         int i  = rn.nextInt(5);
-        int size = 3;//set this later by level
+        int size = getsize;//set this later by level
         int x=0;
         if (multgesture) {
             List<GestureTexture> gestures = getGestureTextures(rn, size);
@@ -514,9 +516,10 @@ public class SwiperImproved implements Screen {
 
         if(curenttime>mainghostspawntime)
         {
-            //SpwanMainEnemy(60f);
+            SpwanMainEnemy(60f);
 
-           // mainghostspawntime=Integer.MAX_VALUE;
+            mainghostspawntime=Integer.MAX_VALUE;
+            spawntime = Integer.MAX_VALUE;
 
         }
         if(time > spawntime)
@@ -532,6 +535,7 @@ public class SwiperImproved implements Screen {
             } else if (curenttime > 30 && curenttime < 60 ){
                 speed = 50f;
                 spawntime = 6;
+                getsize = 2;
                 SpwanEnemy(speed);
                 SpwanEnemy(speed);
                 System.out.println(" curenttime is <60 "+curenttime);
@@ -560,40 +564,6 @@ public class SwiperImproved implements Screen {
                     System.out.println("matched "+r.getName() + " score "+r.getScore());
                     if (r.getScore() > 0.1) {
 
-                    /*    if(mainGhost!=null)
-                        {
-                            hunt.play();
-                            if (mainGhost.gestureSet != null && mainGhost.gestureSet.size() > 1)
-                            {
-                                mainGhost.gestureSet.remove(0);
-                                if(mainGhost.gestureSet.size()==1)
-                                {
-                                    occ--;
-                                }
-
-                            }
-                            else
-                            {
-                                if (occ == 0)
-                                {
-                                    mainGhost.setDead();
-                                }
-                                else
-                                {
-                                   mainGhost.sequence.
-                                    Random rn = new Random();
-                                    int size = 5;
-                                    List<GestureTexture> gestures = getGestureTextures(rn, size);
-                                    mainGhost.setGestureSet(gestures);
-
-                                }
-
-
-                            }
-
-
-                        }*/
-
                         if (GhostMap.containsKey(r.getName())){
 
                             hunt.play();
@@ -618,6 +588,7 @@ public class SwiperImproved implements Screen {
                                                     int size = 5;
                                                     List<GestureTexture> gestures = getGestureTextures(rn, size);
                                                     value.setGestureSet(gestures);
+                                                    enhancedList.add(value);
                                                 if(((MainGhosts) value).getOcc()>0) {
                                                     ((MainGhosts) value).setSequence();
                                                 }
@@ -642,33 +613,7 @@ public class SwiperImproved implements Screen {
                                     } else
                                         value.setDead();
                                 }
-                            /*} finally {
-                                writeLock.unlock();
-                            }*/
-                           /* Collection<Ghosts> ghostsCollection = Collections.synchronizedCollection(GhostMap.get(r.getName()));
-                            int size=ghostsCollection.size();
-                          //  List<Ghosts> enhancedList = new ArrayList<Ghosts>();
-                            List<Ghosts> enhancedList = new CopyOnWriteArrayList<Ghosts>();
-                            synchronized (ghostsCollection) {
-                                for (Ghosts value : ghostsCollection) {
-                                    if (multgesture) {
-                                        if (value.gestureSet != null && value.gestureSet.size() > 1) {
-                                            value.gestureSet.remove(0);
-                                            enhancedList.add(value);
-                                            GhostMap.put(value.gestureSet.get(0).getString(), value);
-                                        } else {
-                                            value.setDead();
-                                        }
-                                    } else
-                                        value.setDead();
 
-                                }
-                            }
-
-                            if (multgesture) {
-                                GhostMap.removeAll(enhancedList);
-                            } else
-                                GhostMap.removeAll(r.getName());*/
                             for (Ghosts value : enhancedList)
                                 GhostMap.put(value.gestureSet.get(0).getString(), value);
                             if (!multgesture)
