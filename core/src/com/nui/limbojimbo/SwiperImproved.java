@@ -79,6 +79,7 @@ public class SwiperImproved implements Screen {
     private final Lock _mutex = new ReentrantLock(true);
     private int gestureSize;
     Texture tex;
+    int [] position;
     ShapeRenderer shapes;
     private String gesture = "";
 
@@ -124,6 +125,7 @@ public class SwiperImproved implements Screen {
     private int score;
     String s;
     String l;
+    int posidx = 0 ;
     ReadWriteLock lock = new ReentrantReadWriteLock();
     Lock writeLock = lock.writeLock();
 
@@ -248,6 +250,14 @@ public class SwiperImproved implements Screen {
         // @Override
         //public void run() {
         //        try {
+
+        position = new int[graphics.getHeight()/100];
+        int pos = 0;
+        for (int i = 0 ; i < graphics.getHeight()/100 ; i ++){
+            position[i] = pos;
+            pos += 100;
+        }
+
 
         {
             gestureText.add(new Texture(Gdx.files.internal("alpha.png")));
@@ -378,7 +388,9 @@ public class SwiperImproved implements Screen {
     public int atlastenemy(List<GestureTexture> gestureList,float speed){
 
         Random rn = new Random();
-        int pos =   (100*rn.nextInt(10) % Gdx.graphics.getWidth()) - 50*rn.nextInt(1)  ;
+        posidx = posidx % position.length;
+        int pos =   position[posidx++];
+        posidx = position.length - posidx-1;
         int isleft = 0;//rn.nextInt(2);
         int i = rn.nextInt(3);
 
