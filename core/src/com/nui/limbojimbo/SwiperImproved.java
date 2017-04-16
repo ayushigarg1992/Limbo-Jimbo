@@ -724,8 +724,8 @@ public class SwiperImproved implements Screen {
         batch.draw(backGround,0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         //batch.draw(button2);
         font.setColor(Color.RED);
-        font.getData().setScale(5);
-        font.draw(batch,"Score: "+ s,Gdx.graphics.getWidth()/2,graphics.getHeight()-10);
+        font.getData().setScale(6);
+        font.draw(batch,"Score: "+ s,Gdx.graphics.getWidth()/2-70,graphics.getHeight()-10);
         if(isdemo){
             font.setColor(Color.YELLOW);
             font.getData().setScale(8);
