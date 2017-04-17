@@ -44,7 +44,7 @@ public class Ghosts extends Image{
     private boolean isdead = false;
     private String type;
     public List<GestureTexture> gestureSet;
-    private float speed = 40f;
+    private float speed = 60f;
     SpriteBatch batch;
     Rectangle bounds;
     String gest;

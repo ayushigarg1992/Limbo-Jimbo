@@ -37,7 +37,7 @@ public class MainGhosts extends Ghosts{
     private int direction;
     private TextureAtlas atlas;
     private TextureAtlas killatlas;
-    private float speed = 40f;
+    private float speed = 60f;
     private float rightspeed =5f;
     //SpriteBatch batch;
    // Rectangle bounds;
@@ -54,7 +54,7 @@ public class MainGhosts extends Ghosts{
     }
     private Action moveToCenter(){
         mta = new MoveToAction();
-        mta.setPosition(Gdx.graphics.getWidth()/2-w/2,40);
+        mta.setPosition(Gdx.graphics.getWidth()/2-w/2,60);
         mta.setDuration(speed);
         //MainGhosts.this.addAction(mta);
         return mta;

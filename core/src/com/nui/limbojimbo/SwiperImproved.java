@@ -198,16 +198,16 @@ public class SwiperImproved implements Screen {
         backgroundList.add(new Texture(Gdx.files.internal("bg1.jpg")));
         backgroundList.add(new Texture(Gdx.files.internal("bg2.jpg")));
         backgroundList.add(new Texture(Gdx.files.internal("bg3.jpg")));
-        backgroundList.add(new Texture(Gdx.files.internal("bg4.jpg")));
+      //  backgroundList.add(new Texture(Gdx.files.internal("bg4.jpg")));
         backGround=new Texture(Gdx.files.internal("bg1.jpg"));
         mainghostAtlasList.add(mainGhostAtlas);
         mainghostAtlasList.add(new TextureAtlas(Gdx.files.internal("ghostmain2.atlas")));
         mainghostAtlasList.add(new TextureAtlas(Gdx.files.internal("ghostMain.atlas")));
-        mainghostAtlasList.add(new TextureAtlas(Gdx.files.internal("ghostmain2.atlas")));
+       // mainghostAtlasList.add(new TextureAtlas(Gdx.files.internal("ghostmain2.atlas")));
         mainghostAtlasListKill.add(mainGhostAtlasKill);
         mainghostAtlasListKill.add(new TextureAtlas(Gdx.files.internal("ghostmain2_kill.atlas")));
         mainghostAtlasListKill.add(new TextureAtlas(Gdx.files.internal("ghostKilledMain.atlas")));
-        mainghostAtlasListKill.add(new TextureAtlas(Gdx.files.internal("ghostmain2_kill.atlas")));
+       // mainghostAtlasListKill.add(new TextureAtlas(Gdx.files.internal("ghostmain2_kill.atlas")));
         //mainGhostAtlas=new TextureAtlas(Gdx.files.internal("mainghost1.atlas"));
         //mainGhostAtlasKill=new TextureAtlas(Gdx.files.internal("mainghost1_kill.atlas"));*/
 
@@ -920,7 +920,7 @@ public void levelChange(int levelnum)
                 mainghostspawntime=30;
                 getsize=levelnum;
                 break;
-            case 4:
+           /* case 4:
                 backGround = backgroundList.get(levelnum-1);
                 mainGhostAtlas=mainghostAtlasList.get(levelnum-1);
                 mainGhostAtlasKill=mainghostAtlasListKill.get(levelnum-1);
@@ -928,7 +928,7 @@ public void levelChange(int levelnum)
                 spawntime=6;
                 mainghostspawntime=30;
                 getsize=levelnum;
-                break;
+                break;*/
 
 
         }
