@@ -76,6 +76,7 @@ public class SwiperImproved implements Screen {
     private  ImageButton button;
     SwipeHandler swipe;
     private boolean isright = true;
+    int countController=0;
     private Texture backGround;
     private List<Texture> backgroundList=new ArrayList<Texture>();
     private List<TextureAtlas> mainghostAtlasList=new ArrayList<TextureAtlas>();
@@ -941,54 +942,58 @@ public void levelChange(int levelnum)
         stage.act(Gdx.graphics.getDeltaTime());
         if(ghosts.size()<=0) {return;}
         //int i=0;
+
         for(int i=0;i<ghosts.size();i++)
         {
             System.out.println("funct lifeline =  "+lifeline );
-            if (lastremoved != null && ghosts.get(i).equals(lastremoved))
-                continue;
+           /* if (lastremoved != null && ghosts.get(i).equals(lastremoved))
+                continue;*/
             //Ghosts ghoul = ghosts.get(i);
             if (mainGhost != null)
                 mainGhost.setBounds(mainGhost.getX(),mainGhost.getY(),mainGhost.getWidth(),mainGhost.getHeight());
             ghosts.get(i).setBounds(ghosts.get(i).getX(),ghosts.get(i).getY(),ghosts.get(i).getWidth(),ghosts.get(i).getHeight());
             if(wiz.getBounds().overlaps(ghosts.get(i).bounds) ){
+                countController++;
+                if(countController%120==0) {
+                    //countController = 0;
+                    if (lifeline > 1) {
+                        String g = ghosts.get(i).getGest();
+                        System.out.println("lifeline =  " + lifeline + "g=" + g);
+                        ghosts.get(i).remove();
+                        GhostMap.remove(g, ghosts.get(i));
+                        lifeline = lifeline - 1;
+                        l = String.valueOf(lifeline);
 
-                if (lifeline > 1) {
-                    lastremoved = ghosts.get(i);
-                    String g = lastremoved.getGest();
-                    System.out.println("lifeline =  "+lifeline+ "g="+g );
-                    lastremoved.remove();
-                    GhostMap.remove(g, lastremoved);
-                    lifeline = lifeline - 1;
-                    l = String.valueOf(lifeline);
+                        // System.out.println("The gesture is "+ g);
+                        //Ghosts ghoul = ghosts.get(i);
 
-                    // System.out.println("The gesture is "+ g);
-                    //Ghosts ghoul = ghosts.get(i);
+                    } else  {
+                        // lifeline = 3;
+                        game.setScreen(new GameOverScreen(game));
 
+                        // break;
+                    }
                 }
 
-                else if (lifeline == 1) {
-                    // lifeline = 3;
-                    game.setScreen(new GameOverScreen(game));
-
-                    // break;
-                }
 
             } else if (mainGhost != null && wiz.getBounds().overlaps(mainGhost.bounds)){
                 System.out.println(" main ghost lifeline =  "+lifeline );
-                if (lifeline > 0) {
-                    lastremoved = mainGhost;
-                    mainGhost.occ++;
-                    mainGhost.setSequence();
-                    lifeline = lifeline - 1;
-                    l = String.valueOf(lifeline);
+                countController++;
+                if(countController%60==0) {
+                    //countController= 0;
+                    if (lifeline > 1) {
+                        lastremoved = mainGhost;
+                        mainGhost.occ++;
+                        mainGhost.setSequence();
+                        lifeline = lifeline - 1;
+                        l = String.valueOf(lifeline);
 
-                }
+                    } else {
+                        // lifeline = 3;
+                        game.setScreen(new GameOverScreen(game));
 
-                else  {
-                    // lifeline = 3;
-                    game.setScreen(new GameOverScreen(game));
-
-                    // break;
+                        // break;
+                    }
                 }
             }
             //ghosts.get(i).setVisible(false);
