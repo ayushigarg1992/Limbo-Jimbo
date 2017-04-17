@@ -77,7 +77,7 @@ public class SwiperImproved implements Screen {
     SwipeHandler swipe;
     private boolean isright = true;
     private Texture backGround;
-   // private List<Texture> backgroundList=new ArrayList<Texture>();
+    private List<Texture> backgroundList=new ArrayList<Texture>();
     private List<TextureAtlas> mainghostAtlasList=new ArrayList<TextureAtlas>();
     private List<TextureAtlas> mainghostAtlasListKill=new ArrayList<TextureAtlas>( );
     private int levelNum=1;
@@ -194,12 +194,12 @@ public class SwiperImproved implements Screen {
         //we will use a texture for the smooth edge, and also for stroke effects
         tex = new Texture("data/gradient.png");
         tex.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-
-        /*backgroundList.add(new Texture(Gdx.files.internal("bg2.jpg")));
+        backgroundList.add(new Texture(Gdx.files.internal("bg1.jpg")));
+        backgroundList.add(new Texture(Gdx.files.internal("bg2.jpg")));
         backgroundList.add(new Texture(Gdx.files.internal("bg3.jpg")));
-        backgroundList.add(new Texture(Gdx.files.internal("bg4.jpg")));*/
+        backgroundList.add(new Texture(Gdx.files.internal("bg4.jpg")));
         backGround=new Texture(Gdx.files.internal("bg1.jpg"));
-       /* mainghostAtlasList.add(mainGhostAtlas);
+        mainghostAtlasList.add(mainGhostAtlas);
         mainghostAtlasList.add(new TextureAtlas(Gdx.files.internal("ghostmain2.atlas")));
         mainghostAtlasList.add(new TextureAtlas(Gdx.files.internal("ghostMain.atlas")));
         mainghostAtlasList.add(new TextureAtlas(Gdx.files.internal("ghostmain2.atlas")));
@@ -207,8 +207,8 @@ public class SwiperImproved implements Screen {
         mainghostAtlasListKill.add(new TextureAtlas(Gdx.files.internal("ghostmain2_kill.atlas")));
         mainghostAtlasListKill.add(new TextureAtlas(Gdx.files.internal("ghostKilledMain.atlas")));
         mainghostAtlasListKill.add(new TextureAtlas(Gdx.files.internal("ghostmain2_kill.atlas")));
-        mainGhostAtlas=new TextureAtlas(Gdx.files.internal("mainghost1.atlas"));
-        mainGhostAtlasKill=new TextureAtlas(Gdx.files.internal("mainghost1_kill.atlas"));*/
+        //mainGhostAtlas=new TextureAtlas(Gdx.files.internal("mainghost1.atlas"));
+        //mainGhostAtlasKill=new TextureAtlas(Gdx.files.internal("mainghost1_kill.atlas"));*/
 
         music = Gdx.audio.newMusic(Gdx.files.internal("data/bgsound.m4a"));
 
@@ -267,6 +267,7 @@ public class SwiperImproved implements Screen {
         }
 
         wiz = new Wizard(new Texture(Gdx.files.internal("witch.png")));
+        wiz.setBounds(wiz.getX(),wiz.getY(),wiz.getWidth()-200,wiz.getHeight()-200);
 
         stage.addActor(wiz);
       //  pauseToggle();
@@ -524,6 +525,7 @@ public class SwiperImproved implements Screen {
         if (multgesture) {
             List<GestureTexture> gestures = getGestureTextures(rn, size);
             isleft = atlastenemy(gestures, speed);
+            ghosts.get(isleft).setGest(gestures.get(0).getString());
             GhostMap.put(gestures.get(0).getString(), ghosts.get(isleft));
         } else {
             switch (i) {
@@ -579,6 +581,8 @@ public class SwiperImproved implements Screen {
     public void atlastmainenemy(List<GestureTexture> gestureList,float speed){
         int isleft=1;
         mainGhost=new MainGhosts(isleft, gestureList, mainGhostAtlas , mainGhostAtlasKill , Gdx.graphics.getWidth() - 100, Gdx.graphics.getHeight()/3, speed);
+        mainGhost.setSequence();
+        mainGhost.setSequence();
     }
 
 
@@ -684,7 +688,8 @@ public class SwiperImproved implements Screen {
                                                 else
                                                 {
                                                     value.setDead();
-                                                    //levelChange(++levelNum);
+                                                    ghostsCollection.remove();
+                                                    levelChange(++levelNum);
                                                 }
 
 
@@ -757,7 +762,7 @@ public class SwiperImproved implements Screen {
         if(isdemo){
             font.setColor(Color.YELLOW);
             font.getData().setScale(8);
-            font.draw(batch,"Draw the symbol to kill the ghost",30,Gdx.graphics.getHeight()-200);
+            font.draw(batch,"Draw the symbol to kill the ghost",30,Gdx.graphics.getHeight()-160);
         }
         batch.end();
         if(isdemo){
@@ -892,7 +897,7 @@ public class SwiperImproved implements Screen {
         //ghosts.get(i).setVisible(false);
 
     }*/
-/*public void levelChange(int levelnum)
+public void levelChange(int levelnum)
 {
     if(levelnum<=4) {
         switch (levelnum) {
@@ -929,29 +934,29 @@ public class SwiperImproved implements Screen {
     }
     else
     {
-
+        game.setScreen(new startScreen(game));
     }
-}*/
+}
     private void act(){
         stage.act(Gdx.graphics.getDeltaTime());
         if(ghosts.size()<=0) {return;}
         //int i=0;
         for(int i=0;i<ghosts.size();i++)
-
         {
-            if (lastremoved != null && ghosts.get(i)==lastremoved)
+            System.out.println("funct lifeline =  "+lifeline );
+            if (lastremoved != null && ghosts.get(i).equals(lastremoved))
                 continue;
             //Ghosts ghoul = ghosts.get(i);
-            wiz.setBounds(wiz.getX(),wiz.getY(),wiz.getWidth()-200,wiz.getHeight()-200);
+            if (mainGhost != null)
+                mainGhost.setBounds(mainGhost.getX(),mainGhost.getY(),mainGhost.getWidth(),mainGhost.getHeight());
             ghosts.get(i).setBounds(ghosts.get(i).getX(),ghosts.get(i).getY(),ghosts.get(i).getWidth(),ghosts.get(i).getHeight());
-            if(wiz.getBounds().overlaps(ghosts.get(i).bounds)){
-                lastremoved = ghosts.get(i);
-                String g = ghosts.get(i).getGest();
-                System.out.println("lifeline =  "+lifeline+ "g="+g );
+            if(wiz.getBounds().overlaps(ghosts.get(i).bounds) ){
+
                 if (lifeline > 1) {
-
-
-                    ghosts.get(i).remove();
+                    lastremoved = ghosts.get(i);
+                    String g = lastremoved.getGest();
+                    System.out.println("lifeline =  "+lifeline+ "g="+g );
+                    lastremoved.remove();
                     GhostMap.remove(g, lastremoved);
                     lifeline = lifeline - 1;
                     l = String.valueOf(lifeline);
@@ -968,6 +973,23 @@ public class SwiperImproved implements Screen {
                     // break;
                 }
 
+            } else if (mainGhost != null && wiz.getBounds().overlaps(mainGhost.bounds)){
+                System.out.println(" main ghost lifeline =  "+lifeline );
+                if (lifeline > 0) {
+                    lastremoved = mainGhost;
+                    mainGhost.occ++;
+                    mainGhost.setSequence();
+                    lifeline = lifeline - 1;
+                    l = String.valueOf(lifeline);
+
+                }
+
+                else  {
+                    // lifeline = 3;
+                    game.setScreen(new GameOverScreen(game));
+
+                    // break;
+                }
             }
             //ghosts.get(i).setVisible(false);
         }
@@ -1021,6 +1043,15 @@ public class SwiperImproved implements Screen {
             t.dispose();
         }
         for (TextureAtlas t :  rightghostskill){
+            t.dispose();
+        }
+        for (TextureAtlas t :  mainghostAtlasList){
+            t.dispose();
+        }
+        for (TextureAtlas t :  mainghostAtlasListKill){
+            t.dispose();
+        }
+        for (Texture t :  backgroundList){
             t.dispose();
         }
         myTexture3.dispose();

@@ -94,7 +94,7 @@ public class startScreen implements Screen {
         //timePassed += Gdx.graphics.getDeltaTime();
         if (ispressed) {
             batch.draw((TextureRegion) animation.getKeyFrame(timePassed+=delta, true), x, y, 300, 500);
-            x += 5;
+            x += 10;
             if (x == Gdx.graphics.getWidth()-30){
                 game.setScreen(main);
             }

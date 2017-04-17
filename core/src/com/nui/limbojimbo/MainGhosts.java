@@ -47,7 +47,7 @@ public class MainGhosts extends Ghosts{
     private MoveToAction mtr;
     public SequenceAction sequence= new SequenceAction();
     private int animlevel=0;
-    int occ=3;
+    int occ=5;
 
     public Rectangle getBounds(){
         return bounds;
