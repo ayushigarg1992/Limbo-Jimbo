@@ -104,14 +104,13 @@ public class startScreen implements Screen {
         stage.draw();
     }
 
-
     public void  nextscreen(){
         click.play();
         Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
                 // Do something on the main thread
-                   main=new SwiperImproved(game);
+                main=new SwiperImproved(game);
 
             }
         });
@@ -129,7 +128,7 @@ public class startScreen implements Screen {
     public void  pause(){
 
     }
-g
+
     @Override
     public void  resume(){
 
@@ -145,7 +144,15 @@ g
     }
     @Override
     public void dispose() {
-      stage.dispose();
+        stage.dispose();
+        batch.dispose();
+        myTexture.dispose();
+        background.dispose();
+      //  spriteB.dispose();
+        wizardatlas.dispose();
+        game.dispose();
+        main.dispose();
+        click.dispose();
     }
 
 }

@@ -82,13 +82,14 @@ public class SwiperImproved implements Screen {
     private List<TextureAtlas> mainghostAtlasList=new ArrayList<TextureAtlas>();
     private List<TextureAtlas> mainghostAtlasListKill=new ArrayList<TextureAtlas>( );
     private int levelNum=1;
+    private int ltime = 0;
 
     private final Lock _mutex = new ReentrantLock(true);
     private int gestureSize;
 
     Texture tex;
     int [] position;
-    ShapeRenderer shapes;
+   // ShapeRenderer shapes;
     private String gesture = "";
 
     SwipeTriStrip tris;
@@ -150,6 +151,11 @@ public class SwiperImproved implements Screen {
     private TextureRegionDrawable myTexRegionDrawable9;
     private ImageButton button9;
     private Stage stage9;
+    private Texture myTexture10;
+    private TextureRegion myTextureRegion10;
+    private TextureRegionDrawable myTexRegionDrawable10;
+    private ImageButton button10;
+    private Stage stage10;
     private ImageButton button3;
     private InputMultiplexer multiplexer;
     private boolean multgesture = true;
@@ -198,16 +204,16 @@ public class SwiperImproved implements Screen {
         backgroundList.add(new Texture(Gdx.files.internal("bg1.jpg")));
         backgroundList.add(new Texture(Gdx.files.internal("bg2.jpg")));
         backgroundList.add(new Texture(Gdx.files.internal("bg3.jpg")));
-      //  backgroundList.add(new Texture(Gdx.files.internal("bg4.jpg")));
+        backgroundList.add(new Texture(Gdx.files.internal("bg4.jpg")));
         backGround=new Texture(Gdx.files.internal("bg1.jpg"));
         mainghostAtlasList.add(mainGhostAtlas);
         mainghostAtlasList.add(new TextureAtlas(Gdx.files.internal("ghostmain2.atlas")));
         mainghostAtlasList.add(new TextureAtlas(Gdx.files.internal("ghostMain.atlas")));
-       // mainghostAtlasList.add(new TextureAtlas(Gdx.files.internal("ghostmain2.atlas")));
+        mainghostAtlasList.add(new TextureAtlas(Gdx.files.internal("ghostmain2.atlas")));
         mainghostAtlasListKill.add(mainGhostAtlasKill);
         mainghostAtlasListKill.add(new TextureAtlas(Gdx.files.internal("ghostmain2_kill.atlas")));
         mainghostAtlasListKill.add(new TextureAtlas(Gdx.files.internal("ghostKilledMain.atlas")));
-       // mainghostAtlasListKill.add(new TextureAtlas(Gdx.files.internal("ghostmain2_kill.atlas")));
+        mainghostAtlasListKill.add(new TextureAtlas(Gdx.files.internal("ghostmain2_kill.atlas")));
         //mainGhostAtlas=new TextureAtlas(Gdx.files.internal("mainghost1.atlas"));
         //mainGhostAtlasKill=new TextureAtlas(Gdx.files.internal("mainghost1_kill.atlas"));*/
 
@@ -221,7 +227,7 @@ public class SwiperImproved implements Screen {
 
 
         font=new BitmapFont();
-        shapes = new ShapeRenderer();
+      //  shapes = new ShapeRenderer();
         batch = new SpriteBatch();
 
         cam = new OrthographicCamera();
@@ -340,6 +346,14 @@ public class SwiperImproved implements Screen {
         button6.setPosition(button6.getWidth()+2,graphics.getHeight()-100);
         stage6=new Stage(new ScreenViewport());
         stage6.addActor(button6);
+
+        myTexture10 = new Texture(Gdx.files.internal("heartempty.png"));
+        myTextureRegion10 = new TextureRegion(myTexture10);
+        myTexRegionDrawable10 = new TextureRegionDrawable(myTextureRegion10);
+        button10 = new ImageButton(myTexRegionDrawable10); //Set the button up
+        button10.setPosition(0,graphics.getHeight()-100);
+        stage10=new Stage(new ScreenViewport());
+        stage10.addActor(button10);
     }
 
 
@@ -573,7 +587,7 @@ public class SwiperImproved implements Screen {
     }
     public void SpwanMainEnemy(float speed){
         Random rn = new Random();
-        int size = 5;
+        int size = 3+levelNum;
         List<GestureTexture> gestures = getGestureTextures(rn, size);
         atlastmainenemy(gestures,speed);
         GhostMap.put(gestures.get(0).getString(), mainGhost);
@@ -609,7 +623,7 @@ public class SwiperImproved implements Screen {
 
         if(curenttime>mainghostspawntime)
         {
-            SpwanMainEnemy(60f);
+            SpwanMainEnemy(70f);
 
             mainghostspawntime=Integer.MAX_VALUE;
             spawntime = Integer.MAX_VALUE;
@@ -620,14 +634,14 @@ public class SwiperImproved implements Screen {
             // x_pattern = MathUtils.random(Stratofall.WIDTH - (cols * balloonWidth));
             // y_pattern = 0; //this will change depending on how many rows of the pattern contain a coin
             float speed = 0;
-            if (curenttime < 30){
-                speed = 60f;
+            if (curenttime < 10){
+                speed = 50f;
                 System.out.println(" curenttime is <30 "+curenttime);
                 SpwanEnemy(speed);
                 SpwanEnemy(speed);
-            } else if (curenttime > 30 && curenttime < 60 ){
-                speed = 50f;
-                spawntime = 6;
+            } else if (curenttime > 10 && curenttime < 30 ){
+                speed = 40f;
+                spawntime = 3;
                 getsize = 2;
                 SpwanEnemy(speed);
                 SpwanEnemy(speed);
@@ -635,7 +649,7 @@ public class SwiperImproved implements Screen {
             } else {
                 speed = 40f;
 
-                spawntime = 3;
+                spawntime = 2;
                 SpwanEnemy(speed);
                 SpwanEnemy(speed);
                 System.out.println(" curenttime is last "+curenttime);
@@ -679,7 +693,7 @@ public class SwiperImproved implements Screen {
                                                 if(((MainGhosts) value).getOcc()>0) {
                                                     ((MainGhosts) value).setSequence();
                                                     Random rn = new Random();
-                                                    int size = 5;
+                                                    int size = 3+levelNum;
                                                     List<GestureTexture> gestures = getGestureTextures(rn, size);
                                                     value.setGestureSet(gestures);
                                                     enhancedList.add(value);
@@ -688,9 +702,12 @@ public class SwiperImproved implements Screen {
                                                 }
                                                 else
                                                 {
-                                                    value.setDead();
-                                                    ghostsCollection.remove();
-                                                    levelChange(++levelNum);
+                                                    if (!value.isdead) {
+                                                        value.setDead();
+                                                        ghostsCollection.remove();
+                                                        levelChange(++levelNum);
+                                                    }
+
                                                 }
 
 
@@ -764,7 +781,15 @@ public class SwiperImproved implements Screen {
             font.setColor(Color.YELLOW);
             font.getData().setScale(8);
             font.draw(batch,"Draw the symbol to kill the ghost",30,Gdx.graphics.getHeight()-160);
+        } else {
+            if(ltime<100) {
+                font.setColor(Color.BLUE);
+                font.getData().setScale(8);
+                font.draw(batch, "Level: " + levelNum, 800, 800);
+                ltime=ltime+1;
+            }
         }
+
         batch.end();
         if(isdemo){
             stage8.draw();
@@ -809,6 +834,11 @@ public class SwiperImproved implements Screen {
             stage9.draw();
             stage6.draw();
             stage5.draw();}
+        else if(l.equals("0")){
+            stage10.draw();
+            stage6.draw();
+            stage5.draw();
+        }
         stage.draw();
         stage2.draw();
 
@@ -817,7 +847,7 @@ public class SwiperImproved implements Screen {
     }
 
     //optional debug drawing..
-    void drawDebug() {
+   /* void drawDebug() {
         Array<Vector2> input = swipe.input();
 
         //draw the raw input
@@ -860,7 +890,7 @@ public class SwiperImproved implements Screen {
             shapes.line(p.x, p.y, p.x+perp.x, p.y+perp.y);
         }
         shapes.end();
-    }
+    }*/
 
 
    /* private void act() {
@@ -900,6 +930,7 @@ public class SwiperImproved implements Screen {
     }*/
 public void levelChange(int levelnum)
 {
+    ltime = 0;
     if(levelnum<=4) {
         switch (levelnum) {
             case 2:
@@ -908,7 +939,7 @@ public void levelChange(int levelnum)
                 mainGhostAtlasKill=mainghostAtlasListKill.get(levelnum-1);
                 curenttime=0;
                 spawntime=6;
-                mainghostspawntime=30;
+                mainghostspawntime=50;
                 getsize=levelnum;
                 break;
             case 3:
@@ -916,26 +947,34 @@ public void levelChange(int levelnum)
                 mainGhostAtlas=mainghostAtlasList.get(levelnum-1);
                 mainGhostAtlasKill=mainghostAtlasListKill.get(levelnum-1);
                 curenttime=0;
-                spawntime=6;
-                mainghostspawntime=30;
+                spawntime=3;
+                mainghostspawntime=50;
                 getsize=levelnum;
                 break;
-           /* case 4:
+            case 4:
                 backGround = backgroundList.get(levelnum-1);
                 mainGhostAtlas=mainghostAtlasList.get(levelnum-1);
                 mainGhostAtlasKill=mainghostAtlasListKill.get(levelnum-1);
                 curenttime=0;
-                spawntime=6;
+                spawntime=4;
                 mainghostspawntime=30;
                 getsize=levelnum;
-                break;*/
+                break;
 
 
         }
     }
     else
     {
-        game.setScreen(new startScreen(game));
+        backGround = backgroundList.get(levelnum-1);
+        mainGhostAtlas=mainghostAtlasList.get(levelnum-1);
+        mainGhostAtlasKill=mainghostAtlasListKill.get(levelnum-1);
+        curenttime=0;
+        spawntime=4;
+        mainghostspawntime=30;
+        getsize=levelnum;
+        //game.setScreen(new startScreen(game));
+       // dispose();
     }
 }
     private void act(){
@@ -945,7 +984,7 @@ public void levelChange(int levelnum)
 
         for(int i=0;i<ghosts.size();i++)
         {
-            System.out.println("funct lifeline =  "+lifeline );
+            //System.out.println("funct lifeline =  "+lifeline );
            /* if (lastremoved != null && ghosts.get(i).equals(lastremoved))
                 continue;*/
             //Ghosts ghoul = ghosts.get(i);
@@ -956,9 +995,9 @@ public void levelChange(int levelnum)
                 countController++;
                 if(countController%120==0) {
                     //countController = 0;
-                    if (lifeline > 1) {
+                    if (lifeline > 0) {
                         String g = ghosts.get(i).getGest();
-                        System.out.println("lifeline =  " + lifeline + "g=" + g);
+                      //  System.out.println("lifeline =  " + lifeline + "g=" + g);
                         ghosts.get(i).remove();
                         GhostMap.remove(g, ghosts.get(i));
                         lifeline = lifeline - 1;
@@ -979,9 +1018,9 @@ public void levelChange(int levelnum)
             } else if (mainGhost != null && wiz.getBounds().overlaps(mainGhost.bounds)){
                 System.out.println(" main ghost lifeline =  "+lifeline );
                 countController++;
-                if(countController%60==0) {
+                if(countController%120==0) {
                     //countController= 0;
-                    if (lifeline > 1) {
+                    if (lifeline > 0) {
                         lastremoved = mainGhost;
                         mainGhost.occ++;
                         mainGhost.setSequence();
@@ -1073,7 +1112,7 @@ public void levelChange(int levelnum)
         wiz.remove();
 
         batch.dispose();
-        shapes.dispose();
+       // shapes.dispose();
         //gestureText.dispose();
         tex.dispose();
 
@@ -1087,6 +1126,9 @@ public void levelChange(int levelnum)
         stage7.dispose();
         stage8.dispose();
         stage9.dispose();
+        wiz.dispose();
+        stage10.dispose();
+        myTexture10.dispose();
 
     }
 

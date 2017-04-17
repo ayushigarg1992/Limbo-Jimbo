@@ -41,10 +41,10 @@ public class Ghosts extends Image{
     private float width = 500f;
     private float height = 400f;
     private float stateTime = 0;
-    private boolean isdead = false;
+    public boolean isdead = false;
     private String type;
     public List<GestureTexture> gestureSet;
-    private float speed = 60f;
+    private float speed = 40f;
     SpriteBatch batch;
     Rectangle bounds;
     String gest;
@@ -271,7 +271,7 @@ public class Ghosts extends Image{
 
                     int tp = 65;
                     if (direction == 1) {
-                      //  System.out.println("gestureset = "+gestureSet.size());
+                        System.out.println("gestureset = "+gestureSet.size());
                         for (int i = 0; i < gestureSet.size(); i++) {
                             batch.draw(gestureSet.get(i).getText(), getGestureCoords(direction)[0] + tp, getGestureCoords(direction)[1], 80, 80);
                             tp += 65;
@@ -311,6 +311,14 @@ public class Ghosts extends Image{
 
         }
         return arr;
+    }
+    public void dispose() {
+        atlas.dispose();
+        killatlas.dispose();
+        gestureImage.dispose();
+        batch.dispose();
+
+
     }
 
 //jkjfknnhdkfjjhhgfk ;

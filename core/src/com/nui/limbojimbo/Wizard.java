@@ -101,4 +101,8 @@ public class Wizard extends Image  {
         ((TextureRegionDrawable) getDrawable()).setRegion(region);
         super.act(delta);
     }
+
+    public void dispose(){
+        atlas.dispose();
+    }
 }

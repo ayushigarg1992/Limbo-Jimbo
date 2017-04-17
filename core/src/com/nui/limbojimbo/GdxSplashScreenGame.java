@@ -2,6 +2,7 @@ package com.nui.limbojimbo;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.utils.Timer;
 
 /**
@@ -11,8 +12,16 @@ import com.badlogic.gdx.utils.Timer;
 public class GdxSplashScreenGame extends Game {
 
     private static long SPLASH_MINIMUM_MILLIS = 2000L;
+    private AssetManager yourAssetManager ;
+    public GdxSplashScreenGame() {
+        super();
+        yourAssetManager  = new AssetManager();
 
-    public GdxSplashScreenGame() { super(); }
+
+    }
+    public AssetManager getManger(){
+        return this.yourAssetManager;
+    }
 
     @Override
     public void create () {

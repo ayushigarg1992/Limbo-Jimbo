@@ -37,7 +37,7 @@ public class MainGhosts extends Ghosts{
     private int direction;
     private TextureAtlas atlas;
     private TextureAtlas killatlas;
-    private float speed = 60f;
+    private float speed = 80f;
     private float rightspeed =5f;
     //SpriteBatch batch;
    // Rectangle bounds;
@@ -47,7 +47,7 @@ public class MainGhosts extends Ghosts{
     private MoveToAction mtr;
     public SequenceAction sequence= new SequenceAction();
     private int animlevel=0;
-    int occ=5;
+    int occ=4;
 
     public Rectangle getBounds(){
         return bounds;
@@ -121,6 +121,12 @@ public class MainGhosts extends Ghosts{
     public void setBounds(float x,float y, float height, float width){
         super.setBounds( x, y,  height,  width);
        // bounds.set(x,y,h/2,w/2);
+    }
+    @Override
+    public void dispose(){
+        super.dispose();
+        //animation.;
+
     }
 
 
