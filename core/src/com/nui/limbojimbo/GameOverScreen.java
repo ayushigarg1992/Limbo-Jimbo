@@ -104,6 +104,7 @@ public class GameOverScreen implements Screen {
 
     public void  nextscreen(){
         click.play();
+        ((GdxSplashScreenGame)game).load();
         game.setScreen(new SwiperImproved(game));
     }
 

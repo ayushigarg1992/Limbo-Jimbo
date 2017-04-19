@@ -104,6 +104,7 @@ public class startScreen implements Screen {
         stage.draw();
     }
 
+
     public void  nextscreen(){
         click.play();
         Gdx.app.postRunnable(new Runnable() {
@@ -117,6 +118,20 @@ public class startScreen implements Screen {
 
 
     }
+
+  /*  public void  nextscreen(){
+        click.play();
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                // Do something on the main thread
+                main=new SwiperImproved(game);
+
+            }
+        });
+
+
+    }*/
 
 
     @Override
@@ -144,15 +159,15 @@ public class startScreen implements Screen {
     }
     @Override
     public void dispose() {
-        stage.dispose();
-        batch.dispose();
+      //  stage.dispose();
+     /*   batch.dispose();
         myTexture.dispose();
         background.dispose();
       //  spriteB.dispose();
         wizardatlas.dispose();
         game.dispose();
         main.dispose();
-        click.dispose();
+        click.dispose();*/
     }
 
 }

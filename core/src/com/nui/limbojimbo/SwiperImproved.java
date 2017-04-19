@@ -105,6 +105,7 @@ public class SwiperImproved implements Screen {
     TextureAtlas atlasRight;
     Music music;
     Music hunt;
+    Music death;
     boolean isinit = false;
     private boolean isdemo = true;
     Dialog  endDialog;
@@ -165,8 +166,8 @@ public class SwiperImproved implements Screen {
     static int lifeline=3;
     private int score;
     private int level=1;
-    private TextureAtlas mainGhostAtlas=new TextureAtlas(Gdx.files.internal("mainghost1.atlas"));
-    private TextureAtlas mainGhostAtlasKill=new TextureAtlas(Gdx.files.internal("mainghost1_kill.atlas"));
+    private TextureAtlas mainGhostAtlas;
+    private TextureAtlas mainGhostAtlasKill;
     String s;
     String l;
     int getsize = 1;
@@ -201,19 +202,23 @@ public class SwiperImproved implements Screen {
         //we will use a texture for the smooth edge, and also for stroke effects
         tex = new Texture("data/gradient.png");
         tex.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-        backgroundList.add(new Texture(Gdx.files.internal("bg1.jpg")));
-        backgroundList.add(new Texture(Gdx.files.internal("bg2.jpg")));
-        backgroundList.add(new Texture(Gdx.files.internal("bg3.jpg")));
-        backgroundList.add(new Texture(Gdx.files.internal("bg4.jpg")));
-        backGround=new Texture(Gdx.files.internal("bg1.jpg"));
+        ((GdxSplashScreenGame)game).getmanager().get("mainghost1.atlas",TextureAtlas.class);
+
+        backgroundList.add(((GdxSplashScreenGame)game).getmanager().get("bg1.jpg",Texture.class));
+        backgroundList.add(((GdxSplashScreenGame)game).getmanager().get("bg2.jpg",Texture.class));
+        backgroundList.add(((GdxSplashScreenGame)game).getmanager().get("bg3.jpg",Texture.class));
+        backgroundList.add(((GdxSplashScreenGame)game).getmanager().get("bg4.jpg",Texture.class));
+        backGround=((GdxSplashScreenGame)game).getmanager().get("bg1.jpg",Texture.class);//new Texture(Gdx.files.internal("bg1.jpg"));
+        mainGhostAtlas=((GdxSplashScreenGame)game).getmanager().get("mainghost1.atlas",TextureAtlas.class);///*Gdx.files.internal("mainghost1.atlas")*/);
+        mainGhostAtlasKill=((GdxSplashScreenGame)game).getmanager().get("mainghost1_kill.atlas",TextureAtlas.class);//new TextureAtlas(Gdx.files.internal("mainghost1_kill.atlas"
         mainghostAtlasList.add(mainGhostAtlas);
-        mainghostAtlasList.add(new TextureAtlas(Gdx.files.internal("ghostmain2.atlas")));
-        mainghostAtlasList.add(new TextureAtlas(Gdx.files.internal("ghostMain.atlas")));
-        mainghostAtlasList.add(new TextureAtlas(Gdx.files.internal("ghostmain2.atlas")));
+        mainghostAtlasList.add(((GdxSplashScreenGame)game).getmanager().get("ghostmain2.atlas",TextureAtlas.class));
+        mainghostAtlasList.add(((GdxSplashScreenGame)game).getmanager().get("ghostMain.atlas",TextureAtlas.class));
+        mainghostAtlasList.add(((GdxSplashScreenGame)game).getmanager().get("ghostmain2.atlas",TextureAtlas.class));
         mainghostAtlasListKill.add(mainGhostAtlasKill);
-        mainghostAtlasListKill.add(new TextureAtlas(Gdx.files.internal("ghostmain2_kill.atlas")));
-        mainghostAtlasListKill.add(new TextureAtlas(Gdx.files.internal("ghostKilledMain.atlas")));
-        mainghostAtlasListKill.add(new TextureAtlas(Gdx.files.internal("ghostmain2_kill.atlas")));
+        mainghostAtlasListKill.add(((GdxSplashScreenGame)game).getmanager().get("ghostmain2_kill.atlas",TextureAtlas.class));
+        mainghostAtlasListKill.add(((GdxSplashScreenGame)game).getmanager().get("ghostKilledMain.atlas",TextureAtlas.class));
+        mainghostAtlasListKill.add(((GdxSplashScreenGame)game).getmanager().get("ghostmain2_kill.atlas",TextureAtlas.class));
         //mainGhostAtlas=new TextureAtlas(Gdx.files.internal("mainghost1.atlas"));
         //mainGhostAtlasKill=new TextureAtlas(Gdx.files.internal("mainghost1_kill.atlas"));*/
 
@@ -237,16 +242,16 @@ public class SwiperImproved implements Screen {
         stage = new Stage(viewport);
 
       //  wiz = new Wizard(new Texture(Gdx.files.internal("wizard5.png")));
-        atlasLeft =new TextureAtlas(Gdx.files.internal("ghoulsLeft.atlas"));
-        atlasRight =new TextureAtlas(Gdx.files.internal("ghoulsRight.atlas"));
+       // atlasLeft =new TextureAtlas(Gdx.files.internal("ghoulsLeft.atlas"));
+       // atlasRight =new TextureAtlas(Gdx.files.internal("ghoulsRight.atlas"));
         isPause=false;
 
-        myTexture2 = new Texture(Gdx.files.internal("pause_filled.png"));
+        myTexture2 = ((GdxSplashScreenGame)game).getmanager().get("pause_filled.png",Texture.class);//new Texture(Gdx.files.internal("pause_filled.png"));
         myTextureRegion2 = new TextureRegion(myTexture2);
         myTexRegionDrawable2 = new TextureRegionDrawable(myTextureRegion2);
 
 
-        myTexture3 = new Texture(Gdx.files.internal("play_filled.png"));
+        myTexture3 = ((GdxSplashScreenGame)game).getmanager().get("play_filled.png",Texture.class);//new Texture(Gdx.files.internal("play_filled.png"));
         myTextureRegion3 = new TextureRegion(myTexture3);
         myTexRegionDrawable3 = new TextureRegionDrawable(myTextureRegion3);
         button2 = new ImageButton(myTexRegionDrawable2,myTexRegionDrawable2,myTexRegionDrawable3); //Set the button up
@@ -267,13 +272,13 @@ public class SwiperImproved implements Screen {
         if (isdemo){
             font1=new BitmapFont();
             //  ghosts.add(0, new Ghosts(0, new Texture(Gdx.files.internal("HLine.png")), leftghosts.get(0),leftghostskill.get(0), -200, 400, 60f));
-            ghosts.add(0,new Ghosts( new Texture(Gdx.files.internal("HLine.png")), rightghosts.get(0),rightghostskill.get(0),Gdx.graphics.getWidth()/2 +100,Gdx.graphics.getHeight()/4, 60f , true));
+            ghosts.add(0,new Ghosts( ((GdxSplashScreenGame)game).getmanager().get("HLine.png",Texture.class), rightghosts.get(0),rightghostskill.get(0),Gdx.graphics.getWidth()/2 +100,Gdx.graphics.getHeight()/4, 60f , true));
             //ghosts.add(0,g);
             GhostMap.put("_", ghosts.get(0));
             stage.addActor(ghosts.get(0));
         }
 
-        wiz = new Wizard(new Texture(Gdx.files.internal("witch.png")));
+        wiz = new Wizard(((GdxSplashScreenGame)game).getmanager().get("witch.png",Texture.class)/*new Texture(Gdx.files.internal("witch.png"))*/);
         wiz.setBounds(wiz.getX(),wiz.getY(),wiz.getWidth()-200,wiz.getHeight()-200);
 
         stage.addActor(wiz);
@@ -293,7 +298,7 @@ public class SwiperImproved implements Screen {
             }
         });
 
-        myTexture8 = new Texture(Gdx.files.internal("arrow.png"));
+        myTexture8 = ((GdxSplashScreenGame)game).getmanager().get("arrow.png",Texture.class);//new Texture(Gdx.files.internal("arrow.png"));
         myTextureRegion8 = new TextureRegion(myTexture8);
         myTexRegionDrawable8 = new TextureRegionDrawable(myTextureRegion8);
         button8 = new ImageButton(myTexRegionDrawable8);
@@ -305,7 +310,7 @@ public class SwiperImproved implements Screen {
         //handle swipe input
         Gdx.input.setInputProcessor(swipe);
 
-        myTexture9 = new Texture(Gdx.files.internal("heart.png"));
+        myTexture9 = ((GdxSplashScreenGame)game).getmanager().get("heart.png",Texture.class);//new Texture(Gdx.files.internal("heart.png"));
         myTextureRegion9 = new TextureRegion(myTexture9);
         myTexRegionDrawable9 = new TextureRegionDrawable(myTextureRegion9);
         button9 = new ImageButton(myTexRegionDrawable9); //Set the button up
@@ -315,7 +320,7 @@ public class SwiperImproved implements Screen {
 
 
 
-        myTexture4 = new Texture(Gdx.files.internal("heart.png"));
+        myTexture4 = ((GdxSplashScreenGame)game).getmanager().get("heart.png",Texture.class);
         myTextureRegion4 = new TextureRegion(myTexture4);
         myTexRegionDrawable4 = new TextureRegionDrawable(myTextureRegion4);
         button4 = new ImageButton(myTexRegionDrawable4); //Set the button up
@@ -323,7 +328,7 @@ public class SwiperImproved implements Screen {
         stage4=new Stage(new ScreenViewport());
         stage4.addActor(button4);
 
-        myTexture7 = new Texture(Gdx.files.internal("heart.png"));
+        myTexture7 = ((GdxSplashScreenGame)game).getmanager().get("heart.png",Texture.class);
         myTextureRegion7 = new TextureRegion(myTexture7);
         myTexRegionDrawable7 = new TextureRegionDrawable(myTextureRegion7);
         button7 = new ImageButton(myTexRegionDrawable7); //Set the button up
@@ -331,7 +336,7 @@ public class SwiperImproved implements Screen {
         stage7=new Stage(new ScreenViewport());
         stage7.addActor(button7);
 
-        myTexture5 = new Texture(Gdx.files.internal("heartempty.png"));
+        myTexture5 = ((GdxSplashScreenGame)game).getmanager().get("heartempty.png",Texture.class);//new Texture(Gdx.files.internal("heartempty.png"));
         myTextureRegion5 = new TextureRegion(myTexture5);
         myTexRegionDrawable5 = new TextureRegionDrawable(myTextureRegion5);
         button5 = new ImageButton(myTexRegionDrawable5); //Set the button up
@@ -339,7 +344,7 @@ public class SwiperImproved implements Screen {
         stage5=new Stage(new ScreenViewport());
         stage5.addActor(button5);
 
-        myTexture6 = new Texture(Gdx.files.internal("heartempty.png"));
+        myTexture6 = ((GdxSplashScreenGame)game).getmanager().get("heartempty.png",Texture.class);
         myTextureRegion6 = new TextureRegion(myTexture6);
         myTexRegionDrawable6 = new TextureRegionDrawable(myTextureRegion6);
         button6 = new ImageButton(myTexRegionDrawable6);
@@ -347,7 +352,7 @@ public class SwiperImproved implements Screen {
         stage6=new Stage(new ScreenViewport());
         stage6.addActor(button6);
 
-        myTexture10 = new Texture(Gdx.files.internal("heartempty.png"));
+        myTexture10 =((GdxSplashScreenGame)game).getmanager().get("heartempty.png",Texture.class);
         myTextureRegion10 = new TextureRegion(myTexture10);
         myTexRegionDrawable10 = new TextureRegionDrawable(myTextureRegion10);
         button10 = new ImageButton(myTexRegionDrawable10); //Set the button up
@@ -372,32 +377,33 @@ public class SwiperImproved implements Screen {
 
 
         {
-            gestureText.add(new Texture(Gdx.files.internal("alpha.png")));
-            gestureText.add(new Texture(Gdx.files.internal("ss.png")));
-            gestureText.add(new Texture(Gdx.files.internal("HLine.png")));
-            gestureText.add(new Texture(Gdx.files.internal("Circle.png")));
-            gestureText.add(new Texture(Gdx.files.internal("VLine.png")));
+            gestureText.add(((GdxSplashScreenGame)game).getmanager().get("alpha.png",Texture.class)/*new Texture(Gdx.files.internal("alpha.png"))*/);
+            gestureText.add(((GdxSplashScreenGame)game).getmanager().get("ss.png",Texture.class)/*new Texture(Gdx.files.internal("ss.png"))*/);
+            gestureText.add(((GdxSplashScreenGame)game).getmanager().get("HLine.png",Texture.class)/*new Texture(Gdx.files.internal("HLine.png"))*/);
+            gestureText.add(((GdxSplashScreenGame)game).getmanager().get("Circle.png",Texture.class)/*new Texture(Gdx.files.internal("Circle.png"))*/);
+            gestureText.add(((GdxSplashScreenGame)game).getmanager().get("VLine.png",Texture.class)/*new Texture(Gdx.files.internal("VLine.png"))*/);
 
         }
 
 
-        atlasLeft =new TextureAtlas(Gdx.files.internal("ghost1_left.atlas"));
+        atlasLeft =((GdxSplashScreenGame)game).getmanager().get("ghost1_left.atlas",TextureAtlas.class);//new TextureAtlas(Gdx.files.internal("ghost1_left.atlas"));
         leftghosts.add(atlasLeft);
-        leftghosts.add( new TextureAtlas(Gdx.files.internal("ghost2.atlas")));
-        leftghosts.add( new TextureAtlas(Gdx.files.internal("ghost3.atlas")));
+        leftghosts.add( ((GdxSplashScreenGame)game).getmanager().get("ghost2.atlas",TextureAtlas.class)/*;new TextureAtlas(Gdx.files.internal("ghost2.atlas"))*/);
+        leftghosts.add( ((GdxSplashScreenGame)game).getmanager().get("ghost3.atlas",TextureAtlas.class));
 
-        leftghostskill.add( new TextureAtlas(Gdx.files.internal("ghostLeftKill.atlas")));
-        leftghostskill.add( new TextureAtlas(Gdx.files.internal("ghost2_kill.atlas")));
-        leftghostskill.add( new TextureAtlas(Gdx.files.internal("ghost3_kill.atlas")));
-        atlasRight =new TextureAtlas(Gdx.files.internal("ghost1_right.atlas"));
+        leftghostskill.add( ((GdxSplashScreenGame)game).getmanager().get("ghostLeftKill.atlas",TextureAtlas.class)/*new TextureAtlas(Gdx.files.internal("ghostLeftKill.atlas"))*/);
+        leftghostskill.add( ((GdxSplashScreenGame)game).getmanager().get("ghost2_kill.atlas",TextureAtlas.class));
+        leftghostskill.add( ((GdxSplashScreenGame)game).getmanager().get("ghost3_kill.atlas",TextureAtlas.class));
+        atlasRight =((GdxSplashScreenGame)game).getmanager().get("ghost1_right.atlas",TextureAtlas.class);
         rightghosts.add(atlasRight);
-        rightghosts.add( new TextureAtlas(Gdx.files.internal("ghost2.atlas")));
-        rightghosts.add( new TextureAtlas(Gdx.files.internal("ghost3.atlas")));
-        rightghostskill.add( new TextureAtlas(Gdx.files.internal("ghost_rightkill1.atlas")));
-        rightghostskill.add( new TextureAtlas(Gdx.files.internal("ghost2_kill.atlas")));
-        rightghostskill.add( new TextureAtlas(Gdx.files.internal("ghost3_kill.atlas")));
+        rightghosts.add(((GdxSplashScreenGame)game).getmanager().get("ghost2.atlas",TextureAtlas.class));
+        rightghosts.add( ((GdxSplashScreenGame)game).getmanager().get("ghost3.atlas",TextureAtlas.class));
+        rightghostskill.add(((GdxSplashScreenGame)game).getmanager().get("ghost_rightkill1.atlas",TextureAtlas.class));
+        rightghostskill.add( ((GdxSplashScreenGame)game).getmanager().get("ghost2_kill.atlas",TextureAtlas.class));
+        rightghostskill.add( ((GdxSplashScreenGame)game).getmanager().get("ghost3_kill.atlas",TextureAtlas.class));
         _library = GestureLibrary.getInstance().getLibrary();
         hunt = Gdx.audio.newMusic(Gdx.files.internal("data/kill.wav"));
+      //  death = Gdx.audio.newMusic(Gdx.files.internal("death.wav"));
         isinit = true;
 
 
@@ -783,7 +789,7 @@ public class SwiperImproved implements Screen {
             font.draw(batch,"Draw the symbol to kill the ghost",30,Gdx.graphics.getHeight()-160);
         } else {
             if(ltime<100) {
-                font.setColor(Color.BLUE);
+                font.setColor(Color.RED);
                 font.getData().setScale(8);
                 font.draw(batch, "Level: " + levelNum, 800, 800);
                 ltime=ltime+1;
@@ -948,16 +954,16 @@ public void levelChange(int levelnum)
                 mainGhostAtlasKill=mainghostAtlasListKill.get(levelnum-1);
                 curenttime=0;
                 spawntime=3;
-                mainghostspawntime=50;
+                mainghostspawntime=40;
                 getsize=levelnum;
                 break;
             case 4:
-                backGround = backgroundList.get(levelnum-1);
+                backGround = backgroundList.get(0);
                 mainGhostAtlas=mainghostAtlasList.get(levelnum-1);
                 mainGhostAtlasKill=mainghostAtlasListKill.get(levelnum-1);
                 curenttime=0;
-                spawntime=4;
-                mainghostspawntime=30;
+                spawntime=2;
+                mainghostspawntime=50;
                 getsize=levelnum;
                 break;
 
@@ -1002,13 +1008,16 @@ public void levelChange(int levelnum)
                         GhostMap.remove(g, ghosts.get(i));
                         lifeline = lifeline - 1;
                         l = String.valueOf(lifeline);
+                       // death.play();
 
                         // System.out.println("The gesture is "+ g);
                         //Ghosts ghoul = ghosts.get(i);
 
                     } else  {
                         // lifeline = 3;
+                       // death.play();
                         game.setScreen(new GameOverScreen(game));
+
 
                         // break;
                     }
@@ -1074,7 +1083,7 @@ public void levelChange(int levelnum)
     }
     @Override
     public void dispose() {
-        for (Texture t :  gestureText){
+     /*   for (Texture t :  gestureText){
             t.dispose();
         }
         for (TextureAtlas t :  leftghosts){
@@ -1097,8 +1106,8 @@ public void levelChange(int levelnum)
         }
         for (Texture t :  backgroundList){
             t.dispose();
-        }
-        myTexture3.dispose();
+        }*/
+        /*myTexture3.dispose();
         myTexture4.dispose();
         myTexture5.dispose();
         myTexture6.dispose();
@@ -1108,7 +1117,7 @@ public void levelChange(int levelnum)
        // stage3.dispose();
         stage4.dispose();
         atlasLeft.dispose();
-        atlasRight.dispose();
+        atlasRight.dispose();*/
         wiz.remove();
 
         batch.dispose();
@@ -1117,9 +1126,9 @@ public void levelChange(int levelnum)
         tex.dispose();
 
         music.dispose();
-        myTexture2.dispose();
+       // myTexture2.dispose();
         stage.dispose();
-        backGround.dispose();
+      //  backGround.dispose();
         stage2.dispose();
         stage5.dispose();
         stage6.dispose();
@@ -1128,7 +1137,7 @@ public void levelChange(int levelnum)
         stage9.dispose();
         wiz.dispose();
         stage10.dispose();
-        myTexture10.dispose();
+        //myTexture10.dispose();
 
     }
 
